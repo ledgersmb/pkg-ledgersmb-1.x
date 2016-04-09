@@ -1,0 +1,7 @@
+usr/share/ledgersmb-1.4/bin/custom
+usr/share/ledgersmb-1.4/scripts/custom
+usr/share/ledgersmb-1.4/LedgerSMB/Reconciliation/CSV/Formats
+usr/share/ledgersmb-1.4/UI/lib/dojo
+var/lib/ledgersmb-1.4/spool
+var/lib/ledgersmb-1.4/users
+
