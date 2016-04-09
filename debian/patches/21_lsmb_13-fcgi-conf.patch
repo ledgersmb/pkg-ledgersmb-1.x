@@ -1,0 +1,62 @@
+Author: Robert James Clay <jame@rocasa.us>
+Description: Set WORKDIR path in LedgerSMB Apache FCGI confiuration files.
+Origin: vendor
+Last-Update: 2016-03-26
+--- a/tools/lsmb_13-fcgi.conf
++++ b/tools/lsmb_13-fcgi.conf
+@@ -1,13 +1,13 @@
+ # This file must be edited to substitute the current path with WORKING_DIR
+ 
+-Alias /ledgersmb_1.5 WORKING_DIR/
++Alias /ledgersmb_1.5 /usr/share/ledgersmb_1.5/
+ LoadModule fastcgi_module modules/mod_fastcgi.so
+ 
+ LogLevel debug
+ 
+-FastCgiExternalServer WORKING_DIR/ledgersmb.fcgi -socket /var/run/httpd/fastcgi/lsmb.sock -idle-timeout 240 -pass-header Authorization
++FastCgiExternalServer /usr/share/ledgersmb_1.5/ledgersmb.fcgi -socket /var/lib/ledgersmb_1.5/lsmb.sock -idle-timeout 240 -pass-header Authorization
+ 
+-<Directory WORKING_DIR>
++<Directory /usr/share/ledgersmb_1.5>
+ 
+   # Rewrite rule to allow HTTP Authorization information to the scripts only
+   # from this directory.
+@@ -32,32 +32,32 @@
+   </Files>
+ </Directory>
+ 
+-<Directory WORKING_DIR/users>
++<Directory /usr/share/ledgersmb_1.5/users>
+   Order Deny,Allow
+   Deny from All
+ </Directory>
+ 
+-<Directory WORKING_DIR/bin>
++<Directory /usr/share/ledgersmb_1.5/bin>
+   Order Deny,Allow
+   Deny from All
+ </Directory>
+ 
+-<Directory WORKING_DIR/utils>
++<Directory /usr/share/ledgersmb_1.5/utils>
+   Order Deny,Allow
+   Deny from All
+ </Directory>
+ 
+-<Directory WORKING_DIR/spool>
++<Directory /usr/share/ledgersmb_1.5/spool>
+   Order Deny,Allow
+   Deny from All
+ </Directory>
+ 
+-<Directory WORKING_DIR/templates>
++<Directory /usr/share/ledgersmb_1.5/templates>
+   Order Deny,Allow
+   Deny from All
+ </Directory>
+ 
+-<Directory WORKING_DIR/LedgerSMB>
++<Directory /usr/share/ledgersmb_1.5/LedgerSMB>
+   Order Deny,Allow
+   Deny from All
+ </Directory>

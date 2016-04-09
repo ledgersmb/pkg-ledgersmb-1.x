@@ -1,0 +1,62 @@
+Source: ledgersmb_1.5
+Section: web
+Priority: optional
+Maintainer: Development discussion for LedgerSMB <ledger-smb-devel@lists.sourceforge.net>
+Uploaders: Robert James Clay <jame@rocasa.us>
+Build-Depends: debhelper (>= 9), libmodule-install-perl, po-debconf
+Standards-Version: 3.9.8
+Homepage: http://www.ledgersmb.org/
+Vcs-Git: https://github.com/ledgersmb/LedgerSMB.git
+Vcs-Browser: https://github.com/ledgersmb/LedgerSMB
+
+Package: ledgersmb-1.5
+Architecture: all
+Depends: libcarp-always-perl,
+         libcgi-emulate-psgi-perl,
+         libcgi-simple-perl,
+         libconfig-inifiles-perl,
+         libdatetime-format-strptime-perl,
+         libdatetime-perl,
+         libdbd-pg-perl,
+         libdbi-perl,
+         liberror-perl,
+         libfile-mimeinfo-perl,
+         libhtml-parser-perl,
+         libio-stringy-perl,
+         libjs-dojo-dojox,
+         libjson-perl | libjson-xs-perl,
+         liblocale-maketext-lexicon-perl (>= 0.62-1),
+         liblog-log4perl-perl,
+         libmime-lite-perl,
+         libmoose-perl,
+         libnamespace-autoclean-perl,
+         libnumber-format-perl,
+         libplack-perl,
+         libtemplate-perl (>=2.14-1),
+         perl (>= 5.8.1-1),
+         postgresql-client,
+         postgresql-contrib,
+         starman,
+         ${misc:Depends},
+         ${perl:Depends}
+Recommends: apache2 | httpd-cgi,
+            default-mta | mail-transport-agent,
+            libmath-bigint-gmp-perl,
+            libopenoffice-oodoc-perl,
+            libparse-recdescent-perl,
+            libtemplate-plugin-latex-perl,
+            libtex-encode-perl,
+            texlive-latex-recommended
+Suggests: latex-cjk-all,
+          libimage-size-perl,
+          libx12-parser-perl,
+          lpr,
+          postgresql,
+          texlive-xetex
+Description: financial accounting and ERP program
+ LedgerSMB is a double-entry financial accounting and Enterprise Resource
+ Planning system which offers "Accounts Receivable", "Accounts Payable" and
+ "General Ledger" tracking as well as inventory control and fixed assets
+ handling. The LedgerSMB client can be a web browser or a programmed API call.
+ The goal of the LedgerSMB project is to bring high quality ERP and accounting
+ capabilities to Small and Midsize Businesses.

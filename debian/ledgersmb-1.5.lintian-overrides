@@ -1,0 +1,5 @@
+# Upstream includes empty directory intentionally, as standard locations for custom scripts
+ledgersmb_1.5 binary: package-contains-empty-directory usr/share/ledgersmb_1.5/bin/custom/
+ledgersmb_1.5 binary: package-contains-empty-directory usr/share/ledgersmb_1.5/scripts/custom/
+ledgersmb_1.5 binary: package-contains-empty-directory usr/share/ledgersmb_1.5/LedgerSMB/Reconciliation/CSV/Formats/
+
