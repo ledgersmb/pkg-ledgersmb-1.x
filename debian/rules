@@ -17,18 +17,17 @@ override_dh_install:
 
 override_dh_fixperms:
 	dh_fixperms
-	chmod -x debian/ledgersmb/usr/share/ledgersmb/lsmb-request.pl
-	chmod -x debian/ledgersmb/usr/share/ledgersmb/bin/gl.pl
-	chmod -x debian/ledgersmb/usr/share/ledgersmb/locale/po/*
-	chmod -x debian/ledgersmb/usr/share/ledgersmb/locale/html/splash.html
-	chmod +x debian/ledgersmb/usr/share/ledgersmb/Reconciliation.pl
-	chmod +x debian/ledgersmb/usr/share/ledgersmb/tools/*.pl
-	chmod +x debian/ledgersmb/usr/share/ledgersmb/tools/*.psgi
-	chmod +x debian/ledgersmb/usr/share/ledgersmb/tools/system/lsmb*
-	find debian/ledgersmb/usr/share/ledgersmb -name '*.sh' -exec chmod +x '{}' \;
-	find debian/ledgersmb/usr/share/ledgersmb -name '*.pm' -exec chmod -x '{}' \;
-	find debian/ledgersmb/usr/share/ledgersmb -name '*.sql' -exec chmod -x '{}' \;
-	find debian/ledgersmb/usr/share/ledgersmb/utils -name '*.pl*' -exec chmod +x '{}' \;
-	find debian/ledgersmb/usr/share/ledgersmb/templates -type d -empty -delete
-	chown -R www-data:www-data debian/ledgersmb/var/lib/ledgersmb
+	chmod -x debian/ledgersmb-1.4/usr/share/ledgersmb-1.4/lsmb-request.pl
+	chmod -x debian/ledgersmb-1.4/usr/share/ledgersmb-1.4/bin/gl.pl
+	chmod -x debian/ledgersmb-1.4/usr/share/ledgersmb-1.4/locale/po/*
+	chmod -x debian/ledgersmb-1.4/usr/share/ledgersmb-1.4/locale/html/splash.html
+	chmod +x debian/ledgersmb-1.4/usr/share/ledgersmb-1.4/Reconciliation.pl
+	chmod +x debian/ledgersmb-1.4/usr/share/ledgersmb-1.4/tools/*.pl
+	chmod +x debian/ledgersmb-1.4/usr/share/ledgersmb-1.4/tools/*.psgi
+	chmod +x debian/ledgersmb-1.4/usr/share/ledgersmb-1.4/tools/system/lsmb*
+	find debian/ledgersmb-1.4/usr/share/ledgersmb-1.4 -name '*.sh' -exec chmod +x '{}' \;
+	find debian/ledgersmb-1.4/usr/share/ledgersmb-1.4 -name '*.pm' -exec chmod -x '{}' \;
+	find debian/ledgersmb-1.4/usr/share/ledgersmb-1.4 -name '*.sql' -exec chmod -x '{}' \;
+	find debian/ledgersmb-1.4/usr/share/ledgersmb-1.4/utils -name '*.pl*' -exec chmod +x '{}' \;
+	find debian/ledgersmb-1.4/usr/share/ledgersmb-1.4/templates -type d -empty -delete
 
