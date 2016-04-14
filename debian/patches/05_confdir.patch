@@ -1,21 +1,10 @@
 Author: Robert James Clay <jame@rocasa.us>
-Description: Change default directories
+Description: Change configuration defaults as neccessary
 Origin: vendor
-Last-Update: 2016-03-25
+Last-Update: 2016-04-11
 --- a/LedgerSMB/Sysconfig.pm
 +++ b/LedgerSMB/Sysconfig.pm
-@@ -19,8 +19,8 @@
- 
- our $auth = 'DB';
- our $images = getcwd() . '/images'; 
--our $cssdir = 'css/';
--our $fs_cssdir = 'css/';
-+our $cssdir = 'lsmbcss/';
-+our $fs_cssdir = '/var/lib/ledgersmb-1.4/css/';
- our $dojo_theme = 'claro';
- 
- our $force_username_case = undef; # don't force case
-@@ -50,23 +50,23 @@
+@@ -53,7 +53,7 @@
  our $max_post_size = 1024 * 1024;
  
  # defaults to LedgerSMB-1.3 - default spelling of cookie
@@ -23,52 +12,9 @@ Last-Update: 2016-03-25
 +our $cookie_name = "LedgerSMB-1.4";
  
  # spool directory for batch printing
--our $spool = "spool";
-+our $spool = "/var/lib/ledgersmb-1.4/spool";
- 
- our $cache_templates = 0;
- # path to user configuration files
--our $userspath = "users";
-+our $userspath = "/var/lib/ledgersmb-1.4/users";
- 
- # templates base directory
--our $templates = "templates";
-+our $templates = "/var/lib/ledgersmb-1.4/templates";
- 
- # Temporary files stored at"
- our $tempdir = ( $ENV{TEMP} || '/tmp' );
- 
- # member file
--our $memberfile = "users/members";
-+our $memberfile = "/var/lib/ledgersmb-1.4/users/members";
- 
- # location of sendmail
- our $sendmail = "/usr/sbin/sendmail -t";
-@@ -89,7 +89,7 @@
- our $gzip = "gzip -S .gz";
- 
- # Path to the translation files
--our $localepath = 'locale/po';
-+our $localepath = '/usr/share/ledgersmb-1.4/locale/po';
- 
- our $no_db_str = 'database';
- our $log_level = 'ERROR';
+ our $spool = "spool";
 --- a/ledgersmb.conf.default
 +++ b/ledgersmb.conf.default
-@@ -9,11 +9,11 @@
- # This is the logical CSS directory.  I.e. it is what comes before the 
- # ledgersmb.css in the url.  Example might be /my_css_dir/ or 
- # http://localhost/other_css_dir/
--cssdir = css/
-+cssdir = /lsmbcss/
- 
- # THis is the location on the file system where the css files are, for editing 
- # and selection.  An example might be /var/www/ledgersmb-1.4_css/
--fs_cssdir = css/
-+fs_cssdir = /var/lib/ledgersmb-1.4/css/
- 
- # If set to a true value this caches templates.  Typically it will be set to 0 
- # to disable or 1 to enable.
 @@ -35,7 +35,7 @@
  # Spelling of cookie name for this instance of LedgerSMB.
  # Used to keep multiple instances and/or different versions
@@ -78,29 +24,6 @@ Last-Update: 2016-03-25
  
  # This is the string we look for in the failed connection error to determine
  # if the database was not found.  For English-language locales, this can be
-@@ -54,16 +54,16 @@
- 
- [paths]
- # spool directory for batch printing
--spool      = spool
-+spool      = /var/lib/ledgersmb-1.4/spool
- # path to user configuration files
--userspath  = users
-+userspath  = /var/lib/ledgersmb-1.4/users
- # templates base directory
--templates  = templates
-+templates  = /var/lib/ledgersmb-1.4/templates
- # images base directory
--images  = images
-+images  = /usr/share/ledgersmb-1.4/images
- # member file
--memberfile = users/members
--localepath = locale/po
-+memberfile = /var/lib/ledgersmb-1.4/users/members
-+localepath = /usr/share/ledgersmb-1.4/locale/po
- 
- [programs]
- # program to use for file compression
 @@ -98,7 +98,7 @@
  # Sets database connection parameters.  Note that default_db can be left blank
  # if you want to force people to enter a company name at login.
