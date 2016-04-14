@@ -1,14 +1,14 @@
 Author: Robert James Clay <jame@rocasa.us>
 Description: Set WORKDIR path in LedgerSMB Apache FCGI confiuration files.
 Origin: vendor
-Last-Update: 2016-03-25
+Last-Update: 2016-04-14
 --- a/tools/lsmb_13-fcgi.conf
 +++ b/tools/lsmb_13-fcgi.conf
 @@ -1,13 +1,13 @@
  # This file must be edited to substitute the current path with WORKING_DIR
  
--Alias /ledgersmb_1.4 WORKING_DIR/
-+Alias /ledgersmb_1.4 /usr/share/ledgersmb-1.4/
+-Alias /ledgersmb_1.3 WORKING_DIR/
++Alias /ledgersmb-1.4 /usr/share/ledgersmb-1.4/
  LoadModule fastcgi_module modules/mod_fastcgi.so
  
  LogLevel debug
