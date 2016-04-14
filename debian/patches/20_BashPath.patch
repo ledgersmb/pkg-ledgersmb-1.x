@@ -6,7 +6,7 @@ Last-Update: 2016-04-14
 +++ b/tools/regen_db_docs.sh
 @@ -1,4 +1,4 @@
 -#!/usr/bin/bash
-+#!/usr/bash
++#!/bin/bash
  
  #  PostgreSQL Autodoc - http://www.rbt.ca/autodoc/
  
@@ -14,7 +14,7 @@ Last-Update: 2016-04-14
 +++ b/tools/system/lsmbstart
 @@ -1,5 +1,5 @@
 -#!/usr/bin/bash
-+#!/usr/bash
++#!/bin/bash
  
 -cd /usr/share/ledgersmb
 +cd /usr/share/ledgersmb-1.4
@@ -24,7 +24,7 @@ Last-Update: 2016-04-14
 +++ b/tools/system/lsmbstop
 @@ -1,4 +1,4 @@
 -#!/usr/bin/bash
-+#!/usr/bash
++#!/bin/bash
  
  killall perl-fcgi-pm
  
