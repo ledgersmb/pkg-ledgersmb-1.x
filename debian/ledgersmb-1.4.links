@@ -1,4 +1,1 @@
 /etc/ledgersmb-1.4/ledgersmb.conf  /usr/share/ledgersmb-1.4/ledgersmb.conf
-/usr/share/javascript/dojo  /usr/share/ledgersmb-1.4/UI/lib/dojo/dojo
-/usr/share/javascript/dijit  /usr/share/ledgersmb-1.4/UI/lib/dojo/dijit
-/usr/share/javascript/dojox  /usr/share/ledgersmb-1.4/UI/lib/dojo/dojox
