@@ -43,7 +43,6 @@ Recommends: apache2 | httpd-cgi,
             default-mta | mail-transport-agent,
             libmath-bigint-gmp-perl,
             libopenoffice-oodoc-perl,
-            libparse-recdescent-perl,
             libtemplate-plugin-latex-perl,
             libtex-encode-perl,
             texlive-latex-recommended
