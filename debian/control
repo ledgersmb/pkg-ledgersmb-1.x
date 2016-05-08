@@ -11,8 +11,7 @@ Vcs-Browser: https://github.com/ledgersmb/LedgerSMB
 
 Package: ledgersmb-1.5
 Architecture: all
-Depends: libcarp-always-perl,
-         libcgi-emulate-psgi-perl,
+Depends: libcgi-emulate-psgi-perl,
          libcgi-simple-perl,
          libconfig-inifiles-perl,
          libdatetime-format-strptime-perl,
