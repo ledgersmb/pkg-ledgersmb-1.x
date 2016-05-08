@@ -40,13 +40,17 @@ Depends: libcarp-always-perl,
 Recommends: apache2 | httpd-cgi,
             default-mta | mail-transport-agent,
             libmath-bigint-gmp-perl,
-            libopenoffice-oodoc-perl,
             libparse-recdescent-perl,
             libtemplate-plugin-latex-perl,
             libtex-encode-perl,
             texlive-latex-recommended,
             texlive-xetex
-Suggests: latex-cjk-all, libimage-size-perl, libx12-parser-perl, lpr, postgresql
+Suggests: latex-cjk-all,
+          libimage-size-perl,
+          libopenoffice-oodoc-perl,
+          libx12-parser-perl,
+          lpr,
+          postgresql
 Description: financial accounting and ERP program
  LedgerSMB is a double-entry financial accounting and Enterprise Resource
  Planning system which offers "Accounts Receivable", "Accounts Payable" and
