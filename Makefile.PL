@@ -14,8 +14,8 @@ license 'GPL';
 perl_version '5.10.1';
 
 requires 'App::LedgerSMB::Admin' => 0.04;
+requires 'CGI::Emulate::PSGI';
 requires 'CGI::Simple';
-requires 'Carp::Always';
 requires 'Config::IniFiles';
 requires 'DBD::Pg';
 requires 'DBI' => '1.00';
@@ -40,10 +40,10 @@ requires 'PGObject::Type::BigFloat';
 requires 'PGObject::Type::DateTime';
 requires 'PGObject::Util::DBMethod';
 requires 'PGObject::Util::DBAdmin' => '0.08';
-requires 'TeX::Encode';
+requires 'Plack::Builder';
+requires 'Plack::Middleware::Static';
 requires 'Template' => '2.14';
 requires 'namespace::autoclean';
-
 
 recommends 'Math::BigInt::GMP';
 
@@ -59,11 +59,7 @@ feature 'RESTful Web Services XML support',
 
 feature 'Standalone Server w/Starman',
     -default => 0,
-    'Starman' => 0,
-    'CGI::Emulate::PSGI' => 0,
-    'Plack::Builder' => 0,
-    'Plack::Middleware::Static' => 0;
-
+    'Starman' => 0;
 
 feature 'Size detection for images for embedding in LaTeX templates',
     -default => 0,
@@ -78,6 +74,7 @@ feature 'X12 EDI support',
 # Rendering options
 feature 'PDF and Postscript output',
     -default => 0,
+    'LaTeX::Driver' => '0.300.2',
     'Template::Plugin::Latex' => 0,
     'TeX::Encode' => 0;
 

@@ -170,33 +170,33 @@ sub login {
         $request->{operation} = $request->{_locale}->text('Create Database?');
         $request->{next_action} = 'create_db';
     } else {
-    my $dispatch_entry;
+        my $dispatch_entry;
 
-    foreach $dispatch_entry (@login_actions_dispatch_table) {
-        if ($version_info->{appname} eq $dispatch_entry->{appname}
-           && ($version_info->{version} eq $dispatch_entry->{version}
-               || ! defined $dispatch_entry->{version})) {
-        my $field;
+        foreach $dispatch_entry (@login_actions_dispatch_table) {
+            if ($version_info->{appname} eq $dispatch_entry->{appname}
+                && ($version_info->{version} eq $dispatch_entry->{version}
+                    || ! defined $dispatch_entry->{version})) {
+                my $field;
 
-        foreach $field (qw|operation message next_action|) {
-            $request->{$field} =
-               $request->{_locale}->maketext($dispatch_entry->{$field});
+                foreach $field (qw|operation message next_action|) {
+                    $request->{$field} =
+                        $request->{_locale}->maketext($dispatch_entry->{$field});
+                }
+                last;
+            }
         }
-        last;
-        }
-    }
 
 
-    if (! defined $request->{next_action}) {
-        $request->{message} = $request->{_locale}->text(
-        'Unknown database found.'
-        );
-        $request->{operation} = $request->{_locale}->text('Cancel?');
-        $request->{next_action} = 'cancel';
-    } elsif ($request->{next_action} eq 'rebuild_modules') {
+        if (! defined $request->{next_action}) {
+            $request->{message} = $request->{_locale}->text(
+                'Unknown database found.'
+                );
+            $request->{operation} = $request->{_locale}->text('Cancel?');
+            $request->{next_action} = 'cancel';
+        } elsif ($request->{next_action} eq 'rebuild_modules') {
             # we found the current version
             # check we don't have stale migrations around
-            my $dbh = $database->connect({PrintError=>0, AutoCommit=>0});
+            my $dbh = $request->{dbh};
             my $sth = $dbh->prepare(qq(
                 SELECT count(*)<>0
                   FROM defaults
@@ -212,12 +212,11 @@ sub login {
         }
     }
     my $template = LedgerSMB::Template->new(
-            path => 'UI/setup',
-            template => 'confirm_operation',
+        path => 'UI/setup',
+        template => 'confirm_operation',
         format => 'HTML',
     );
     $template->render($request);
-
 }
 
 =item sanity_checks
@@ -433,7 +432,6 @@ sub revert_migration {
     $sth->execute();
     my ($src_schema) = $sth->fetchrow_array();
     $dbh->rollback();
-    $dbh->begin_work();
     $dbh->do("DROP SCHEMA public CASCADE");
     $dbh->do("ALTER SCHEMA $src_schema RENAME TO public");
     $dbh->commit();
@@ -630,19 +628,30 @@ sub upgrade {
     my $database = _init_db($request);
     my $dbinfo = $database->get_info();
     my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
+    my @selectable_values = ();
 
     $request->{dbh}->{AutoCommit} = 0;
     my $locale = $request->{_locale};
 
     for my $check (LedgerSMB::Upgrade_Tests->get_tests()){
         next if ($check->min_version gt $dbinfo->{version})
-        || ($check->max_version lt $dbinfo->{version})
-        || ($check->appname ne $dbinfo->{appname});
+            || ($check->max_version lt $dbinfo->{version})
+            || ($check->appname ne $dbinfo->{appname});
+        if ( $check->selectable_values ) {
+            my $sth = $request->{dbh}->prepare($check->selectable_values);
+            $sth->execute()
+                or die "Failed to execute pre-migration check " . $check->name;
+            while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+                push @selectable_values, { value => $row->{value},
+                                           text => $row->{id}
+                };
+            }
+        }
         my $sth = $request->{dbh}->prepare($check->test_query);
         $sth->execute()
         or die "Failed to execute pre-migration check " . $check->name;
         if ($sth->rows > 0){ # Check failed --CT
-             _failed_check($request, $check, $sth);
+             _failed_check($request, $check, $sth, @selectable_values);
              return;
         }
     $sth->finish();
@@ -659,7 +668,6 @@ sub upgrade {
         $template->render($request);
     } else {
         $request->{dbh}->rollback();
-        $request->{dbh}->begin_work();
 
         __PACKAGE__->can($upgrade_run_step{$upgrade_type})->($request);
     }
@@ -667,7 +675,7 @@ sub upgrade {
 }
 
 sub _failed_check {
-    my ($request, $check, $sth) = @_;
+    my ($request, $check, $sth, @selectable_values) = @_;
     my $template = LedgerSMB::Template->new(
             path => 'UI',
             template => 'form-dynatable',
@@ -677,29 +685,37 @@ sub _failed_check {
     my $count = 1;
     my $hiddens = {table => $check->table,
                     edit => $check->column,
+                           id_column => $check->{id_column},
+                            id_where => $check->{id_where},
                 database => $request->{database}};
     my $header = {};
     for (@{$check->display_cols}){
         $header->{$_} = $_;
     }
-    while (my $row = $sth->fetchrow_hashref('NAME_lc')){
-          warn $check;
-          $row->{$check->column} =
-                    { input => {
-                                name => $check->column . "_$row->{id}",
-                                value => $row->{$check->column},
-                                type => 'text',
-                                size => 15,
-                    },
-          };
-          push @$rows, $row;
-          $hiddens->{"id_$count"} = $row->{id},
-          ++$count;
-    }
+    while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+        $row->{$check->column} =
+           ( $check->column && $check->selectable_values )
+           ? { select => {
+                   name => $check->column . "_$row->{trans_id}",
+                   id => $row->{trans_id},
+                   options => \@selectable_values,
+                   default_blank => 1,
+           } }
+           : { input => {
+                   name => $check->column . "_$row->{id}",
+                   value => $row->{$check->column},
+                   type => 'text',
+                   size => 15,
+           }};
+        push @$rows, $row;
+        $hiddens->{"id_$count"} = $row->{$check->id_column},
+        ++$count;
+   }
     $sth->finish();
 
     $hiddens->{count} = $count;
-    $hiddens->{edit} = $check->column;
+#    $hiddens->{edit} = $check->column; # Why again. Set in module beginning
+
     my $buttons = [
            { type => 'submit',
              name => 'action',
@@ -734,19 +750,19 @@ sub fix_tests{
 
     my $table = $request->{dbh}->quote_identifier($request->{table});
     my $edit = $request->{dbh}->quote_identifier($request->{edit});
+        my $where = $request->{id_where};
     my $sth = $request->{dbh}->prepare(
-            "UPDATE $table SET $edit = ? where id = ?"
+            "UPDATE $table SET $edit = ? where $where = ?"
     );
 
     for my $count (1 .. $request->{count}){
         warn $count;
         my $id = $request->{"id_$count"};
-        $sth->execute($request->{"$request->{edit}_$id"}, $id) ||
+                $sth->execute($request->{"$request->{edit}_$id"}, $id) ||
             $request->error($sth->errstr);
     }
     $sth->finish();
     $request->{dbh}->commit;
-    $request->{dbh}->begin_work;
     upgrade($request);
 }
 
@@ -761,6 +777,24 @@ sub create_db {
     my $rc=0;
 
     my $database = _get_database($request);
+    my $version_info = $database->get_info;
+    $request->{login_name} = $version_info->{username};
+    if ($version_info->{status} ne 'does not exist') {
+        $request->{message} = $request->{_locale}->text(
+            'Database exists.');
+        $request->{operation} =
+            $request->{_locale}->text('Login?');
+        $request->{next_action} = 'login';
+
+        my $template = LedgerSMB::Template->new(
+            path => 'UI/setup',
+            template => 'confirm_operation',
+            format => 'HTML',
+        );
+        $template->render($request);
+
+        return;
+    }
     $rc=$database->create_and_load();
     $logger->info("create_and_load rc=$rc");
 
@@ -972,7 +1006,6 @@ sub save_user {
         );
    }
    $request->{dbh}->commit;
-   $request->{dbh}->begin_work;
 
    rebuild_modules($request);
 }
@@ -991,7 +1024,6 @@ sub process_and_run_upgrade_script {
     $dbh->do("CREATE SCHEMA $LedgerSMB::Sysconfig::db_namespace")
     or die "Failed to create schema $LedgerSMB::Sysconfig::db_namespace (" . $dbh->errstr . ")";
     $dbh->commit;
-    $dbh->begin_work;
 
     $database->load_base_schema({
     log     => $temp . "_stdout",
@@ -1011,7 +1043,6 @@ sub process_and_run_upgrade_script {
                      VALUES ('migration_src_schema', '$src_schema')
      ));
     $dbh->commit;
-    $dbh->begin_work;
 
     my $dbtemplate = LedgerSMB::Template->new(
         user => {},
@@ -1050,7 +1081,6 @@ sub process_and_run_upgrade_script {
                 from users WHERE username IN (select rolname from pg_roles)");
 
     $dbh->commit;
-    $dbh->begin_work;
 }
 
 

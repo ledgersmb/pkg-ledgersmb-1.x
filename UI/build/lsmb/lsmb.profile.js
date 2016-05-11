@@ -71,8 +71,8 @@ var profile = (function(){
 
         layers: {
             "dojo/dojo": {
-                include: [ "dojo/dojo", "dojo/query", "dojo/domReady", "dojo/on",
-                    "lsmb/main" ],
+                include: [ "dojo/dojo", "dojo/query",
+                           "dojo/domReady", "dojo/on" ],
                 customBase: true,
                 boot: true
             },
@@ -84,9 +84,11 @@ var profile = (function(){
                     "lsmb/InvoiceLines",
                     "lsmb/MainContentPane",
                     "lsmb/MaximizeMinimize",
+                    "lsmb/PrintButton",
                     "lsmb/PublishCheckBox",
                     "lsmb/PublishRadioButton",
                     "lsmb/PublishSelect",
+                    "lsmb/SetupLoginButton",
                     "lsmb/SubscribeCheckBox",
                     "lsmb/SubscribeSelect",
                     "lsmb/SubscribeShowHide",

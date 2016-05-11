@@ -7,17 +7,19 @@ define([
     'dojo/_base/lang',
     'dojo/promise/Promise',
     'dojo/on',
+    'dojo/hash',
     'dojo/promise/all',
     'dojo/request/xhr',
     'dojo/query',
     'dojo/dom-class'
     ],
        function(ContentPane, declare, event, registry, style,
-                lang, Promise, on, all, xhr, query, domClass) {
+                lang, Promise, on, hash, all, xhr, query, domClass) {
            return declare('lsmb/MainContentPane',
                           [ContentPane],
               {
                   last_page: null,
+                  interceptClick: null,
                   set_main_div: function(doc){
                       var self = this;
                       var body = doc.match(/<body[^>]*>([\s\S]*)<\/body>/i);
@@ -68,19 +70,6 @@ define([
                   show_main_div: function() {
                       style.set(this.domNode, 'visibility', 'visible');
                   },
-                  _patchAtags: function() {
-                      var self = this;
-                      query('a', self.domNode)
-                          .forEach(function (dnode) {
-                              if (! dnode.target && dnode.href) {
-                                  self.own(on(dnode, 'click',
-                                              function(e) {
-                                                  event.stop(e);
-                                                  self.load_link(dnode.href);
-                                              }));
-                              }
-                          });
-                  },
                   set: function() {
                       var newContent = null;
                       var contentOnly = 0;
@@ -107,7 +96,8 @@ define([
                               this.inherited('set',arguments,
                                              ['content',newContent])
                               .then(function() {
-                                  self._patchAtags();
+                                  query('a', self.domNode)
+                                      .forEach(self.interceptClick);
                                   self.show_main_div();
                               });
                       }
