@@ -7,23 +7,15 @@
 # Even minor modifications require translation updates and such
 # changes should be coordinated with translators and reviewers.
 
-Template: ledgersmb/admin_login
+Template: ledgersmb-1.5/admin_login
 Type: string
 Default: ledgersmb
 _Description: Database administrative user login:
  Please enter the login of the LedgerSMB database administrative user. This
  login is needed for the administrative web user interface, typically at
- http://localhost/ledgersmb/setup.pl.
+ http://localhost/ledgersmb-1.5/setup.pl.
 
-Template: ledgersmb/admin_password
-Type: password
-Default: LEDGERSMBINITIAL
-_Description: Database administrative user password:
- Please enter the password of the LedgerSMB database administrative user. This
- password is needed for the administrative web user interface, typically at
- http://localhost/ledgersmb/setup.pl.
-
-Template: ledgersmb/debconf_install
+Template: ledgersmb-1.5/debconf_install
 Type: boolean
 Default: true
 _Description: Configure LedgerSMB automatically?
@@ -31,4 +23,13 @@ _Description: Configure LedgerSMB automatically?
  some aspects of LedgerSMB, such as the LedgerSMB database user.
  .
  More general information about the initial configuration of the application
- can be found in /usr/share/doc/ledgersmb/README.Debian.
+ can be found in /usr/share/doc/ledgersmb-1.5/README.Debian.
+
+Template: ledgersmb-1.5/lsmb_proxy
+Type: select
+Choices: ${lsmbproxy}, None, nginx, Apache
+Default: None
+_Description: Web Reverse Proxy to configure?
+ The LedgerSMB appication now defaults to being made available on port 5055.
+ If other access is needed, a Reverse Proxy can be configured using ngninx
+ or Apache, or leave the choice as None if it is not needed.
