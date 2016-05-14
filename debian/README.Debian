@@ -21,7 +21,7 @@ LedgerSMB Configuration
     those databases.
 
     The standard database superuser used in the setup.pl script has the name
-    'ledgersmb'. If it is not created and its password set during the package
+    'lsmb_dbadmin'. If it is not created and its password set during the package
     installation, that can be done or its password changed by running the
     following command: 'dpkg-reconfigure ledgersmb'.
 
