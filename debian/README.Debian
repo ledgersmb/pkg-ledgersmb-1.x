@@ -49,7 +49,6 @@ Optional Perl modules
     X12::Parser              [Support for X12 EDI support]
     OpenOffice::OODoc        [Support for OpenOffice output]
     Template::Plugin::Latex  [Support for Postscript and PDF output]
-    Parse::RecDescent        [Support for the *experimental* scripting engine]
     Image::Size              [Support for image size detection in templates]
     Plack                    [Support for using Plack to run LedgerSMB]
 
@@ -60,9 +59,6 @@ Optional Perl modules
     it is not already installed.
 
     The PDF/Postscript support is available as libtemplate-plugin-latex-perl
-    if it is not already installed.
-
-    The scripting engine support is available as libparse-recdescent-perl
     if it is not already installed.
 
     The support for size detection for images for embedding in LaTex templates
@@ -91,4 +87,4 @@ Company database removal
 
 
 
- -- Robert James Clay <jame@rocasa.us>  Sun, 12 Apr 2015 12:07:18 -0400
+ -- Robert James Clay <jame@rocasa.us>  Sat, 14 May 2016 03:44:07 -0400
