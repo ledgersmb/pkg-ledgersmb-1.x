@@ -1,7 +1,7 @@
-ledgersmb-1.5 (1.5.0~beta5-0~1) UNRELEASED; urgency=low
+ledgersmb-1.5 (1.5.0~beta6-0~1) UNRELEASED; urgency=low
 
   TODO:
-    - Continue updating pkg as necessary for changes related to beta5.
+    - Continue updating pkg as necessary for changes related to beta6.
   * Create initial version of 'LedgerSMB-1.5' package.
 
- -- Robert James Clay <jame@rocasa.us>  Wed, 11 May 2016 11:19:23 -0400
+ -- Robert James Clay <jame@rocasa.us>  Wed, 25 May 2016 12:10:23 -0400
