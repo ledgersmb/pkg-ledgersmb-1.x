@@ -179,8 +179,8 @@ sub new {
     #menubar will be deprecated, replaced with below
     $self->{lynx} = 1 if ( ( defined $self->{path} ) && ( $self->{path} =~ /lynx/i ) );
 
-    $self->{version}   = "1.5.0-beta5";
-    $self->{dbversion} = "1.5.0-beta5";
+    $self->{version}   = "1.5.0-beta6";
+    $self->{dbversion} = "1.5.0-beta6";
 
     bless $self, $type;
 
@@ -1220,7 +1220,6 @@ sub generate_selects {
      # partsgroups
     if ( $form->{all_partsgroup} && @{ $form->{all_partsgroup} } ) {
         $form->{selectpartsgroup} = "<option></option>\n";
-          $form->{selectpartsgroup} = "";
         foreach my $ref ( @{ $form->{all_partsgroup} } ) {
                 my $value = "$ref->{partsgroup}--$ref->{id}";
                 my $selected = ($form->{partsgroup} eq $value) ?

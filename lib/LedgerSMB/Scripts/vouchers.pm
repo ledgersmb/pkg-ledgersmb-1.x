@@ -1,5 +1,6 @@
 =head1 NAME
-LedgerSMB::Scripts::vouchers
+
+LedgerSMB::Scripts::vouchers - web entry points for voucher/batch workflows
 
 =head1 SYNPOSIS
 
@@ -57,13 +58,6 @@ sub create_batch {
     my $batch = LedgerSMB::Batch->new({base => $request});
     $batch->{class_id} = $batch->get_class_id($batch->{batch_type});
     $batch->get_new_info;
-
-    if ($batch->{order_by}) {
-        $batch->set_ordering({
-                method => $batch->get_search_method({mini => 1}),
-                column => $batch->{order_by}
-        });
-    }
 
     $batch->get_search_results({mini => 1});
 
@@ -327,10 +321,11 @@ Approves all selected batches.
 
 sub batch_approve {
     my ($request) = @_;
-    my $batch = LedgerSMB::Batch->new(base => $request);
-    if (!$batch->close_form){
+    if (!$request->close_form){
         list_batches($request);
     }
+
+    my $batch = LedgerSMB::Batch->new(base => $request);
     for my $count (1 .. $batch->{rowcount_}){
         next unless $batch->{"select_" . $count};
         $batch->{batch_id} = $batch->{"row_$count"};
@@ -372,10 +367,11 @@ Deletes selected batches
 
 sub batch_delete {
     my ($request)  = @_;
-    my $batch = LedgerSMB::Batch->new(base => $request);
-    if (!$batch->close_form){
+    if (!$request->close_form){
         return list_batches($request);
     }
+
+    my $batch = LedgerSMB::Batch->new(base => $request);
     for my $count (1 .. $batch->{rowcount_}){
         next unless $batch->{"select_" . $count};
         $batch->{batch_id} = $batch->{"row_$count"};
