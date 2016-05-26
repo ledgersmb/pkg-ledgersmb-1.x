@@ -11,3 +11,7 @@ ledgersmb-1.5 binary: package-contains-empty-directory usr/share/ledgersmb-1.5/U
 # Upstream includes JS directories UI/js/dijit and UI/js/dojo, the content of
 # which is built from the current dojo source as part of the release.
 ledgersmb-1.5 binary: embedded-javascript-library
+#
+# This coming up because it is Perl script and the packaging is setting as executable but
+# it is not actually intended to run directly, as per the documentation in the script.
+ledgersmb-1.5 binary: executable-not-elf-or-script usr/share/ledgersmb-1.5/tools/installer.pl
