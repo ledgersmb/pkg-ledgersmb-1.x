@@ -12,7 +12,7 @@ override_dh_auto_test:
 override_dh_auto_install:
 
 override_dh_install:
-	dh_install -XMIT-LICENSE -XGPL.txt
+	dh_install -XMIT-LICENSE -XGPL.txt -XLICENSE
 
 override_dh_fixperms:
 	dh_fixperms
