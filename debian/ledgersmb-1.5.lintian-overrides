@@ -1,5 +1,7 @@
 # Upstream includes empty directory intentionally, as standard locations for custom scripts
-ledgersmb_1.5 binary: package-contains-empty-directory usr/share/ledgersmb_1.5/bin/custom/
-ledgersmb_1.5 binary: package-contains-empty-directory usr/share/ledgersmb_1.5/scripts/custom/
-ledgersmb_1.5 binary: package-contains-empty-directory usr/share/ledgersmb_1.5/LedgerSMB/Reconciliation/CSV/Formats/
-
+ledgersmb-1.5 binary: package-contains-empty-directory usr/share/ledgersmb_1.5/bin/custom/
+ledgersmb-1.5 binary: package-contains-empty-directory usr/share/ledgersmb_1.5/scripts/custom/
+ledgersmb-1.5 binary: package-contains-empty-directory usr/share/ledgersmb_1.5/LedgerSMB/Reconciliation/CSV/Formats/
+# Upstream includes JS directories UI/js/dijit and UI/js/dojo, the content of
+# which is built from the current dojo source as part of the release.
+ledgersmb-1.5 binary: embedded-javascript-library
