@@ -17,7 +17,12 @@ set -e
 old_version=$2
 
 case "$1" in
-    upgrade|install|abort-upgrade)
+    install)
+        # Configure the 'ledgersmb' user.
+        getent passwd ledgersmb >/dev/null 2>&1 || adduser --system --group --quiet --disabled-password --home /var/run/ledgersmb --gecos "LedgerSMB" ledgersmb
+    ;;
+
+    upgrade|abort-upgrade)
     ;;
 
     *)
