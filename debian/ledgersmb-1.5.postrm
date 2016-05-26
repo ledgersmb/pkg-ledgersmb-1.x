@@ -1,5 +1,5 @@
 #!/bin/sh
-# postrm script for ledgersmb_1.5
+# postrm script for ledgersmb-1.5
 #
 # see: dh_installdeb(1)
 
@@ -20,41 +20,41 @@ set -e
 
 case "$1" in
     purge)
-        # If Apache 2.4 in use, disable use of ledgersmb_1.5.conf.
+        # If Apache 2.4 in use, disable use of ledgersmb-1.5.conf.
         if [ -e /usr/share/apache2/apache2-maintscript-helper ] ; then
             . /usr/share/apache2/apache2-maintscript-helper
-            apache2_invoke disconf ledgersmb_1.5.conf || exit $?
+            apache2_invoke disconf ledgersmb-1.5.conf || exit $?
         fi
         # When being purged; if /etc/ledgersmb-httpd-2.0-2.2.conf exists, remove it.
-        if [ -h "/etc/ledgersmb_1.5/ledgersmb-httpd-2.0-2.2.conf" ]; then
-            rm -f /etc/ledgersmb_1.5/ledgersmb-httpd-2.0-2.2.conf
+        if [ -h "/etc/ledgersmb-1.5/ledgersmb-httpd-2.0-2.2.conf" ]; then
+            rm -f /etc/ledgersmb-1.5/ledgersmb-httpd-2.0-2.2.conf
         fi
-        # When being purged; if /etc/apache2/conf.d/ledgersmb_1.5.conf exists, remove it.
-        if [ -f "/etc/apache2/conf.d/ledgersmb_1.5.conf" ]; then
-            rm -f /etc/apache2/conf.d/ledgersmb_1.5.conf
+        # When being purged; if /etc/apache2/conf.d/ledgersmb-1.5.conf exists, remove it.
+        if [ -f "/etc/apache2/conf.d/ledgersmb-1.5.conf" ]; then
+            rm -f /etc/apache2/conf.d/ledgersmb-1.5.conf
         fi
         # When being purged; if /etc/ledgersmb-httpd-2.4.conf exists, remove it.
-        if [ -h "/etc/ledgersmb_1.5/ledgersmb-httpd-2.4.conf" ]; then
-            rm -f /etc/ledgersmb_1.5/ledgersmb-httpd-2.4.conf
+        if [ -h "/etc/ledgersmb-1.5/ledgersmb-httpd-2.4.conf" ]; then
+            rm -f /etc/ledgersmb-1.5/ledgersmb-httpd-2.4.conf
         fi
-        # When being purged; if /etc/apache2/conf-available/ledgersmb_1.5.conf exists, remove it.
-        if [ -f "/etc/apache2/conf-available/ledgersmb_1.5.conf" ]; then
-            rm -f /etc/apache2/conf-available/ledgersmb_1.5.conf
+        # When being purged; if /etc/apache2/conf-available/ledgersmb-1.5.conf exists, remove it.
+        if [ -f "/etc/apache2/conf-available/ledgersmb-1.5.conf" ]; then
+            rm -f /etc/apache2/conf-available/ledgersmb-1.5.conf
         fi
     ;;
 
     remove)
-        # If Apache 2.4 in use, disable use of ledgersmb_1.5.conf.
+        # If Apache 2.4 in use, disable use of ledgersmb-1.5.conf.
         if [ -e /usr/share/apache2/apache2-maintscript-helper ] ; then
             . /usr/share/apache2/apache2-maintscript-helper
-            apache2_invoke disconf ledgersmb_1.5.conf || exit $?
+            apache2_invoke disconf ledgersmb-1.5.conf || exit $?
         fi
     ;;
 
     abort-install|abort-upgrade)
         # If the old ledgersmb-httpd.conf was present, rename it back.
         dpkg-maintscript-helper mv_conffile \
-        /etc/apache2/conf.d/ledgersmb-httpd.conf /etc/apache2/conf.d/ledgersmb_1.5.conf 1.3.46-1~ ledgersmb_1.5 -- "$@"
+        /etc/apache2/conf.d/ledgersmb-httpd.conf /etc/apache2/conf.d/ledgersmb-1.5.conf 1.3.46-1~ ledgersmb-1.5 -- "$@"
     ;;
 
     upgrade|failed-upgrade|disappear)

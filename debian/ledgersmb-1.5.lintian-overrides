@@ -1,7 +1,7 @@
 # Upstream includes empty directory intentionally, as standard locations for custom scripts
-ledgersmb-1.5 binary: package-contains-empty-directory usr/share/ledgersmb_1.5/bin/custom/
-ledgersmb-1.5 binary: package-contains-empty-directory usr/share/ledgersmb_1.5/scripts/custom/
-ledgersmb-1.5 binary: package-contains-empty-directory usr/share/ledgersmb_1.5/LedgerSMB/Reconciliation/CSV/Formats/
+ledgersmb-1.5 binary: package-contains-empty-directory usr/share/ledgersmb-1.5/bin/custom/
+ledgersmb-1.5 binary: package-contains-empty-directory usr/share/ledgersmb-1.5/scripts/custom/
+ledgersmb-1.5 binary: package-contains-empty-directory usr/share/ledgersmb-1.5/LedgerSMB/Reconciliation/CSV/Formats/
 # 
 # Upstream includes these empty UI/js-src directories intentionally
 ledgersmb-1.5 binary: package-contains-empty-directory usr/share/ledgersmb-1.5/UI/js-src/dijit/

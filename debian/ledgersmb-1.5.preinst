@@ -1,5 +1,5 @@
 #!/bin/sh
-# preinst script for ledgersmb_1.5
+# preinst script for ledgersmb-1.5
 #
 # see: dh_installdeb(1)
 
