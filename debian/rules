@@ -19,10 +19,10 @@ override_dh_fixperms:
 	chmod -x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/bin/lsmb-request.pl
 	chmod -x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/bin/gl.pl
 	chmod -x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/locale/po/*
-	chmod -x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/locale/html/splash.html
 	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/tools/*.pl
 	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/tools/*.psgi
 	find debian/ledgersmb-1.5/usr/share/ledgersmb-1.5 -name '*.sh' -exec chmod +x '{}' \;
+	find debian/ledgersmb-1.5/usr/share/ledgersmb-1.5 -name '*.html' -exec chmod -x '{}' \;
 	find debian/ledgersmb-1.5/usr/share/ledgersmb-1.5 -name '*.pm' -exec chmod -x '{}' \;
 	find debian/ledgersmb-1.5/usr/share/ledgersmb-1.5 -name '*.sql' -exec chmod -x '{}' \;
 	find debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/locale/po -name '*.po' -exec chmod -x '{}' \;
