@@ -1,10 +1,10 @@
-ledgersmb-1.4 (1.4.28-0~2) UNRELEASED; urgency=low
+ledgersmb-1.4 (1.4.29-0~1) UNRELEASED; urgency=low
 
   TODO:
     - Resolve issues with lintian errors and warnings?
   * Create initial version of 'LedgerSMB-1.4' package.
 
- -- Robert James Clay <jame@rocasa.us>  Sun,  8 May 2016 14:51:10 -0400
+ -- Robert James Clay <jame@rocasa.us>  Wed, 29 Jun 2016 10:35:10 -0400
 
 
 
