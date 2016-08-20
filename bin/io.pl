@@ -48,6 +48,7 @@ use LedgerSMB::Company_Config;
 use LedgerSMB::File;
 use List::Util qw(max reduce);
 
+require "bin/printer.pl";
 # any custom scripts for this one
 if ( -f "bin/custom/io.pl" ) {
     eval { require "bin/custom/io.pl"; };
@@ -152,9 +153,11 @@ sub display_row {
     my $desc_disabled = "";
     $desc_disabled = 'DISABLED="DISABLED"' if $form->{lock_description};
     if ($form->{vc} eq 'customer'){
-       $lsmb_module = 'AR';
+        $lsmb_module = 'AR';
+        $parts_list = 'sales';
     } elsif ($form->{vc} eq 'vendor'){
-       $lsmb_module = 'AP';
+        $lsmb_module = 'AP';
+        $parts_list = 'purchase';
     }
     $form->all_business_units($form->{transdate},
                               $form->{"$form->{vc}_id"},
@@ -338,7 +341,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
                 qq|<td><div data-dojo-type="lsmb/parts/PartDescription"
                             id="description_$i" name="description_$i"
                             $desc_disabled size=48
-                            data-dojo-props="linenum: $i"
+                            data-dojo-props="channel:'/invoice/part-select/$i',fetchProperties:{type:'$parts_list'}"
                             style="width:100%;"
                             rows="1"
                             >$form->{"description_$i"}</div></td>|;
@@ -417,7 +420,7 @@ require('dijit/registry').byId('invoice-lines').removeLine('line-$i');
         } else {
             $column_data{deleteline} = '<td rowspan="2"></td>';
             $column_data{partnumber} =
-qq|<td class="partnumber"><input data-dojo-type="lsmb/parts/PartSelector" data-dojo-props="required: false, linenum: $i" name="partnumber_$i" id="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" accesskey="$i" title="[Alt-$i]" style="width:100%">$skunumber</td>|;
+qq|<td class="partnumber"><input data-dojo-type="lsmb/parts/PartSelector" data-dojo-props="required:false,channel: '/invoice/part-select/$i',fetchProperties:{type:'$parts_list'}" name="partnumber_$i" id="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" accesskey="$i" title="[Alt-$i]" style="width:100%">$skunumber</td>|;
         }
         $column_data{qty} =
 qq|<td align=right class="qty"><input data-dojo-type="dijit/form/TextBox" name="qty_$i" title="$form->{"onhand_$i"}" size="5" value="|
@@ -1018,15 +1021,24 @@ sub create_form {
 }
 
 sub e_mail {
-
+    LedgerSMB::Company_Config->initialize();
     my %hiddens;
-    if ( $myconfig{role} !~ /(admin|manager)/ ) {
-      #  $hiddens{bcc} = $form->{bcc};
-    }
+    my $cc = $LedgerSMB::App_State::Company_Config;
 
     if ( $form->{formname} =~ /(pick|packing|bin)_list/ ) {
         $form->{email} = $form->{shiptoemail} if $form->{shiptoemail};
     }
+    my $doctype;
+    my $docnum;
+    if ( defined $form->{invnumber} ){
+        $doctype = $locale->text('Invoice');
+        $docnum = $form->{invnumber};
+    } elsif ( defined $form->{ordnumber} ){
+        $doctype = $locale->text('Order');
+        $docnum = $form->{ordnumber};
+    }
+    $doctype = $locale->text('Invoice') if defined $form->{invnumber};
+    $doctype //= $locale->text('Order') if defined $form->{ordnumber};
     $form->{oldlanguage_code} = $form->{language_code};
 
     $form->{oldmedia} = $form->{media};
@@ -1039,8 +1051,18 @@ sub e_mail {
         qw(subject message sendmode format language_code action nextsub)
       )
     {
-        delete $form->{$_};
+        delete $form->{$_}; # reset to defaults
     }
+
+    $form->{subject} = $locale->text(
+           'Attached document for [_1] [_2]',
+           $doctype, $docnum
+    );
+    my @bcclist;
+    push @bcclist, $form->{bcc} if $form->{bcc};
+    push @bcclist, $cc->{default_email_bcc} if $cc->{default_email_bcc};
+    $form->{bcc} = join(', ', @bcclist);
+
 
     $hiddens{$_} = $form->{$_} for keys %$form;
 
@@ -1080,229 +1102,40 @@ sub send_email {
 
 }
 
-sub print_options {
-
-    my $hiddens = shift;
-    my %options;
-    $form->{format} = $form->get_setting('format') unless $form->{format};
-    $form->{sendmode} = "attachment";
-    $form->{copies} = 1 unless $form->{copies};
-
-    $form->{SM}{ $form->{sendmode} } = "selected";
-
-    delete $form->{all_language};
-    $form->all_languages;
-    if ( ref $form->{all_language} eq 'ARRAY') {
-        $options{lang} = {
-            name => 'language_code',
-            default_values => $form->{oldlanguage_code},
-            options => [{text => ' ', value => ''}],
-            };
-        for my $lang (@{$form->{all_language}}) {
-            push @{$options{lang}{options}}, {
-                text => $lang->{description},
-                value => $lang->{code},
-                };
-        }
-        $hiddens->{oldlanguage_code} = $form->{oldlanguage_code};
-    }
-
-    $options{formname} = {
-        name => 'formname',
-        default_values => $form->{formname},
-        options => [],
-        };
-
-    # SC: Option values extracted from other bin/ scripts
-    if ($form->{type} eq 'invoice') {
-    push @{$options{formname}{options}}, {
-        text => $locale->text('Invoice'),
-        value => 'invoice',
-        };
-    }
-    if ($form->{type} eq 'sales_quotation') {
-        push @{$options{formname}{options}}, {
-            text => $locale->text('Quotation'),
-            value => 'sales_quotation',
-            };
-    } elsif ($form->{type} eq 'request_quotation') {
-        push @{$options{formname}{options}}, {
-            text => $locale->text('RFQ'),
-            value => 'request_quotation',
-            };
-    } elsif ($form->{type} eq 'sales_order') {
-        push @{$options{formname}{options}}, {
-            text => $locale->text('Sales Order'),
-            value => 'sales_order',
-            };
-        push @{$options{formname}{options}}, {
-            text => $locale->text('Work Order'),
-            value => 'work_order',
-            };
-        push @{$options{formname}{options}}, {
-            text => $locale->text('Pick List'),
-            value => 'pick_list',
-            };
-        push @{$options{formname}{options}}, {
-            text => $locale->text('Packing List'),
-            value => 'packing_list',
-            };
-    } elsif ($form->{type} eq 'purchase_order') {
-        push @{$options{formname}{options}}, {
-            text => $locale->text('Purchase Order'),
-            value => 'purchase_order',
-            };
-        push @{$options{formname}{options}}, {
-            text => $locale->text('Bin List'),
-            value => 'bin_list',
-            };
-    } elsif ($form->{type} eq 'ship_order') {
-        push @{$options{formname}{options}}, {
-            text => $locale->text('Pick List'),
-            value => 'pick_list',
-            };
-        push @{$options{formname}{options}}, {
-            text => $locale->text('Packing List'),
-            value => 'packing_list',
-            };
-    } elsif ($form->{type} eq 'receive_order') {
-        push @{$options{formname}{options}}, {
-            text => $locale->text('Bin List'),
-            value => 'bin_list',
-            };
-    }
-    push @{$options{formname}{options}}, {
-            text => $locale->text('Envelope'),
-            value => 'envelope',
-            };
-    push @{$options{formname}{options}}, {
-            text => $locale->text('Shipping Label'),
-            value => 'shipping_label',
-            };
-
-    if ( $form->{media} eq 'email' ) {
-        $options{media} = {
-            name => 'sendmode',
-            options => [{
-                text => $locale->text('Attachment'),
-                value => 'attachment'}, {
-                text => $locale->text('In-line'),
-                value => 'inline'}
-                ]};
-        $options{media}{default_values} = 'attachment' if $form->{SM}{attachment};
-        $options{media}{default_values} = 'inline' if $form->{SM}{inline};
-    } else {
-        $options{media} = {
-            name => 'media',
-            default_values => $form->{media},
-            options => [{
-                text => $locale->text('Screen'),
-                value => 'screen'}
-                ]};
-        if (   %{LedgerSMB::Sysconfig::printer}
-            && ${LedgerSMB::Sysconfig::latex} )
-        {
-            for ( sort keys %{LedgerSMB::Sysconfig::printer} ) {
-                push @{$options{media}{options}}, {text => $_, value => $_};
-            }
-        }
-    }
-
-    $options{format} = {
-        name => 'format',
-        default_values => $form->{selectformat},
-        options => [{text => 'HTML', value => 'html'},
-                    {text => 'CSV', value => 'csv'} ],
-        };
-    if ( ${LedgerSMB::Sysconfig::latex} ) {
-        push @{$options{format}{options}}, {
-            text => $locale->text('Postscript'),
-            value => 'postscript',
-            };
-        push @{$options{format}{options}}, {
-            text => 'PDF',
-            value => 'pdf',
-            };
-    }
-    if ($form->{type} eq 'invoice'){
-       push @{$options{format}{options}}, {
-            text => '894.EDI',
-            value => '894.edi',
-            };
-    }
-
-    if (   %{LedgerSMB::Sysconfig::printer}
-        && ${LedgerSMB::Sysconfig::latex}
-        && $form->{media} ne 'email' )
-    {
-        $options{copies} = 1;
-    }
-
-    # $locale->text('Printed')
-    # $locale->text('E-mailed')
-    # $locale->text('Scheduled')
-
-    $options{status} = (
-        printed   => 'Printed',
-        emailed   => 'E-mailed',
-        recurring => 'Scheduled'
-    );
-
-    $options{groupby} = {};
-    $options{groupby}{groupprojectnumber} = "checked" if $form->{groupprojectnumber};
-    $options{groupby}{grouppartsgroup} = "checked" if $form->{grouppartsgroup};
-
-    $options{sortby} = {};
-    for (qw(runningnumber partnumber description bin)) {
-        $options{sortby}{$_} = "checked" if $form->{sortby} eq $_;
-    }
-
-    \%options;
-}
-
-sub print_select { # Needed to print new printoptions output from non-template
-                   # screens --CT
-    my ($form, $select) = @_;
-    my $name = $select->{name};
-    my $id = $name;
-    $id =~ s/\_/-/;
-    print qq|<select data-dojo-type="dijit/form/Select" id="$id" name="$name" class="$select->{class}">\n|;
-    for my $opt (@{$select->{options}}){
-        print qq|<option value="$opt->{value}" |;
-        if ($form->{$select->{name}} eq $opt->{value}){
-            print qq|SELECTED="SELECTED"|;
-        }
-        print qq|>$opt->{text}</option>\n|;
-    }
-    print "</select>";
-}
-
 
 sub print {
-
+    my $saved_form = { %$form };
     $lang = $form->{language_code};
 
-    if ($form->{vc} eq 'vendor') {
-        IR->retrieve_invoice(\%myconfig, $form);
+    if ($form->{type} eq 'invoice') {
+        &invoice_links;
+        &prepare_invoice;
+
+        if ($form->{vc} eq 'vendor') {
+            IR->retrieve_invoice(\%myconfig, $form);
+        }
+        else {
+            IS->retrieve_invoice(\%myconfig, $form);
+        }
     }
     else {
-        IS->retrieve_invoice(\%myconfig, $form);
+        &order_links;
+        &prepare_order;
     }
-    $form->{language_code} = $lang;
+    $form->{$_} = $saved_form->{$_} for (qw(language_code media formname));
 
     # if this goes to the printer pass through
     my $old_form = undef;
     if ( $form->{media} !~ /(screen|email)/ ) {
         $form->error( $locale->text('Select txt, postscript or PDF!') )
           if ( $form->{format} !~ /(txt|postscript|pdf)/ );
-
-        $old_form = new Form;
-        for ( keys %$form ) { $old_form->{$_} = $form->{$_} }
-
     }
-    &print_form($old_form);
 
+    $old_form = new Form;
+    for ( keys %$form ) { $old_form->{$_} = $form->{$_} }
 
+    $form->{rowcount}++;
+    &print_form;
 }
 
 sub print_form {
@@ -1517,6 +1350,7 @@ sub print_form {
             1 .. $form->{rowcount};
         @{$form->{sellprice}} = map { $form->{"sellprice_$_"} }
             1 .. $form->{rowcount};
+        $form->{discount} = []; # bug: discount is a number here??
         @{$form->{discount}} = map { $form->{"discount_$_"} }
             1 .. $form->{rowcount};
         @{$form->{linetotal}} = map {

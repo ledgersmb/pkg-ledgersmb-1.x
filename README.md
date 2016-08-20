@@ -34,9 +34,9 @@ below.
 ## Client
 
 A [Dojo 1.10 compatible web browser](http://dojotoolkit.org/reference-guide/1.10/releasenotes/1.10.html#user-agent-support)
-is all that's required on the client; it includes Chrome as of version 13,
-FireFox as of 3.6 and MS Internet Explorer as of version 8 and a wide range of
-mobile browsers.
+is all that's required on the client (except IE8 and 9); it includes Chrome as
+of version 13, FireFox as of 3.6 and MS Internet Explorer as of version 10 and
+a wide range of mobile browsers.
 
 # Quick start
 
@@ -46,8 +46,10 @@ for production installs.
 
 ## Check out the sources from GitHub
 
-Note: The preferred way of installation is from release tarballs. When using
- tarballs, **this step should be skipped**. To get the latest development version:
+Note: **Skip this step for from-tarball installs**
+Installation from release tarballs is preferred over installation from GitHub.
+
+To get the latest development version:
 
 ```sh
  $ git clone https://github.com/ledgersmb/LedgerSMB.git
@@ -122,8 +124,9 @@ contain a list of distribution provided packages to reduce the CPAN
 installation.
 
 **NOTES**
-For the pdf-ps target, LaTeX is required.
-For the pdf-images target, ImageMagick is  required.
+
+ 1. For the pdf-ps target, LaTeX is required.
+ 1. For the pdf-images target, ImageMagick is  required.
 
 ## PostgreSQL configuration
 
@@ -169,11 +172,19 @@ For most systems, all that's required in this step is:
  $ cp conf/ledgersmb.conf.default ledgersmb.conf
 ```
 
+ > Note: the default search location for `ledgersmb.conf`
+ > is in the root directory of the project where Starman
+ > will be started; when the `LSMB_CONFIG_FILE` environment
+ > variable is set, its path will be taken from that variable
+ >
+ > e.g.
+ > `LSMB_CONFIG_FILE=/etc/ledgersmb/ledgersmb.conf`
+
 ## Build optimized JavaScript widgets (aka "build Dojo")
 
-Note: The preferred way of installation is from release tarballs. When using
- tarballs, this step should be skipped as it has been executed during the
- release process.
+Note: **Skip this step for from-tarball installs** The tarrball already contains
+  the "compiled" JavaScript sources.
+
 
 This step requires either ```node``` (NodeJS) or ```java``` to be installed
 and in all cases ```make```.
@@ -186,22 +197,47 @@ Builds the required content for the ```UI/js/``` directory from the content
 in the ```UI/js-src/``` directory.  Note that this step fails when submodules
 haven't been correctly initialised.
 
+ > Note: In case correct building of the dojo assets isn't working,
+ > it is possible (at the expense of performance/speed) to run without
+ > preprocessed dojo assets by setting `dojo_built = 0` in the `[debug]`
+ > section of the `ledgersmb.conf` configuration file.
+
 ## Running Starman
 
-With the above completed, the system is ready to run the web server:
+With the above steps completed, the system is ready to run the web server:
 
 ```bash
- $ starman tools/starman.psgi
+ $ starman --port 5762 tools/starman.psgi
 2016/05/12-02:14:57 Starman::Server (type Net::Server::PreFork) starting! pid(xxxx)
-Resolved [*]:5000 to [::]:5000, IPv6
+Resolved [*]:5762 to [::]:5762, IPv6
 Not including resolved host [0.0.0.0] IPv4 because it will be handled by [::] IPv6
-Binding to TCP port 5000 on host :: with IPv6
+Binding to TCP port 5762 on host :: with IPv6
 Setting gid to "1000 1000 24 25 27 29 30 44 46 108 111 121 1000"
 ```
+
+## Environment Variables
+
+We support the following
+- PERL5LIB        : Optional (but recommended)
+     - should be configured before any LedgerSMB related process is executed (including starman/plack)
+     - This should have the normal system entries, but also the LedgerSMB install dir should be prepended or appended depending on if the system is dedicated to LedgerSMB (prepend) or used for other things (append)
+     - An example would be
+    ```
+    PERL5LIB='/home/foo/perl5/lib/perl5:/home/foo/perl5/lib/perl5:/usr/local/ledgersmb/'
+    ```
+- LSMB_WORKINGDIR : Optional
+     - Causes a chdir to the specified directory as the first thing done in starman.psgi
+     - If not set the current dir is used.
+     - An example would be
+    ```
+    LSMB_WORKINGDIR='/usr/local/ledgersmb/'
+    ```
+
+
 ## Next steps
 
 The system is installed and should be available for evaluation through
-http://localhost:5000/setup.pl and http://localhost:5000/login.pl.
+http://localhost:5762/setup.pl and http://localhost:5762/login.pl.
 
 The system is ready for [preparation for first
 use](http://ledgersmb.org/topic/preparing/preparing-ledgersmb-15-first-use).

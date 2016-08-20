@@ -158,18 +158,17 @@ use LedgerSMB::User;
 use LedgerSMB::Setting;
 use LedgerSMB::Company_Config;
 use LedgerSMB::DBH;
-use LedgerSMB::Request::Error;
-use Carp;
 use utf8;
 
 
 $CGI::Simple::POST_MAX = -1;
 
 use Try::Tiny;
+use Carp;
 use DBI;
 
 use base qw(LedgerSMB::Request);
-our $VERSION = '1.5.0-beta6';
+our $VERSION = '1.5.0-dev';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 
@@ -232,6 +231,7 @@ sub open_form {
     if (!$ENV{GATEWAY_INTERFACE}){
         return 1;
     }
+    my $i = 1;
     my @vars = $self->call_procedure(procname => 'form_open',
                               args => [$self->{session_id}],
                               continue_on_error => 1
@@ -313,7 +313,6 @@ sub _get_password {
     } else {
         LedgerSMB::Auth::credential_prompt();
     }
-    die;
 }
 
 
@@ -471,15 +470,10 @@ sub call_procedure {
 # Keeping this here due to common requirements
 sub is_allowed_role {
     my ($self, $args) = @_;
-    my @roles = @{$args->{allowed_roles}};
-    for my $role (@roles){
-        $self->{_role_prefix} = "lsmb_$self->{company}__" unless defined $self->{_role_prefix};
-        my @roleset = grep m/^$self->{_role_prefix}$role$/, @{$self->{_roles}};
-        if (scalar @roleset){
-            return 1;
-        }
-    }
-    return 0;
+    my ($access) =  $self->call_procedure(
+         procname => 'lsmb__is_allowed_role', args => [$args->{allowed_roles}]
+    );
+    return $access->{lsmb__is_allowed_role};
 }
 
 sub finalize_request {
@@ -488,36 +482,31 @@ sub finalize_request {
                 # Without dying, we tend to continue with a bad dbh. --CT
 }
 
-# To be replaced with a generic interface to an Error class
 sub error {
     my ($self, $msg) = @_;
     Carp::croak $msg;
 }
 
 sub _error {
-
-    my ( $self, $msg, $status ) = @_;
-    my $error;
+    my ( $self_or_form, $msg, $status ) = @_;
+    $msg = "? _error" if !defined $msg;
     $status = 500 if ! defined $status;
-    local ($@); # pre-5.14, do not die() in this block
-    if (eval { $msg->isa('LedgerSMB::Request::Error') }){
-        $error = $msg;
-    } else {
-        $error = LedgerSMB::Request::Error->new(msg => $msg,
-                                                status => $status );
-    }
 
-    if ( $ENV{GATEWAY_INTERFACE} ) {
+    if ( ! $ENV{GATEWAY_INTERFACE} && $ENV{error_function} ) {
 
-        delete $self->{pre};
-        print $error->http_response("<p>dbversion: $self->{dbversion}, company: $self->{company}</p>");
+        &{ $ENV{error_function} }($msg);
 
     }
     else {
+        print qq|Status: $status ISE
+Content-Type: text/html; charset=utf-8
 
-        if ( $ENV{error_function} ) {
-            &{ $ENV{error_function} }($msg);
-        }
+<html>
+<body><h2 class="error">Error!</h2> <p><b>$msg</b></p>
+<p>dbversion: $self_or_form->{dbversion}, company: $self_or_form->{company}</p>
+</body>
+</html>
+|;
     }
     die;
 }
@@ -577,20 +566,6 @@ sub _db_init {
         push @{ $self->{custom_db_fields}->{ $ref->{extends} } },
           $ref->{field_def};
     }
-
-    # Adding role list to self
-    $self->{_roles} = [];
-    $query = "select rolname from pg_roles
-               where pg_has_role(SESSION_USER, 'USAGE')";
-    $sth = $self->{dbh}->prepare($query);
-    $sth->execute();
-    while (my @roles = $sth->fetchrow_array){
-        push @{$self->{_roles}}, $roles[0];
-    }
-
-    $LedgerSMB::App_State::Roles = @{$self->{_roles}};
-    $LedgerSMB::App_State::Role_Prefix = $self->{_role_prefix};
-    # @{$self->{_roles}} will eventually go away. --CT
 
     $sth->finish();
     $logger->debug("end");

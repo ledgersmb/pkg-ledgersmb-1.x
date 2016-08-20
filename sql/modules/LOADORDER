@@ -12,6 +12,7 @@ Entity.sql
 Drafts.sql
 Account.sql
 Session.sql
+Robot.sql
 Business_type.sql
 Business_Unit.sql
 Location.sql
@@ -44,3 +45,6 @@ Goods.sql
 Roles.sql
 Templates.sql
 Timecards.sql
+PriceMatrix.sql
+# This should remain the last check
+Duplicates_Functions.sql

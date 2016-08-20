@@ -85,7 +85,7 @@ sub display {
     );
     my $curr = LedgerSMB::Setting->get('curr');
     @{$request->{currencies}} = split /:/, $curr;
-    $request->{total} = $request->{qty} + $request->{non_billable};
+    $request->{total} = ($request->{qty}//0) + ($request->{non_billable}//0);
      my $template = LedgerSMB::Template->new(
          user     => $request->{_user},
          locale   => $request->{_locale},
@@ -146,15 +146,26 @@ sub save {
            $request->{partnumber}
     );
     $request->{jctype} ||= 1;
-    $request->{total} = $request->{qty} + $request->{non_chargeable};
+    $request->{total} = ($request->{qty}//0) + ($request->{non_chargeable}//0);
     $request->{checkedin} = $request->{transdate};
+    die $request->{_locale}->text('Please submit a start/end time or a qty')
+        unless defined $request->{qty}
+               or ($request->{checkedin} and $request->{checkedout});
+    $request->{qty} //= _get_qty($request->{checkedin}, $request->{checkedout});
     my $timecard = LedgerSMB::Timecard->new(%$request);
     $timecard->save;
     $request->{id} = $timecard->id;
     $request->merge($timecard->get($request->{id}));
     $request->{templates} = ['timecard'];
-    @{$request->{printers}} = %LedgerSMB::Sysconfig::Printers; # List context
+    @{$request->{printers}} = %LedgerSMB::Sysconfig::printer; # List context
     display($request);
+}
+
+sub _get_qty {
+    my ($checkedin, $checkedout) = @_;
+    my $when_in = LedgerSMB::PGDate->from_input($checkedin);
+    my $when_out = LedgerSMB::PGDate->from_input($checkedout);
+    return ($when_in->epoch - $when_out->epoch) / 3600;
 }
 
 =item save_week
@@ -206,9 +217,9 @@ sub print {
   no_auto_output => 1,
         format   => $request->{format} || 'HTML'
     );
-    $template->render($request);;
+    $template->render($request);
     $template->output(%$request);
-    return if $request->{media} eq 'screen';
+    return if lc($request->{media}) eq 'screen';
     display($request);
 }
 
@@ -247,6 +258,13 @@ sub get {
     $tcard->{transdate} = LedgerSMB::PGDate->from_db(
               $tcard->checkedin->to_db,
              'date');
+    $tcard->{transdate}->is_time(0);
+    my ($part) = $tcard->call_procedure(
+         funcname => 'part__get_by_id', args => [$tcard->parts_id]
+    );
+    $tcard->{partnumber} = $part->{partnumber};
+    $tcard->{qty} //= 0;
+    $tcard->{non_billable} //= 0;
     display($tcard);
 }
 

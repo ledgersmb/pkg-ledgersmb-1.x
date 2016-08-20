@@ -9,15 +9,18 @@ use PageObject;
 use Moose;
 extends 'PageObject';
 
-my $page_heading = 'Add Sales Invoice';
+__PACKAGE__->self_register(
+              'ar-invoice',
+              './/div[@id="AR-invoice"]',
+              tag_name => 'div',
+              attributes => {
+                  id => 'AR-invoice',
+              });
 
-sub verify {
+
+
+sub _verify {
     my ($self) = @_;
-
-    $self->driver
-        ->find_element("//*[\@id='maindiv']
-                           [.//*[\@class='listtop'
-                                 and text()='$page_heading']]");
 
     return $self;
 }
@@ -26,13 +29,12 @@ sub select_customer {
     my ($self, $customer) = @_;
 
     $self->verify;
-    my $elem = 
-        $self->driver->find_element_by_label("Customer");
+    my $elem = $self->find("*labeled", text => "Customer");
 
     $elem->clear;
     $elem->send_keys($customer);
 
-    $self->driver->find_button("Update")->click;
+    $self->find("*button", text => "Update")->click;
 }
 
 __PACKAGE__->meta->make_immutable;

@@ -10,15 +10,23 @@ use Moose;
 extends 'PageObject';
 
 
-sub verify {
+__PACKAGE__->self_register(
+              'setup-operation-complete',
+              './/body[@id="setup-operation-complete"]',
+              tag_name => 'body',
+              attributes => {
+                  id => 'setup-operation-complete',
+              });
+
+
+sub _verify {
     my ($self) = @_;
-    my $driver = $self->driver;
 
-    my $elements =
-        $driver->find_elements_containing_text('LedgerSMB may now be used');
+    my $element =
+        $self->find('*contains', text => 'LedgerSMB may now be used');
 
-    croak "Not on the operation confirmation page" .scalar(@$elements)
-        if scalar(@$elements) != 1;
+    croak "Not on the operation confirmation page"
+        if ! $element;
 
     return $self;
 }

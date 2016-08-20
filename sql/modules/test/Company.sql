@@ -3,38 +3,38 @@ BEGIN;
 
 INSERT INTO test_result (test_name, success)
 SELECT 'Saving Company',
-	company__save (NULL, 'TESTING...', 1,'TESTING', 'TESTING', NULL, '1234', 232, 'st-123', 'ubi-123-456-789')
-		IS NOT NULL;
+        company__save ('TESTING...', 1,'TESTING', 'TESTING', NULL, '1234', 232, 'st-123', 'ubi-123-456-789')
+                IS NOT NULL;
 
 
 INSERT INTO test_result (test_name, success)
 SELECT 'Saving Credit Acct',
-	eca__save(  NULL , 1, currval('entity_id_seq')::int, 'TEST', 0, false,
-		0, 0, 0, 'test-123', NULL, NULL, NULL, 'USD', now()::date, now()::date,
-		0, -1000, NULL, NULL, NULL, NULL)
-	IS NOT NULL;
+        eca__save(  NULL , 1, currval('entity_id_seq')::int, 'TEST', 0, false,
+                0, 0, 0, 'test-123', NULL, NULL, NULL, 'USD', now()::date, now()::date,
+                0, -1000, NULL, NULL, NULL, NULL)
+        IS NOT NULL;
 
 INSERT INTO test_result (test_name, success)
 SELECT 'eca_location_save',
-	eca__location_save(currval('entity_credit_account_id_seq')::int, NULL, 2, 'Test', 'Test',
-		NULL, 'Test', 'Test', '12345', 25, NULL)
-	IS NOT NULL;
+        eca__location_save(currval('entity_credit_account_id_seq')::int, NULL, 2, 'Test', 'Test',
+                NULL, 'Test', 'Test', '12345', 25, NULL)
+        IS NOT NULL;
 
 INSERT INTO test_result (test_name, success)
 SELECT 'eca_location_save returns same id with same args and no in_location_id',
-	eca__location_save(currval('entity_credit_account_id_seq')::int, NULL, 1, 'Test2', 'Test',
+        eca__location_save(currval('entity_credit_account_id_seq')::int, NULL, 1, 'Test2', 'Test',
                 '', 'Test', 'Test123', '12345', 25, NULL) =
-	eca__location_save(currval('entity_credit_account_id_seq')::int, NULL, 3, 'Test2', 'Test',
+        eca__location_save(currval('entity_credit_account_id_seq')::int, NULL, 3, 'Test2', 'Test',
                 '', 'Test', 'Test123', '12345', 25, NULL);
 
 INSERT INTO test_result (test_name, success)
 SELECT 'list_locations', count(*) = 3
-	FROM eca__list_locations(currval('entity_credit_account_id_seq')::int);
+        FROM eca__list_locations(currval('entity_credit_account_id_seq')::int);
 
 INSERT INTO test_result(test_name, success)
 SELECT 'saving eca contact',
-	eca__save_contact(currval('entity_credit_account_id_seq')::int,
-		1, 'test_d', 'test_c', NULL, NULL) IS NOT NULL;
+        eca__save_contact(currval('entity_credit_account_id_seq')::int,
+                1, 'test_d', 'test_c', NULL, NULL) IS NOT NULL;
 
 INSERT INTO test_result(test_name, success)
 SELECT 'Contact found correctly', count(*) = 1
@@ -50,7 +50,7 @@ WHERE control_code is not null;
 
 INSERT INTO test_result (test_name, success)
 SELECT 'entity__save_notes',
-       entity__save_notes ( currval('entity_id_seq')::int, 'Test note text', 'Test note subject' ) > 0;
+       entity__save_notes ( currval('entity_id_seq')::int, 'Test note text', 'Test note subject' ) is not null;
 
 INSERT INTO test_result (test_name, success)
 SELECT 'entity__save_note subject record',
@@ -60,7 +60,7 @@ SELECT 'entity__save_note subject record',
 
 INSERT INTO test_result(test_name, success)
 SELECT 'eca_save_notes',
-       eca__save_notes( currval('entity_credit_account_id_seq')::int, 'Test note text', 'ECA test note subject' ) > 0;
+       eca__save_notes( currval('entity_credit_account_id_seq')::int, 'Test note text', 'ECA test note subject' ) is not null;
 
 INSERT INTO test_result (test_name, success)
 SELECT 'eca__save_notes subject record',

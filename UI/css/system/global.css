@@ -123,7 +123,7 @@ html, body {
    font-weight: bold;
    width: 12em;
    margin-right: 0.5em;
-   //vertical-align: center;
+   /*vertical-align: center;*/
    height: 100%,
 }
 
@@ -143,6 +143,7 @@ html, body {
 /********* For business units editing page ********/
 
 #business_units div.table { display: table; }
+#business_units form.tr,
 #business_units div.tr { display: table-row; }
 #business_units div.td,
 #business_units div.th {
@@ -207,6 +208,31 @@ html, body {
     padding-right: 3px;
 }
 
+/***** Reports ******/
+
+#reports label
+{ display: inline-block;
+        width: 170px;
+        text-align: right;
+}
+
+#reports span.input_group
+{ display: block;
+        float: left;
+        width: 40%;
+}
+
+#reports div.input_row
+{
+   display: block;
+        width: 100%;
+   clear: both;
+}
+
+#assets .invisible
+{
+       display: none;
+}
 
 
 /***** PNL Report ******/
@@ -234,6 +260,7 @@ html, body {
 }
 #PNL td.amount {
         text-align: right;
+        padding-left: 0.5em;
 }
 #PNL tr.separator {
         min-height: 1em;
@@ -297,6 +324,19 @@ html, body {
 
 #reconciliation span.data {
 }
+
+#reconciliation td.no-submit {
+        background: red;
+}
+
+#reconciliation td.cleared-future {
+        font-weight: bold;
+}
+
+#reconciliation td.cleared-past {
+        font-weight: bold;
+}
+
 #reconciliation th {
         font-weight: bold;
 }
@@ -385,4 +425,13 @@ html, body {
   .export-link {
       display: inline;
   }
+}
+
+
+.claro .dijitTextBox.dijitTextArea {
+    padding: 0;
+}
+
+.claro textarea.dijitInputInner {
+    outline: none;
 }

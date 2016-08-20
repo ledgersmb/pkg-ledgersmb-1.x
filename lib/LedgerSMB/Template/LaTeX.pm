@@ -55,10 +55,33 @@ use warnings;
 use strict;
 
 use Template::Latex;
+use Template::Parser;
 use LedgerSMB::Template::TTI18N;
 use Log::Log4perl;
-use LedgerSMB::Template::DB;
+use LedgerSMB::Template::DBProvider;
+use TeX::Encode::charmap;
 use TeX::Encode;
+
+BEGIN {
+delete $TeX::Encode::charmap::ACCENTED_CHARS{chr(0x00c5)};
+delete $TeX::Encode::charmap::ACCENTED_CHARS{chr(0x00e5)};
+%TeX::Encode::charmap::CHAR_MAP = (
+    %TeX::Encode::charmap::CHARS,
+    %TeX::Encode::charmap::ACCENTED_CHARS,
+    %TeX::Encode::charmap::GREEK);
+for(keys %TeX::Encode::charmap::MATH)
+{
+        $TeX::Encode::charmap::CHAR_MAP{$_} ||= '$' . $TeX::Encode::charmap::MATH{$_} . '$';
+}
+for(keys %TeX::Encode::charmap::MATH_CHARS)
+{
+        $TeX::Encode::charmap::CHAR_MAP{$TeX::Encode::charmap::MATH_CHARS{$_}} ||= '$' . $_ . '$';
+}
+
+$TeX::Encode::charmap::CHAR_MAP_RE = '[' . join('', map { quotemeta($_) } sort { length($b) <=> length($a) } keys %TeX::Encode::charmap::CHAR_MAP) . ']';
+}
+
+
 
 #my $binmode = ':utf8';
 my $binmode = ':raw';
@@ -137,14 +160,24 @@ sub process {
     my $cleanvars = shift;
     my $template;
     my $source;
+    my %additional_options = ();
     $parent->{outputfile} ||=
         "${LedgerSMB::Sysconfig::tempdir}/$parent->{template}-output-$$";
 
         $parent->{binmode} = $binmode;
-        if ($parent->{include_path} eq 'DB'){
-                $source = LedgerSMB::Template::DB->get_template(
-                       $parent->{template}, undef, 'tex'
-                );
+    if ($parent->{include_path} eq 'DB'){
+        $source = $parent->{template};
+        $additional_options{INCLUDE_PATH} = [];
+        $additional_options{LOAD_TEMPLATES} =
+            [ LedgerSMB::Template::DBProvider->new(
+                  {
+                      format => 'tex',
+                      language_code => $parent->{language},
+                      PARSER => Template::Parser->new({
+                         START_TAG => quotemeta('<?lsmb'),
+                         END_TAG => quotemeta('?>'),
+                      }),
+                  }) ];
     } elsif (ref $parent->{template} eq 'SCALAR') {
         $source = $parent->{template};
     } elsif (ref $parent->{template} eq 'ARRAY') {
@@ -170,6 +203,7 @@ sub process {
             ENCODING => 'utf8',
             DEBUG => ($parent->{debug})? 'dirs': undef,
             DEBUG_FORMAT => '',
+            (%additional_options)
         }) || die Template::Latex->error();
     my $out = "$parent->{outputfile}.$format"
         unless ref $parent->{outputfile};

@@ -40,6 +40,13 @@ BEGIN
 END;
 $$;
 
+CREATE OR REPLACE FUNCTION lsmb__is_allowed_role(in_rolelist text[])
+RETURNS BOOL LANGUAGE SQL AS
+$$
+select bool_and(pg_has_role(lsmb__role(r), 'USAGE'))
+  from unnest(in_rolelist) r;
+$$;
+
 CREATE OR REPLACE FUNCTION lsmb__grant_perms
 (in_role text, in_table text, in_perms text) RETURNS BOOL
 SECURITY INVOKER
@@ -214,6 +221,7 @@ SELECT lsmb__grant_perms(role, 'file_incoming', 'DELETE'),
 
 \echo Contact Management
 SELECT lsmb__create_role('contact_read');
+SELECT lsmb__grant_role('contact_read', 'file_read');
 SELECT lsmb__grant_perms('contact_read', 'partsvendor', 'SELECT');
 SELECT lsmb__grant_perms('contact_read', 'partscustomer', 'SELECT');
 SELECT lsmb__grant_perms('contact_read', 'taxcategory', 'SELECT');
@@ -250,6 +258,8 @@ SELECT lsmb__create_role('contact_class_referral');
 SELECT lsmb__create_role('contact_class_lead');
 SELECT lsmb__create_role('contact_class_hot_lead');
 SELECT lsmb__create_role('contact_class_cold_lead');
+SELECT lsmb__create_role('contact_class_sub_contractor');
+SELECT lsmb__create_role('contact_class_robot');
 
 SELECT lsmb__create_role('contact_create');
 SELECT lsmb__grant_role('contact_create', 'contact_read');
@@ -299,6 +309,7 @@ SELECT lsmb__grant_menu('employees_manage', 49, 'allow');
 
 SELECT lsmb__create_role('contact_edit');
 SELECT lsmb__grant_role('contact_edit', 'contact_read');
+SELECT lsmb__grant_role('contact_create', 'contact_edit');
 SELECT lsmb__grant_perms('contact_edit', 'entity', 'UPDATE');
 SELECT lsmb__grant_perms('contact_edit', 'company', 'UPDATE');
 SELECT lsmb__grant_perms('contact_edit', 'location', 'UPDATE');
@@ -324,6 +335,13 @@ SELECT lsmb__grant_perms('contact_delete', obj, 'DELETE')
                     'entity_bank_account', 'person_to_company']) obj;
 
 SELECT lsmb__create_role('contact_all_rights');
+SELECT lsmb__grant_role('contact_all_rights', 'contact_class_customer');
+SELECT lsmb__grant_role('contact_all_rights', 'contact_class_employee');
+SELECT lsmb__grant_role('contact_all_rights', 'contact_class_contact');
+SELECT lsmb__grant_role('contact_all_rights', 'contact_class_referral');
+SELECT lsmb__grant_role('contact_all_rights', 'contact_class_lead');
+SELECT lsmb__grant_role('contact_all_rights', 'contact_class_hot_lead');
+SELECT lsmb__grant_role('contact_all_rights', 'contact_class_cold_lead');
 SELECT lsmb__grant_role('contact_all_rights', 'contact_create');
 SELECT lsmb__grant_role('contact_all_rights', 'contact_edit');
 SELECT lsmb__grant_role('contact_all_rights', 'contact_read');
@@ -853,6 +871,22 @@ SELECT lsmb__grant_perms('yearend_run', obj, ptype)
 SELECT lsmb__grant_perms('yearend_run', 'account_checkpoint_id_seq','ALL');
 SELECT lsmb__grant_menu('yearend_run', 132, 'allow');
 
+SELECT lsmb__create_role('yearend_run');
+SELECT lsmb__grant_perms('yearend_run', obj, ptype)
+  FROM unnest(array['acc_trans'::text, 'account_checkpoint', 'yearend']) obj,
+       unnest(array['SELECT'::text, 'INSERT']) ptype;
+SELECT lsmb__grant_perms('yearend_run', 'account_checkpoint_id_seq','ALL');
+SELECT lsmb__grant_menu('yearend_run', 132, 'allow');
+
+SELECT lsmb__create_role('yearend_reopen');
+SELECT lsmb__grant_perms('yearend_reopen', obj, ptype)
+  FROM unnest(array['account_checkpoint'::text]) obj,
+       unnest(array['DELETE'::text]) ptype;
+SELECT lsmb__grant_perms('yearend_reopen', obj, ptype)
+  FROM unnest(array['yearend'::text]) obj,
+       unnest(array['UPDATE'::text]) ptype;
+-- also needs access to posting of transactions...
+
 SELECT lsmb__create_role('batch_list');
 SELECT lsmb__grant_role('batch_list', 'gl_reports');
 SELECT lsmb__grant_perms('batch_list', obj, 'SELECT')
@@ -1024,9 +1058,9 @@ SELECT lsmb__create_role('template_edit');
 SELECT lsmb__grant_perms('template_edit', 'template', 'ALL');
 SELECT lsmb__grant_perms('template_edit', 'template_id_seq', 'ALL');
 SELECT lsmb__grant_menu('template_edit', id, 'allow')
-  FROM unnest(array[90, 99, 159,160,161,162,163,164,165,166,167,168,169,170,
-                    171,173,174,175,176,177,178,179,180,181,182,183,184,
-                    185,186,187,241,242]) id;
+  FROM unnest(array[29,30,31,32,33,90, 99, 159,160,161,162,163,164,165,
+                    166,167,168,169,170,171,173,174,175,176,177,178,179,180,
+                    181,182,183,184,185,186,187,241,242]) id;
 
 SELECT lsmb__create_role('users_manage');
 SELECT lsmb__grant_role('users_manage', 'contact_read');

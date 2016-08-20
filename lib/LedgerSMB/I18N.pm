@@ -36,15 +36,83 @@ sub _build_locale {
     return ($locale) ? $locale : LedgerSMB::App_State->Locale;
 }
 
+=head1 METHODS
+
+=over
+
+=item $self->Text(@args)
+
+Instance method, uses the locale object from the 'locale' attribute
+to call its maketext() function, passing all @args forward.
+
+Note: The first argument must be a string constant for
+ PO file extraction; in case of dynamic string arguments, use
+ the C<Maketext> method
+
+=cut
+
 sub Text {
     my $self = shift;
 
     return $self->locale->maketext(@_);
 }
 
+
+
+=item $self->Maketext(@args)
+
+Instance method, uses the locale object from the 'locale' attribute
+to call its maketext() function, passing all @args forward.
+
+Note: In order for the first string (if it is an inline constant string)
+ to be detected for translation and included in PO files, the C<Text>
+ method should be used.
+
+=cut
+
+sub Maketext {
+    my $self = shift;
+
+    return $self->locale->maketext(@_);
+}
+
+
+=item LedgerSMB::I18N::text(@args)
+
+Translates the string using the arguments passed.
+
+Wrapper around the MakeText::maketext function; uses the locale object
+stored in LedgerSMB::App_State->Locale.
+
+Note: The first argument must be a string constant for
+ PO file extraction; in case of dynamic string arguments, use
+ the C<maketext> method
+
+=cut
+
 sub text {
     return LedgerSMB::App_State->Locale->maketext(@_);
 }
+
+
+=item $self->maketext(@args)
+
+Translates the string using the arguments passed.
+
+Wrapper around the MakeText::maketext function; uses the locale object
+stored in LedgerSMB::App_State->Locale.
+
+Note: In order for the first string (if it is an inline constant string)
+ to be detected for translation and included in PO files, the C<Maketext>
+ method should be used.
+
+=cut
+
+sub maketext {
+    return LedgerSMB::App_State->Locale->maketext(@_);
+}
+
+=back
 
 =head1 COPYRIGHT
 

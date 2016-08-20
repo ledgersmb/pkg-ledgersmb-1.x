@@ -61,19 +61,19 @@ DEBUG=${cfgValue[sourceforge_Debug]};
 ############
 HowToGetAPIkey() {
     cat <<-EOF
-	Here is how to get your API key:
-	
-	    Go to your account page by....
-	      * login
-	      * click on down arrow next to "me" top right of page
-	      * click on account settings
-	      * at the bottom of the preferences tab
-	    Click on the "Generate" button under the Releases API Key.
-	    Copy and paste the key that appears into 
-	        $ConfigFile
-	            [sourceforge]
-	            ApiKey    = YourKey
-	
+        Here is how to get your API key:
+        
+            Go to your account page by....
+              * login
+              * click on down arrow next to "me" top right of page
+              * click on account settings
+              * at the bottom of the preferences tab
+            Click on the "Generate" button under the Releases API Key.
+            Copy and paste the key that appears into 
+                $ConfigFile
+                    [sourceforge]
+                    ApiKey    = YourKey
+        
 EOF
 }
 
@@ -93,7 +93,7 @@ EOF
 
 getCurrentProjectInfo() { # Stores result in Project_JSON   stores release.filename in Project_Filename    stores release.sf_platform_default in Project_OS_list
     # {"release": null, "platform_releases": {"windows": null, "mac": null, "linux": null}}
-    local _URL="http://sourceforge.net/projects/${cfgValue[sourceforge_Project]}/best_release.json"
+    local _URL="https://sourceforge.net/projects/${cfgValue[sourceforge_Project]}/best_release.json"
     declare -g Project_JSON=''
     declare -g Project_Filename=''
     printf "===================================================\n"
@@ -229,8 +229,8 @@ main() {
 	    |                                               | |
 	    |  DEBUG=$DEBUG                                   | |
 	    |_______________________________________________|/
-
-
+	
+	
 	EOF
 
     GetKey 'Yn' "Continue and Update Sourceforge Default Link?";

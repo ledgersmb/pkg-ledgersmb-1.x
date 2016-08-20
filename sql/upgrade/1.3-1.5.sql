@@ -492,7 +492,7 @@ SELECT
 INSERT INTO exchangerate SELECT * FROM lsmb13.exchangerate;
 
 INSERT INTO business_unit (id, class_id, control_code, description)
-SELECT id, 1, id, description
+SELECT id, 1, description, description
   FROM lsmb13.department;
 
 INSERT INTO business_unit
@@ -674,7 +674,6 @@ SELECT setval('id', max(id)) FROM transactions;
  SELECT setval('entity_id_seq', max(id)) FROM entity;
  SELECT setval('company_id_seq', max(id)) FROM company;
  SELECT setval('location_id_seq', max(id)) FROM location;
- SELECT setval('open_forms_id_seq', max(id)) FROM open_forms;
  SELECT setval('location_class_id_seq', max(id)) FROM location_class;
  SELECT setval('asset_report_id_seq', max(id)) FROM asset_report;
  SELECT setval('salutation_id_seq', max(id)) FROM salutation;

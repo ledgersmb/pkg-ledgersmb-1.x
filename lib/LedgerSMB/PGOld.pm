@@ -27,14 +27,35 @@ use warnings;
 use base 'PGObject::Simple';
 use LedgerSMB::App_State;
 
+=head1 METHODS
+
+=over
+
+=item new(%args)
+=item rew(\%args)
+
+Constructor.
+
+=cut
+
 sub new {
     my $pkg = shift;
     my $args = (ref $_[0]) ? $_[0] : { @_ };
+    if ($args->{_DBH}) {
+        $args->{dbh} = $args->{_DBH};
+        delete $args->{_DBH};
+    };
     my $mergelist = $args->{mergelist} || [keys %{$args->{base}}];
     my $self = { map { $_ => $args->{base}->{$_} } @$mergelist };
     $self =  PGObject::Simple::new($pkg, %$self);
     return $self;
 }
+
+=item set_dbh
+
+Attribute _DBH builder.  Should probably have been named _set_dbh.
+
+=cut
 
 sub set_dbh {
     my ($self) = @_;
@@ -63,6 +84,13 @@ sub _db_array_literal {
     # No longer needed since we require DBD::Pg 2.x
 }
 
+=item $self->merge(\%base, %args)
+
+Sets the values from hash 'base' in $self, optionally limited by the
+keys enumerated in the array @$args{keys}.
+
+=cut
+
 sub merge {
      my ($self, $base, %args) = @_;
     my @keys = $args{keys} || keys %$base;
@@ -72,5 +100,24 @@ sub merge {
      return $self;
 }
 
+=item $self->is_allowed_role([@rolelist])
+
+Accepts an arrayref of roles to check.  For each role on the list, checks to
+see if the current session is granted that.  Returns true if any are, false if
+none are.
+
+=cut
+
+sub is_allowed_role {
+    my ($self, $rolelist) = @_;
+    my ($access) =  $self->call_procedure(
+         procname => 'lsmb__is_allowed_role', args => [$rolelist]
+    );
+    return $access->{lsmb__is_allowed_role};
+}
+
+=back
+
+=cut
 
 1;

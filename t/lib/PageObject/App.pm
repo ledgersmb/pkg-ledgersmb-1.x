@@ -3,28 +3,47 @@ package PageObject::App;
 use strict;
 use warnings;
 
-use Carp;
 use PageObject;
 
 
 use Moose;
 extends 'PageObject';
 
-use PageObject::App::Main;
-use PageObject::App::Menu;
 
-has driver => (is => 'ro', required => 1);
-
-has menu => (is => 'ro', builder => '_build_menu', lazy => 1);
-has maindiv => (is => 'ro', builder => '_build_maindiv', lazy => 1);
-
-sub _build_menu { return PageObject::App::Menu->new(%{(shift)}); }
-sub _build_maindiv { return PageObject::App::Main->new(%{(shift)}); }
+__PACKAGE__->self_register(
+              'app',
+              './/body[@id="app-main"]',
+              tag_name => 'body',
+              attributes => {
+                  id => 'app-main',
+              });
 
 
-sub verify {
+has menu => (is => 'ro',
+             isa => 'PageObject',
+             builder => '_build_menu',
+             lazy => 1);
+
+has maindiv => (is => 'ro',
+                isa => 'PageObject',
+                builder => '_build_maindiv',
+                lazy => 1);
+
+sub _build_menu {
     my ($self) = @_;
-    my $driver = $self->driver;
+
+    return $self->find('*app-menu');
+}
+
+sub _build_maindiv {
+    my ($self) = @_;
+
+    return $self->find('*app-main');
+}
+
+
+sub _verify {
+    my ($self) = @_;
 
     $self->menu->verify;
     $self->maindiv->verify;
@@ -32,7 +51,14 @@ sub verify {
     return $self;
 };
 
+sub verify_screen {
+    my ($self) = @_;
 
+    my $content = $self->maindiv->content;
+    $content->verify;
+
+    return $content;
+}
 
 __PACKAGE__->meta->make_immutable;
 

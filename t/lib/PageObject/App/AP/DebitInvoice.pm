@@ -9,15 +9,16 @@ use PageObject;
 use Moose;
 extends 'PageObject';
 
-my $page_heading = 'Add Debit Invoice';
+__PACKAGE__->self_register(
+              'ap-invoice-reverse',
+              './/div[@id="AP-invoice-reverse"]',
+              tag_name => 'div',
+              attributes => {
+                  id => 'AP-invoice-reverse',
+              });
 
-sub verify {
+sub _verify {
     my ($self) = @_;
-
-    $self->driver
-        ->find_element("//*[\@id='maindiv']
-                           [.//*[\@class='listtop'
-                                 and text()='$page_heading']]");
 
     return $self;
 }

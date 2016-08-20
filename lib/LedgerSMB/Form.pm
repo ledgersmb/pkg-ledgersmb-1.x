@@ -100,6 +100,8 @@ Both menubar and lynx are set if path matches lynx.
 $form->error may be called to deny access on some attribute values.
 
 =cut
+# Set this Globally so we only need to do it once
+my $dojo_location = ($LedgerSMB::Sysconfig::dojo_built == 0) ? 'js-src' : 'js';
 
 sub new {
 
@@ -168,7 +170,7 @@ sub new {
             my ( $name, $value ) = split /=/, $_, 2;
             $cookie{$name} = $value;
         }
-        $self->{cookie} = $cookie{${LedgerSMB::Sysconfig::cookie_name}};
+        $self->{cookie} = $cookie{$LedgerSMB::Sysconfig::cookie_name};
         $self->{cookie} =~ m/.*:([^:]*)$/;
         $self->{company} = $1
             if ! $self->{company};
@@ -179,8 +181,8 @@ sub new {
     #menubar will be deprecated, replaced with below
     $self->{lynx} = 1 if ( ( defined $self->{path} ) && ( $self->{path} =~ /lynx/i ) );
 
-    $self->{version}   = "1.5.0-beta6";
-    $self->{dbversion} = "1.5.0-beta6";
+    $self->{version}   = "1.5.0-dev";
+    $self->{dbversion} = "1.5.0-dev";
 
     bless $self, $type;
 
@@ -604,20 +606,20 @@ qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}"
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     $stylesheet
     $charset
-        <link rel="stylesheet" href="lib/dojo/dijit/themes/$dojo_theme/$dojo_theme.css" type="text/css" title="LedgerSMB stylesheet" />
-        <link rel="stylesheet" href="lib/dojo/dojo/resources/dojo.css" type="text/css" title="LedgerSMB stylesheet" />
-        <script type="text/javascript" language="JavaScript">
-          var dojoConfig = {
-               async: 1,
-               parseOnLoad: 0,
-               packages: [{"name":"lsmb","location":"../.."}]
-           }
-           var lsmbConfig = {dateformat: '$dformat'};
-        </script>
-       <script type="text/javascript" language="JavaScript" src="lib/dojo/dojo/dojo.js"></script>
-        <script type="text/javascript" language="JavaScript" src="lib/main.js"></script>
+    <link rel="stylesheet" href="$dojo_location/dijit/themes/$dojo_theme/$dojo_theme.css" type="text/css" title="LedgerSMB stylesheet" />
+    <link rel="stylesheet" href="$dojo_location/dojo/resources/dojo.css" type="text/css" title="LedgerSMB stylesheet" />
+    <script type="text/javascript" language="JavaScript">
+      var dojoConfig = {
+           async: 1,
+           parseOnLoad: 0,
+           packages: [{"name":"lsmb","location":"../lsmb"}]
+       }
+       var lsmbConfig = {dateformat: '$dformat'};
+    </script>
+    <script type="text/javascript" language="JavaScript" src="$dojo_location/dojo/dojo.js"></script>
+    <script type="text/javascript" language="JavaScript" src="$dojo_location/lsmb/main.js"></script>
     <meta name="robots" content="noindex,nofollow" />
-        $headeradd
+    $headeradd
 </head>
 
         $self->{pre} \n|;
@@ -637,7 +639,7 @@ to "new."
 =cut
 
 sub open_status_div {
-    my ($self) = @_;
+    my ($self, $div_id) = @_;
     my $class;
     if ($self->{approved} and $self->{id}){
         $class = "posted";
@@ -648,9 +650,10 @@ sub open_status_div {
     }
     my $status = $LedgerSMB::App_State::Locale->text(
             'Action: [_1], ID: [_2]', $self->{action}, $self->{id}
-    );
-    return "<div id='statusdiv' class='$class'>
-            <div id='history'>$status</div>";
+        );
+    my $id = $div_id ? "id=\"$div_id\"" : '';
+    return "<div $id class=\"$class\">
+            <div id=\"history\">$status</div>";
 }
 
 =item $form->close_status_div
@@ -706,7 +709,7 @@ sub _redirect {
         return;
     }
     $form->error(
-        $form->_locale->text(
+        LedgerSMB::App_State::Locale->text(
             "[_1]:[_2]:[_3]: Invalid Redirect", __FILE__, __LINE__, $script)
     ) unless first { $_ eq $script } @{LedgerSMB::Sysconfig::scripts};
 
@@ -1240,7 +1243,7 @@ sub generate_selects {
         $form->{selectprojectnumber} = "<option></option>\n";
           $form->{selectprojectnumber} = "";
         for ( @{ $form->{all_project} } ) {
-                my $value = "$_->{projectnumber}--$_->{id}";
+            my $value = "$_->{projectnumber}--$_->{id}";
             $form->{selectprojectnumber} .=
                      # change the format here, then change it below!
                      qq|<option value="$value">$_->{projectnumber}</option>\n|;
@@ -1412,31 +1415,13 @@ sub db_init {
 
     LedgerSMB::DBH->require_version($self->{version}) if $self->{version};
 
-    # Roles tracking
-    $self->{_roles} = [];
-    my $query = "select rolname from pg_roles
-               where pg_has_role(rolname, 'USAGE')
-                     and rolname like
-                          coalesce((select value from defaults
-                                     where setting_key = 'role_prefix'),
-                                   'lsmb_' || current_database() || '__') || '%'";
-    my $sth = $dbh->prepare($query);
-    $sth->execute();
-    while (my @roles = $sth->fetchrow_array){
-        push @{$self->{_roles}}, $roles[0];
-    }
-
-    $sth = $self->{dbh}->prepare("
+    my $sth = $self->{dbh}->prepare("
             SELECT value FROM defaults
              WHERE setting_key = 'role_prefix'");
     $sth->execute;
 
     ($self->{_role_prefix}) = $sth->fetchrow_array;
-    $LedgerSMB::App_State::Roles = @{$self->{_roles}};
-    $LedgerSMB::App_State::Role_Prefix = $self->{_role_prefix};
     $LedgerSMB::App_State::DBName = $dbname;
-    # Expect @{$self->{_roles}} to go away sometime during 1.4/1.5 development
-    # -CT
 
     $sth = $self->{dbh}->prepare("
             SELECT value FROM defaults
@@ -1459,6 +1444,19 @@ sub db_init {
     $logger->trace("end");
 }
 
+=item $form->is_allowed_role($rolelist)
+
+Returns true if any roles are allowed, false otherwise.
+
+=cut
+
+sub is_allowed_role {
+    my ($self, $rolelist) = @_;
+    my $sth = $self->{dbh}->prepare('SELECT lsmb__is_allowed_role(?)');
+    $sth->execute($rolelist) || die $DBI::errstr;
+    my ($access) = $sth->fetchrow_array;
+    return $access;
+}
 
 =item $form->dbquote($var);
 
@@ -2450,7 +2448,10 @@ sub create_links {
     # get customer e-mail accounts
     $query = qq|SELECT * FROM eca__list_contacts(?)
                       WHERE class_id BETWEEN 12 AND ?
-                      ORDER BY class_id DESC;|;
+                UNION
+                SELECT * FROM entity__list_contacts(?)
+                      WHERE class_id BETWEEN 12 AND ?
+                      ORDER BY class_id DESC|;
     my %id_map = ( 12 => 'email',
                13 => 'cc',
                14 => 'bcc',
@@ -2458,8 +2459,10 @@ sub create_links {
                16 => 'cc',
                17 => 'bcc' );
     $sth = $dbh->prepare($query);
-    $sth->execute( $self->{entity_id},
-                   $billing ? 17 : 14) || $self->dberror( $query );
+    my $max_class = ($billing) ? 17 : 14;
+    $sth->execute( $self->{entity_credit_account}, $max_class,
+                   $self->{entity_id}, $max_class)
+                   || $self->dberror( $query );
 
     my $ctype;
     my $billing_email = 0;

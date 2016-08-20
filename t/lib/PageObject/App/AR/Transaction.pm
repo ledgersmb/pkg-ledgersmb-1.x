@@ -11,13 +11,16 @@ extends 'PageObject';
 
 my $page_heading = 'Add AR Transaction';
 
-sub verify {
-    my ($self) = @_;
+__PACKAGE__->self_register(
+              'ar-transaction',
+              './/div[@id="AR-transaction"]',
+              tag_name => 'div',
+              attributes => {
+                  id => 'AR-transaction',
+              });
 
-    $self->driver
-        ->find_element("//*[\@id='maindiv']
-                           [.//*[\@class='listtop'
-                                 and text()='$page_heading']]");
+sub _verify {
+    my ($self) = @_;
 
     return $self;
 }
@@ -26,13 +29,14 @@ sub select_customer {
     my ($self, $customer) = @_;
 
     $self->verify;
-    my $elem = 
-        $self->driver->find_element_by_label("Customer");
+    my $elem =
+        $self->find("*labeled", text => "Customer");
 
     $elem->clear;
     $elem->send_keys($customer);
 
-    $self->driver->find_button("Update")->click;
+    $self->find("*button", text => "Update")->click;
+    $self->session->page->body->maindiv->wait_for_content;
 }
 
 

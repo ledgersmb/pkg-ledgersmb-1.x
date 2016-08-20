@@ -168,6 +168,7 @@ sub columns {
     if ($self->is_detailed){
         $inv_label = LedgerSMB::Report::text('Invoice');
         $inv_type = 'href';
+        $inv_href_base = '';
     }
     my $entity_label;
     if ($self->entity_class == 1){
@@ -193,6 +194,7 @@ sub columns {
         {col_id => 'invnumber',
            name => $inv_label,
            type => $inv_type,
+      href_base => $inv_href_base,
          pwidth => 10, },
         {col_id => 'ordnumber',
            name => LedgerSMB::Report::text('Order'),
@@ -211,7 +213,7 @@ sub columns {
            type => 'href',
       href_base => 'contact.pl?action=edit&',
          pwidth => 15, },
-        {col_id => 'amount',
+        {col_id => 'netamount',
            name => LedgerSMB::Report::text('Amount'),
            type => 'text',
           money => 1,
@@ -221,7 +223,7 @@ sub columns {
            type => 'text',
           money => 1,
          pwidth => 8, },
-        {col_id => 'netamount',
+        {col_id => 'amount',
            name => LedgerSMB::Report::text('Total'),
            type => 'text',
           money => 1,

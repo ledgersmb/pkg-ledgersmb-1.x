@@ -55,22 +55,6 @@ Database handle for current connection
 
 our $DBH;
 
-=item Roles
-
-This is a list (array) of role names for the current user.
-
-=cut
-
-our @Roles;
-
-=item Role_Prefix
-
-String of the beginning of the role.
-
-=cut
-
-our $Role_Prefix;
-
 =item DBName
 
 name of the database connecting to
@@ -81,12 +65,14 @@ our $DBName;
 
 =back
 
-Each of the above has an accessor function fo the same name which reads the
+Each of the above has an accessor function of the same name which reads the
 data, and a set_... function which writes it.  The set_ function should be
 used sparingly.
 
 The direct access approach is deprecated and is likely to go away in 1.5 with
 the variables above given a "my" scope instead of an "our" one.
+
+=over
 
 =cut
 
@@ -101,63 +87,87 @@ sub _set_n {
     }
 }
 
+=item DBName
+
+=cut
+
 sub DBName {
     return $DBName;
 }
+
+=item set_DBName
+
+=cut
 
 sub set_DBName {
     return _set_n('DBName', @_);
 }
 
+=item User
+
+=cut
+
 sub User {
     return $User;
 }
+
+=item set_User
+
+=cut
 
 sub set_User {
     return _set_n('User', @_);
 }
 
+=item Locale
+
+=cut
+
 sub Locale {
     return $Locale;
 }
+
+=item set_Locale
+
+=cut
 
 sub set_Locale {
     return _set_n('Locale', @_);
 }
 
-sub Roles {
-    return @Roles;
-}
+=item Company_Settings
 
-sub set_Roles {
-    shift @_ if $_[0] eq __PACKAGE__;
-    @Roles = @_;
-    return @Roles;
-}
+=cut
 
 sub Company_Settings {
     return $Company_Settings;
 }
 
+=item set_Company_Settings
+
+=cut
+
 sub set_Company_Settings {
     return _set_n('Company_Settings', @_);
 }
+
+=item DBH
+
+=cut
 
 sub DBH {
     return $DBH;
 }
 
+=item set_DBH
+
+=cut
+
 sub set_DBH {
     return _set_n('DBH', @_);
 }
 
-sub Role_Prefix {
-    return $Role_Prefix;
-}
-
-sub set_Role_Prefix {
-    return _set_n('Role_Prefix', @_);
-}
+=back
 
 =head1 METHODS
 
@@ -179,8 +189,6 @@ sub cleanup {
     $Company_Settings = {};
     $DBH = undef;
     $DBName = undef;
-    @Roles = ();
-    $Role_Prefix = undef;
     delete $ENV{LSMB_ALWAYS_MONEY} if $ENV{LSMB_ALWAYS_MONEY};
 }
 
@@ -199,6 +207,13 @@ sub get_url {
     return "$ENV{SCRIPT_NAME}?$ENV{QUERY_STRING}";
 }
 
+=head2 get_relative_url
+
+Returns the script and query string part of the URL of the GET request,
+without the script path, or undef.
+
+=cut
+
 sub get_relative_url {
     if ($ENV{REQUEST_METHOD} ne 'GET') {
        return undef;
@@ -206,6 +221,55 @@ sub get_relative_url {
     my $script = $ENV{SCRIPT_NAME};
     $script =~ s#.*/([^/]+)$#$1#;
     return "$script?$ENV{QUERY_STRING}";
+}
+
+=head2 all_periods(is_short $bool)
+
+Returns hashref of localized date data with following members:
+
+If $is_short is set and true, returns short names (D, W, M, Q, Y) instead of
+long names (Days, Weeks, Months, Quarters, Years).
+
+=over
+
+=item dropdown
+
+Period information in drop down format.
+
+=item hashref
+
+Period info in hashref format in D => Days format
+
+=back
+
+=cut
+
+sub all_periods {
+    my ($self, $is_short) = @_;
+    my $i18n = $Locale;
+    my $periods = {
+           # XXX That's asking for trouble below.  Need to update .po files
+           # before changing however. --CT
+     'day'     => {long => $i18n->text('Days'),     short => $i18n->text('D'), order => 1 },
+     'week'    => {long => $i18n->text('Weeks'),    short => $i18n->text('W'), order => 2 },
+     'month'   => {long => $i18n->text('Months'),   short => $i18n->text('M'), order => 3 },
+     'quarter' => {long => $i18n->text('Quarters'), short => $i18n->text('Q'), order => 4 },
+     'year'    => {long => $i18n->text('Years'),    short => $i18n->text('Y'), order => 5 },
+    };
+
+    my $for_dropdown = [];
+    my $as_hashref = {};
+    for my $key (sort { $periods->{$a}->{order} <=> $periods->{$b}->{order}} keys %$periods){
+        my $mname;
+        if ($is_short){
+           $mname = $periods->{$key}->{short};
+        } else {
+           $mname = $periods->{$key}->{long};
+        }
+        $as_hashref->{$key} = $mname;
+        push @$for_dropdown, {text => $mname, value => $key};
+    }
+    return { as_hashref => $as_hashref, dropdown=> $for_dropdown };
 }
 
 =head2 all_months(is_short $bool)

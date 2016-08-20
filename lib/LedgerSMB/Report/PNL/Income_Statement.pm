@@ -31,6 +31,23 @@ This is either 'cash' or 'accrual'
 
 has basis => (is => 'ro', isa =>'Str', required => 1);
 
+=item comparison_periods
+
+This is the number of periods to compare to
+
+=cut
+
+has comparison_periods => (is => 'ro', isa =>'Int',
+                required =>0, default => 1);
+
+=item comparison_type
+
+This is either by number of periods or by dates
+
+=cut
+
+has comparison_type => (is => 'ro', isa =>'Str', required => 1, default => "by_periods");
+
 =item ignore_yearend
 
 This is 'none', 'all', or 'last'
@@ -71,20 +88,28 @@ sub header_lines {
 
 =head1 METHODS
 
+=over
+
+=item $self->report_base($from_date, $to_date)
+
+Implement query protocol from parent class.
+
 =cut
 
-# private method
-# report_base($from, $to)
-# returns an array of hashrefs of report results.  Used in adding comparison
-# as well as the main report
+
 
 sub report_base {
     my ($self, $from_date, $to_date) = @_;
     die $self->Text('Invalid Reporting Basis')
            if ($self->basis ne 'accrual') and ($self->basis ne 'cash');
+    die $self->Text('Required period type')
+           if $self->comparison_periods and $self->interval eq 'none';
     my $procname = 'pnl__income_statement_' . $self->basis;
     return $self->call_dbmethod(funcname => $procname);
 }
+
+
+=back
 
 =head1 SEE ALSO
 

@@ -9,15 +9,16 @@ use PageObject;
 use Moose;
 extends 'PageObject';
 
-my $page_heading = 'Add Service';
+__PACKAGE__->self_register(
+              'service',
+              './/div[@id="service"]',
+              tag_name => 'div',
+              attributes => {
+                  id => 'service',
+              });
 
-sub verify {
+sub _verify {
     my ($self) = @_;
-
-    $self->driver
-        ->find_element("//*[\@id='maindiv']
-                           [.//*[\@class='listtop'
-                                 and text()='$page_heading']]");
 
     return $self;
 }

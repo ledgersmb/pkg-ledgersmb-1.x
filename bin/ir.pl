@@ -314,6 +314,9 @@ sub form_header {
 
     $form->{nextsub} = 'update';
 
+    $status_div_id = 'AP-invoice';
+    $status_div_id .= '-reverse' if $form->{reverse};
+
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
     $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
 
@@ -328,16 +331,6 @@ sub form_header {
         $form->{"select$_"} = $form->unescape( $form->{"select$_"} );
         $form->{"select$_"} =~ s/ selected="selected"//;
         $form->{"select$_"} =~ s/(<option value="\Q$form->{$_}\E")/$1 selected/;
-    }
-
-    if ( $form->{selectlanguage} ) {
-        $lang = qq|
-          <tr>
-        <th align=right nowrap>| . $locale->text('Language') . qq|</th>
-        <td><select data-dojo-type="dijit/form/Select" id="language-code" name=language_code>$form->{selectlanguage}</select></td>
-          </tr>
-|;
-
     }
 
     $form->{exchangerate} =
@@ -371,7 +364,7 @@ sub form_header {
     }
     else {
         $vendor = qq|<input data-dojo-type="dijit/form/TextBox" name=vendor value="$form->{vendor}" size=35>
-                 <a href="contact.pl?action=add&entity_class=1"
+                 <a href="login.pl?action=login&company=$form->{company}#/contact.pl?action=add&entity_class=1"
                   target="new" id="new-contact">[|
                  .  $locale->text('New') . qq|]</a>|;
     }
@@ -395,21 +388,8 @@ sub form_header {
 
     print qq|
 <body class="lsmb $form->{dojo_theme}" onLoad="document.forms[0].${focus}.focus()" />
-| . $form->open_status_div . qq|
-<script>
-function on_return_submit(event){
-  var kc;
-  if (window.event){
-    kc = window.event.keyCode;
-  } else {
-    kc = event.which;
-  }
-  if (kc == '13' && document.activeElement.tagName != 'TEXTAREA'){
-        document.forms[0].submit();
-  }
-}
-</script>
-<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}" onkeypress="on_return_submit(event)">
+| . $form->open_status_div($status_div_id) . qq|
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 |;
     if ($form->{notice}){
          print qq|$form->{notice}<br/>|;
@@ -530,7 +510,6 @@ function on_return_submit(event){
         <th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
         <td><input data-dojo-type="dijit/form/TextBox" name=ponumber size=20 value="$form->{ponumber}"></td>
           </tr>
-          $lang
         </table>
       </td>
     </tr>
@@ -593,7 +572,7 @@ function on_return_submit(event){
                        ndx   => 3,
                        key   => 'O',
                        value => $locale->text('Post') };
-               if (grep /^lsmb_$form->{company}__draft_modify$/, @{$form->{_roles}}){
+               if ($form->is_allowed_role(['draft_modify'])){
                    $button{edit_and_save} = {
                        ndx   => 4,
                        key   => 'E',
@@ -989,9 +968,9 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="memo_$i" id
               print qq|
 <tr>
 <td><a href="file.pl?action=get&file_class=1&ref_key=$form->{id}&id=$file->{id}"
-            >$file->{file_name}</a></td>
+       target="_download">$file->{file_name}</a></td>
 <td>$file->{mime_type}</td>
-<td>| . $file->{uploaded_at}->to_output . qq|</td>
+<td>| . $file->{uploaded_at} . qq|</td>
 <td>$file->{uploaded_by_name}</td>
 </tr>
               |;

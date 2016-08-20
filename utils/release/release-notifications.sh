@@ -23,7 +23,8 @@ getChangelogEntry() {
 
 updateWikipedia() { # $1 = New Version     $2 = New Date
     # wikipedia-update.pl [boilerplate|Wikipage] [stable|preview] [NewVersion] [NewDate] [UserName Password]
-    ./release-wikipedia.pl "${cfgValue[wiki_PageToEdit]}" "$release_type" "$1" "$2" "${cfgValue[wiki_User]}" "${cfgValue[wiki_Password]}"
+    ./notification-helpers/release-wikipedia.pl "${cfgValue[wiki_PageToEdit]}" \
+              "$release_type" "$1" "$2" "${cfgValue[wiki_User]}" "${cfgValue[wiki_Password]}"
 }
 
 updateIRC() {
@@ -139,8 +140,8 @@ main() {
 	    |         by converting the tag                           | |
 	    |                                                         | |
 	    |_________________________________________________________|/
-
-
+	
+	
 	EOF
 
     ValidateEnvironment;

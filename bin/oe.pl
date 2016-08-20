@@ -282,23 +282,25 @@ sub form_header {
 
     my $ordnumber;
     my $numberfld;
+    my $status_div_id = $form->{type};
+    $status_div_id =~ s/_/-/g;
     if ( $form->{type} =~ /_order$/ ) {
         $quotation = "0";
         $ordnumber = "ordnumber";
-    if ($form->{vc} eq 'customer'){
-             $numberfld = "sonumber";
+        if ($form->{vc} eq 'customer'){
+            $numberfld = "sonumber";
         } else {
-             $numberfld = "ponumber";
+            $numberfld = "ponumber";
         }
     }
     else {
         $quotation = "1";
         $ordnumber = "quonumber";
         if ( $form->{vc} eq 'customer' ) {
-        $numberfld = "sqnumber";
-    } else {
-        $numberfld = "rfqnumber";
-    }
+            $numberfld = "sqnumber";
+        } else {
+            $numberfld = "rfqnumber";
+        }
     }
     $form->{nextsub} = 'update';
 
@@ -503,7 +505,7 @@ sub form_header {
         }
         $vc = qq|<input data-dojo-type="dijit/form/TextBox" id=$form->{vc} name=$form->{vc} value="$form->{$form->{vc}}" size=35>
              <a id="new-contact" target="new"
-                 href="contact.pl?action=add&entity_class=$eclass">
+                 href="login.pl?action=login&company=$form->{company}#/contact.pl?action=add&entity_class=$eclass">
                  [| . $locale->text('New') . qq|]</a>|;
     }
 
@@ -547,21 +549,8 @@ sub form_header {
 
     print qq|
 <body class="lsmb $form->{dojo_theme}" onLoad="document.forms[0].${focus}.focus()" />
-| . $form->open_status_div . qq|
-<script>
-function on_return_submit(event){
-  var kc;
-  if (window.event){
-    kc = window.event.keyCode;
-  } else {
-    kc = event.which;
-  }
-  if (kc == '13' && document.activeElement.tagName != 'TEXTAREA'){
-        document.forms[0].submit();
-  }
-}
-</script>
-<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}" onkeypress="on_return_submit(event)">
+| . $form->open_status_div($status_div_id) . qq|
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 |;
 
@@ -570,7 +559,7 @@ function on_return_submit(event){
     }
     $form->hide_form(qw(entity_control_code meta_number tax_id address city));
     $form->hide_form(
-        qw(id type formname media format printed emailed queued vc title discount creditlimit creditremaining tradediscount business recurring form_id nextsub
+        qw(id type printed emailed queued vc title discount creditlimit creditremaining tradediscount business recurring form_id nextsub
    lock_description)
     );
 
@@ -638,7 +627,8 @@ function on_return_submit(event){
             'update' =>
               { ndx => 1, key => 'U', value => $locale->text('Update') },
             'print' =>
-              { ndx => 2, key => 'P', value => $locale->text('Print') },
+              { ndx => 2, key => 'P', value => $locale->text('Print'),
+                type => 'lsmb/PrintButton' },
             'save' => { ndx => 3, key => 'S', value => $locale->text('Save') },
             'ship_to' =>
               { ndx => 4, key => 'T', value => $locale->text('Ship to') },
@@ -647,14 +637,16 @@ function on_return_submit(event){
             'print_and_save' => {
                 ndx   => 6,
                 key   => 'R',
-                value => $locale->text('Print and Save')
+                value => $locale->text('Print and Save'),
+                type => 'lsmb/PrintButton'
             },
             'save_as_new' =>
               { ndx => 7, key => 'N', value => $locale->text('Save as new') },
             'print_and_save_as_new' => {
                 ndx   => 8,
                 key   => 'W',
-                value => $locale->text('Print and Save as new')
+                value => $locale->text('Print and Save as new'),
+                type => 'lsmb/PrintButton'
             },
             'sales_invoice' =>
               { ndx => 9, key => 'I', value => $locale->text('Sales Invoice') },
@@ -892,9 +884,9 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
               print qq|
 <tr>
 <td><a href="file.pl?action=get&file_class=2&ref_key=$form->{id}&id=$file->{id}&type=sales_quotation&additional=type"
-            >$file->{file_name}</a></td>
+       target="_download">$file->{file_name}</a></td>
 <td>$file->{mime_type}</td>
-<td>|.$file->{uploaded_at}->to_output.qq|</td>
+<td>|.$file->{uploaded_at}.qq|</td>
 <td>$file->{uploaded_by_name}</td>
 </tr>
               |;

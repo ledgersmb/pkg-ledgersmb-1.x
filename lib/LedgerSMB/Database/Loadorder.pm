@@ -24,9 +24,9 @@ But see the notes about locking below
 
 =head1 METHODS
 
-=head2 constructor
+=head2 new
 
-LedgerSMB::Database::Loadorder->new($path);
+Constructor. LedgerSMB::Database::Loadorder->new($path);
 
 =cut
 
@@ -89,6 +89,7 @@ Returns 1 if applied.  Returns 0 if not.
 
 sub init_if_needed {
     my ($self, $dbh) = @_;
+    return 0 unless _needs_init($dbh);
     return LedgerSMB::Database::Change::init($dbh);
 }
 
@@ -141,6 +142,17 @@ sub _unlock {
     my ($dbh) = @_;
     $dbh->do("select pg_advisory_unlock('db_patches'::regclass::oid::int, 1)");
 }
+
+sub _needs_init {
+    my $dbh = pop @_;
+    my $count = $dbh->prepare("
+        select relname from pg_class
+         where relname = 'db_patches'
+               and pg_table_is_visible(oid)
+    ")->execute();
+    return !int($count);
+}
+
 
 =head1 COPYRIGHT
 

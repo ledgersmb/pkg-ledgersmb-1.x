@@ -35,23 +35,24 @@ CREATE TYPE eca__pricematrix AS (
   validfrom date,
   validto date,
   curr char(3),
-  entry_id int
+  entry_id int,
+  qty numeric
 );
 
 
 DROP TYPE IF EXISTS  contact_search_result CASCADE;
 
 CREATE TYPE contact_search_result AS (
-	entity_id int,
-	entity_control_code text,
-	entity_credit_id int,
-	meta_number text,
-	credit_description text,
-	entity_class int,
-	name text,
-	sic_code text,
-	business_type text,
-	curr text
+        entity_id int,
+        entity_control_code text,
+        entity_credit_id int,
+        meta_number text,
+        credit_description text,
+        entity_class int,
+        name text,
+        sic_code text,
+        business_type text,
+        curr text
 );
 
 DROP TYPE IF EXISTS eca_history_result CASCADE;
@@ -99,6 +100,29 @@ CREATE OR REPLACE FUNCTION eca__history
  in_inc_open bool, in_inc_closed bool)
 RETURNS SETOF  eca_history_result AS
 $$
+     WITH arap AS (
+       select  invnumber, curr, ar.transdate, entity_credit_account, id,
+                   person_id, notes
+             FROM ar
+             JOIN acc_trans ON ar.id  = acc_trans.trans_id
+             JOIN account_link l ON acc_trans.chart_id = l.account_id
+                  and l.description = 'AR'
+            where $16 = 2 and $13 = 'i'
+       GROUP BY 1, 2, 3, 4, 5, 6, 7
+                  having (($17 and sum(acc_trans.amount) = 0)
+                      or ($18 and 0 <> sum(acc_trans.amount)))
+            UNION ALL
+           select invnumber, curr, ap.transdate, entity_credit_account, id,
+                  person_id, notes
+             FROM ap
+             JOIN acc_trans ON ap.id  = acc_trans.trans_id
+             JOIN account_link l ON acc_trans.chart_id = l.account_id
+                  and l.description = 'AP'
+            where $16 = 1 and $13 = 'i'
+       GROUP BY 1, 2, 3, 4, 5, 6, 7
+                  having (($17 and sum(acc_trans.amount) = 0) or
+                       ($18 and sum(acc_trans.amount) <> 0))
+     )
      SELECT eca.id, e.name, eca.meta_number,
             a.id as invoice_id, a.invnumber, a.curr::text,
             p.id AS parts_id, p.partnumber,
@@ -116,17 +140,8 @@ $$
           select * from entity_credit_account WHERE $2 is null
           ) eca  -- broken into unions for performance
      join entity e on eca.entity_id = e.id
-     JOIN (select  invnumber, curr, transdate, entity_credit_account, id,
-                   person_id, notes
-             FROM ar
-            where $16 = 2 and $13 = 'i'
-                  and (($17 and amount = paid) or ($18 and amount <> paid))
-            UNION
-           select invnumber, curr, transdate, entity_credit_account, id,
-                  person_id, notes
-             FROM ap
-            where $16 = 1 and $13 = 'i'
-                  and (($17 and amount = paid) or ($18 and amount <> paid))
+     JOIN (
+           SELECT * FROM arap
            union
            select ordnumber, curr, transdate, entity_credit_account, id,
                   person_id, notes
@@ -255,28 +270,28 @@ DROP FUNCTION IF EXISTS  contact__search
 
 DROP FUNCTION IF EXISTS contact__search
 (in_entity_class int, in_contact text, in_contact_info text[],
-	in_meta_number text, in_address text, in_city text, in_state text,
-	in_mail_code text, in_country text, in_active_date_from date,
+        in_meta_number text, in_address text, in_city text, in_state text,
+        in_mail_code text, in_country text, in_active_date_from date,
         in_active_date_to date,
-	in_business_id int, in_name_part text, in_control_code text,
+        in_business_id int, in_name_part text, in_control_code text,
         in_notes text);
 
 CREATE OR REPLACE FUNCTION contact__search
 (in_entity_class int, in_contact text, in_contact_info text[],
-	in_meta_number text, in_address text, in_city text, in_state text,
-	in_mail_code text, in_country text, in_active_date_from date,
+        in_meta_number text, in_address text, in_city text, in_state text,
+        in_mail_code text, in_country text, in_active_date_from date,
         in_active_date_to date,
-	in_business_id int, in_name_part text, in_control_code text,
+        in_business_id int, in_name_part text, in_control_code text,
         in_notes text, in_users bool)
 RETURNS SETOF contact_search_result AS $$
-		SELECT e.id, e.control_code, ec.id, ec.meta_number,
-			ec.description, ec.entity_class,
-			c.legal_name, c.sic_code, b.description , ec.curr::text
-		FROM (select * from entity
+                SELECT e.id, e.control_code, ec.id, ec.meta_number,
+                        ec.description, ec.entity_class,
+                        c.legal_name, c.sic_code, b.description , ec.curr::text
+                FROM (select * from entity
                        where control_code like in_control_code || '%'
                       union
                       select * from entity where in_control_code is null) e
-		JOIN (SELECT legal_name, sic_code, entity_id
+                JOIN (SELECT legal_name, sic_code, entity_id
                         FROM company
                        WHERE legal_name @@ plainto_tsquery(in_name_part)
                              OR legal_name ilike in_name_part || '%'
@@ -299,11 +314,11 @@ RETURNS SETOF contact_search_result AS $$
                             || coalesce(last_name, ''), null, entity_id
                        FROM person
                        WHERE in_name_part IS NULL) c ON (e.id = c.entity_id)
-		LEFT JOIN entity_credit_account ec ON (ec.entity_id = e.id)
-		LEFT JOIN business b ON (ec.business_id = b.id)
-		WHERE (in_entity_class is null
+                LEFT JOIN entity_credit_account ec ON (ec.entity_id = e.id)
+                LEFT JOIN business b ON (ec.business_id = b.id)
+                WHERE (in_entity_class is null
                         OR coalesce(ec.entity_class,e.entity_class) = in_entity_class)
-			AND (c.entity_id IN
+                        AND (c.entity_id IN
                        (select entity_id
                           FROM entity_credit_account leca
                           JOIN eca_to_contact le2c ON leca.id = le2c.credit_id
@@ -311,42 +326,42 @@ RETURNS SETOF contact_search_result AS $$
                       OR '' ILIKE ALL(in_contact_info)
                       OR in_contact_info IS NULL)
 
-			AND ((in_address IS NULL AND in_city IS NULL
-					AND in_state IS NULL
-					AND in_country IS NULL)
-				OR (c.entity_id IN
-				(select entity_id
+                        AND ((in_address IS NULL AND in_city IS NULL
+                                        AND in_state IS NULL
+                                        AND in_country IS NULL)
+                                OR (c.entity_id IN
+                                (select entity_id
                                    FROM entity_credit_account leca
                                    JOIN eca_to_location le2a
                                      ON leca.id = le2a.credit_id
                                    JOIN location ll ON le2a.location_id = ll.id
-			          WHERE (line_one @@ plainto_tsquery(in_address)
+                                  WHERE (line_one @@ plainto_tsquery(in_address)
                                         OR
-				        line_two @@ plainto_tsquery(in_address)
+                                        line_two @@ plainto_tsquery(in_address)
                                         OR
-					line_three @@ plainto_tsquery(in_address))
-					AND city ILIKE
+                                        line_three @@ plainto_tsquery(in_address))
+                                        AND city ILIKE
                                             '%' || coalesce(in_city, '') || '%'
-					AND state ILIKE
-					    '%' || coalesce(in_state, '') || '%'
-					AND mail_code ILIKE
-		   			    coalesce(in_mail_code, '') || '%'
-					AND country_id
+                                        AND state ILIKE
+                                            '%' || coalesce(in_state, '') || '%'
+                                        AND mail_code ILIKE
+                                            coalesce(in_mail_code, '') || '%'
+                                        AND country_id
                                             IN (SELECT id FROM country
-						 WHERE name ilike in_country
-						       OR short_name
+                                                 WHERE name ilike in_country
+                                                       OR short_name
                                                        ilike in_country))))
-			AND (ec.business_id =
-				coalesce(in_business_id, ec.business_id)
-				OR (ec.business_id IS NULL
-					AND in_business_id IS NULL))
-			AND (ec.startdate <= coalesce(in_active_date_to,
-						ec.startdate)
-				OR (ec.startdate IS NULL))
-			AND (ec.enddate >= coalesce(in_active_date_from, ec.enddate)
-				OR (ec.enddate IS NULL))
-	 		AND (ec.meta_number like in_meta_number || '%'
-			     OR in_meta_number IS NULL)
+                        AND (ec.business_id =
+                                coalesce(in_business_id, ec.business_id)
+                                OR (ec.business_id IS NULL
+                                        AND in_business_id IS NULL))
+                        AND (ec.startdate <= coalesce(in_active_date_to,
+                                                ec.startdate)
+                                OR (ec.startdate IS NULL))
+                        AND (ec.enddate >= coalesce(in_active_date_from, ec.enddate)
+                                OR (ec.enddate IS NULL))
+                        AND (ec.meta_number like in_meta_number || '%'
+                             OR in_meta_number IS NULL)
                         AND (in_notes IS NULL OR e.id in (
                                      SELECT entity_id from entity_note
                                       WHERE note @@ plainto_tsquery(in_notes))
@@ -399,13 +414,14 @@ The entity credit account must exist before calling this function, and must
 have a type of either 1 or 2.
 $$;
 
+DROP FUNCTION if exists entity__save_notes(integer,text,text);
 CREATE OR REPLACE FUNCTION entity__save_notes(in_entity_id int, in_note text, in_subject text)
-RETURNS INT AS
+RETURNS entity_note AS
 $$
-	-- TODO, change this to create vector too
-	INSERT INTO entity_note (ref_key, note_class, entity_id, note, vector, subject)
-	VALUES (in_entity_id, 1, in_entity_id, in_note, '', in_subject)
-        RETURNING id;
+        -- TODO, change this to create vector too
+        INSERT INTO entity_note (ref_key, note_class, entity_id, note, vector, subject)
+        VALUES (in_entity_id, 1, in_entity_id, in_note, '', in_subject)
+        RETURNING *;
 
 $$ LANGUAGE SQL;
 
@@ -414,13 +430,14 @@ COMMENT ON FUNCTION entity__save_notes
 $$ Saves an entity-level note.  Such a note is valid for all credit accounts
 attached to that entity.  Returns the id of the note.  $$;
 
+DROP FUNCTION if exists eca__save_notes(integer,text,text);
 CREATE OR REPLACE FUNCTION eca__save_notes(in_credit_id int, in_note text, in_subject text)
-RETURNS INT AS
+RETURNS eca_note AS
 $$
-	-- TODO, change this to create vector too
-	INSERT INTO eca_note (ref_key, note_class, note, vector, subject)
-	VALUES (in_credit_id, 3, in_note, '', in_subject)
-        RETURNING id;
+        -- TODO, change this to create vector too
+        INSERT INTO eca_note (ref_key, note_class, note, vector, subject)
+        VALUES (in_credit_id, 3, in_note, '', in_subject)
+        RETURNING *;
 
 $$ LANGUAGE SQL;
 
@@ -434,10 +451,10 @@ CREATE OR REPLACE FUNCTION entity_credit_get_id_by_meta_number
 (in_meta_number text, in_account_class int)
 returns int AS
 $$
-	SELECT id
-	FROM entity_credit_account
-	WHERE meta_number = in_meta_number
-		AND entity_class = in_account_class;
+        SELECT id
+        FROM entity_credit_account
+        WHERE meta_number = in_meta_number
+                AND entity_class = in_account_class;
 
 $$ LANGUAGE sql;
 
@@ -457,7 +474,7 @@ $$ Returns the entity credit account info.$$;
 CREATE OR REPLACE FUNCTION contact_class__list()
 RETURNS SETOF contact_class AS
 $$
-		SELECT * FROM contact_class ORDER BY id;
+                SELECT * FROM contact_class ORDER BY id;
 $$ language sql;
 
 COMMENT ON FUNCTION contact_class__list() IS
@@ -468,14 +485,14 @@ CREATE TYPE entity_credit_search_return AS (
         legal_name text,
         id int,
         entity_id int,
-	entity_control_code text,
+        entity_control_code text,
         entity_class int,
         discount numeric,
         taxincluded bool,
         creditlimit numeric,
         terms int2,
         meta_number text,
-	credit_description text,
+        credit_description text,
         business_id int,
         language_code text,
         pricegroup_id int,
@@ -484,7 +501,7 @@ CREATE TYPE entity_credit_search_return AS (
         enddate date,
         ar_ap_account_id int,
         cash_account_id int,
-	tax_id text,
+        tax_id text,
         threshold numeric
 );
 
@@ -500,7 +517,7 @@ CREATE TYPE entity_credit_retrieve AS (
         creditlimit numeric,
         terms int2,
         meta_number text,
-	description text,
+        description text,
         business_id int,
         language_code text,
         pricegroup_id int,
@@ -511,9 +528,9 @@ CREATE TYPE entity_credit_retrieve AS (
         cash_account_id int,
         discount_account_id int,
         threshold numeric,
-	control_code text,
-	credit_id int,
-	pay_to_name text,
+        control_code text,
+        credit_id int,
+        pay_to_name text,
         taxform_id int
 );
 
@@ -523,10 +540,10 @@ $$ This may change in 1.4 and should not be relied upon too much $$;
 CREATE OR REPLACE FUNCTION entity_credit_get_id
 (in_entity_id int, in_entity_class int, in_meta_number text)
 RETURNS int AS $$
-	SELECT id FROM entity_credit_account
-	WHERE entity_id = in_entity_id
-		AND in_entity_class = entity_class
-		AND in_meta_number = meta_number;
+        SELECT id FROM entity_credit_account
+        WHERE entity_id = in_entity_id
+                AND in_entity_class = entity_class
+                AND in_meta_number = meta_number;
 
 $$ language sql;
 
@@ -540,19 +557,19 @@ CREATE OR REPLACE FUNCTION entity__list_credit
 (in_entity_id int, in_entity_class int)
 RETURNS SETOF entity_credit_retrieve AS
 $$
-		SELECT  ec.id, e.id, ec.entity_class, ec.discount,
+                SELECT  ec.id, e.id, ec.entity_class, ec.discount,
                         ec.discount_terms,
-			ec.taxincluded, ec.creditlimit, ec.terms,
-			ec.meta_number, ec.description, ec.business_id,
-			ec.language_code,
-			ec.pricegroup_id, ec.curr::text, ec.startdate,
-			ec.enddate, ec.ar_ap_account_id, ec.cash_account_id,
+                        ec.taxincluded, ec.creditlimit, ec.terms,
+                        ec.meta_number, ec.description, ec.business_id,
+                        ec.language_code,
+                        ec.pricegroup_id, ec.curr::text, ec.startdate,
+                        ec.enddate, ec.ar_ap_account_id, ec.cash_account_id,
                         ec.discount_account_id,
-			ec.threshold, e.control_code, ec.id, ec.pay_to_name,
+                        ec.threshold, e.control_code, ec.id, ec.pay_to_name,
                         ec.taxform_id
-		FROM entity e
-		JOIN entity_credit_account ec ON (e.id = ec.entity_id)
-		WHERE e.id = in_entity_id
+                FROM entity e
+                JOIN entity_credit_account ec ON (e.id = ec.entity_id)
+                WHERE e.id = in_entity_id
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION entity__list_credit (in_entity_id int, in_entity_class int)
@@ -562,7 +579,7 @@ entity class.$$;
 CREATE OR REPLACE FUNCTION company__get (in_entity_id int)
 RETURNS company_entity AS
 $$
-	SELECT c.entity_id, e.entity_class, c.legal_name, c.tax_id, c.sales_tax_id,
+        SELECT c.entity_id, e.entity_class, c.legal_name, c.tax_id, c.sales_tax_id,
                c.license_number, c.sic_code, e.control_code, e.country_id
           FROM company c
           JOIN entity e ON e.id = c.entity_id
@@ -589,10 +606,10 @@ create or replace function save_taxform
 (in_country_code int, in_taxform_name text)
 RETURNS bool AS
 $$
-	INSERT INTO country_tax_form(country_id, form_name)
-	values (in_country_code, in_taxform_name);
+        INSERT INTO country_tax_form(country_id, form_name)
+        values (in_country_code, in_taxform_name);
 
-	SELECT true;
+        SELECT true;
 $$ LANGUAGE SQL;
 
 COMMENT ON function save_taxform (in_country_code int, in_taxform_name text) IS
@@ -603,15 +620,15 @@ $$
 DECLARE t_country_tax_form country_tax_form;
 BEGIN
 
-	FOR t_country_tax_form IN
+        FOR t_country_tax_form IN
 
-		      SELECT *
-		            FROM country_tax_form where country_id in(SELECT country_id from entity where id=in_entity_id)
+                      SELECT *
+                            FROM country_tax_form where country_id in(SELECT country_id from entity where id=in_entity_id)
         LOOP
 
-	RETURN NEXT t_country_tax_form;
+        RETURN NEXT t_country_tax_form;
 
-	END LOOP;
+        END LOOP;
 
 END;
 $$ language plpgsql;
@@ -638,21 +655,21 @@ country text
 CREATE OR REPLACE FUNCTION company_get_billing_info (in_id int)
 returns company_billing_info as
 $$
-	select coalesce(eca.pay_to_name, c.legal_name), eca.meta_number,
-		e.control_code, eca.cash_account_id, c.tax_id,
+        select coalesce(eca.pay_to_name, c.legal_name), eca.meta_number,
+                e.control_code, eca.cash_account_id, c.tax_id,
                 a.line_one, a.line_two, a.line_three,
-		a.city, a.state, a.mail_code, cc.name
-	FROM (select legal_name, tax_id, entity_id
+                a.city, a.state, a.mail_code, cc.name
+        FROM (select legal_name, tax_id, entity_id
                 FROM company
                UNION ALL
               SELECT last_name || ', ' || first_name, null, entity_id
                 FROM person) c
-	JOIN entity e ON (c.entity_id = e.id)
-	JOIN entity_credit_account eca ON (eca.entity_id = e.id)
-	LEFT JOIN eca_to_location cl ON (eca.id = cl.credit_id)
-	LEFT JOIN location a ON (a.id = cl.location_id)
-	LEFT JOIN country cc ON (cc.id = a.country_id)
-	WHERE eca.id = in_id AND (location_class = 1 or location_class is null);
+        JOIN entity e ON (c.entity_id = e.id)
+        JOIN entity_credit_account eca ON (eca.entity_id = e.id)
+        LEFT JOIN eca_to_location cl ON (eca.id = cl.credit_id)
+        LEFT JOIN location a ON (a.id = cl.location_id)
+        LEFT JOIN country cc ON (cc.id = a.country_id)
+        WHERE eca.id = in_id AND (location_class = 1 or location_class is null);
 
 $$ language sql;
 
@@ -667,65 +684,69 @@ DROP FUNCTION IF EXISTS company_save (
     in_entity_id int, in_sic_code text,in_country_id int,
     in_sales_tax_id text, in_license_number text
 );
---TODO 1.5 in_id not used in function,drop it
-CREATE OR REPLACE FUNCTION company__save (
+
+DROP FUNCTION IF EXISTS company__save (
     in_id int, in_control_code text, in_entity_class int,
+    in_legal_name text, in_tax_id TEXT,
+    in_entity_id int, in_sic_code text,in_country_id int,
+    in_sales_tax_id text, in_license_number text
+);
+
+CREATE OR REPLACE FUNCTION company__save (
+    in_control_code text, in_entity_class int,
     in_legal_name text, in_tax_id TEXT,
     in_entity_id int, in_sic_code text,in_country_id int,
     in_sales_tax_id text, in_license_number text
 ) RETURNS company AS $$
 DECLARE t_entity_id INT;
-	--t_company_id INT;--not used
-	t_control_code TEXT;
+        t_control_code TEXT;
         t_retval COMPANY;
 BEGIN
-	--t_company_id := in_id;--not used
 
-	IF in_control_code IS NULL THEN
-		--t_control_code := setting_increment('company_control');
-		t_control_code := setting_increment('entity_control');
-	ELSE
-		t_control_code := in_control_code;
-	END IF;
+        IF in_control_code IS NULL THEN
+                t_control_code := setting_increment('entity_control');
+        ELSE
+                t_control_code := in_control_code;
+        END IF;
 
-	UPDATE entity
-	SET name = in_legal_name,
-		entity_class = in_entity_class,
-		control_code = t_control_code,
+        UPDATE entity
+        SET name = in_legal_name,
+                entity_class = in_entity_class,
+                control_code = t_control_code,
                 country_id   = in_country_id
-	WHERE id = in_entity_id;
+        WHERE id = in_entity_id;
 
-	IF FOUND THEN
-		t_entity_id = in_entity_id;
-	ELSE
-		INSERT INTO entity (name, entity_class, control_code,country_id)
-		VALUES (in_legal_name, in_entity_class, t_control_code,in_country_id);
-		t_entity_id := currval('entity_id_seq');
-	END IF;
+        IF FOUND THEN
+                t_entity_id = in_entity_id;
+        ELSE
+                INSERT INTO entity (name, entity_class, control_code,country_id)
+                VALUES (in_legal_name, in_entity_class, t_control_code,in_country_id);
+                t_entity_id := currval('entity_id_seq');
+        END IF;
 
-	UPDATE company
-	SET legal_name = in_legal_name,
-		tax_id = in_tax_id,
-		sic_code = in_sic_code,
+        UPDATE company
+        SET legal_name = in_legal_name,
+                tax_id = in_tax_id,
+                sic_code = in_sic_code,
                 sales_tax_id = in_sales_tax_id,
                 license_number = in_license_number
-	WHERE entity_id = t_entity_id;
+        WHERE entity_id = t_entity_id;
 
 
-	IF NOT FOUND THEN
-		INSERT INTO company(entity_id, legal_name, tax_id, sic_code,
+        IF NOT FOUND THEN
+                INSERT INTO company(entity_id, legal_name, tax_id, sic_code,
                                     sales_tax_id, license_number)
-		VALUES (t_entity_id, in_legal_name, in_tax_id, in_sic_code,
+                VALUES (t_entity_id, in_legal_name, in_tax_id, in_sic_code,
                         in_sales_tax_id, in_license_number);
 
-	END IF;
+        END IF;
         SELECT * INTO t_retval FROM company WHERE entity_id = t_entity_id;
         RETURN t_retval;
 END;
 $$ LANGUAGE PLPGSQL;
 
 COMMENT ON  FUNCTION company__save (
-    in_id int, in_control_code text, in_entity_class int,
+    in_control_code text, in_entity_class int,
     in_legal_name text, in_tax_id TEXT,
     in_entity_id int, in_sic_code text,in_country_id int,
     in_sales_tax_id text, in_license_number text
@@ -787,25 +808,25 @@ CREATE OR REPLACE FUNCTION eca__save (
     DECLARE
         t_entity_class int;
         l_id int;
-	t_meta_number text;
-	t_mn_default_key text;
+        t_meta_number text;
+        t_mn_default_key text;
     BEGIN
-	-- TODO:  Move to mapping table.
+        -- TODO:  Move to mapping table.
             IF in_entity_class = 1 THEN
-	       t_mn_default_key := 'vendornumber';
-	    ELSIF in_entity_class = 2 THEN
-	       t_mn_default_key := 'customernumber';
-	    END IF;
-	    IF in_meta_number IS NULL THEN
-		t_meta_number := setting_increment(t_mn_default_key);
-	    ELSE
-		t_meta_number := in_meta_number;
-	    END IF;
+               t_mn_default_key := 'vendornumber';
+            ELSIF in_entity_class = 2 THEN
+               t_mn_default_key := 'customernumber';
+            END IF;
+            IF in_meta_number IS NULL THEN
+                t_meta_number := setting_increment(t_mn_default_key);
+            ELSE
+                t_meta_number := in_meta_number;
+            END IF;
             update entity_credit_account SET
                 discount = in_discount,
                 taxincluded = in_taxincluded,
                 creditlimit = in_creditlimit,
-		description = in_description,
+                description = in_description,
                 terms = in_terms,
                 ar_ap_account_id = in_ar_ap_account_id,
                 cash_account_id = in_cash_account_id,
@@ -818,9 +839,9 @@ CREATE OR REPLACE FUNCTION eca__save (
                 startdate = in_startdate,
                 enddate = in_enddate,
                 threshold = in_threshold,
-		discount_terms = in_discount_terms,
-		pay_to_name = in_pay_to_name,
-		taxform_id = in_taxform_id
+                discount_terms = in_discount_terms,
+                pay_to_name = in_pay_to_name,
+                taxform_id = in_taxform_id
             where id = in_id;
 
          IF FOUND THEN
@@ -843,7 +864,7 @@ CREATE OR REPLACE FUNCTION eca__save (
                 enddate,
                 discount_terms,
                 threshold,
-		ar_ap_account_id,
+                ar_ap_account_id,
                 pay_to_name,
                 taxform_id,
                 cash_account_id,
@@ -869,7 +890,7 @@ CREATE OR REPLACE FUNCTION eca__save (
                 in_ar_ap_account_id,
                 in_pay_to_name,
                 in_taxform_id,
-		in_cash_account_id,
+                in_cash_account_id,
                 in_discount_account_id
             );
             RETURN currval('entity_credit_account_id_seq');
@@ -899,14 +920,14 @@ $$ Saves an entity credit account.  Returns the id of the record saved.  $$;
 CREATE OR REPLACE FUNCTION entity__list_locations(in_entity_id int)
 RETURNS SETOF location_result AS
 $$
-		SELECT l.id, l.line_one, l.line_two, l.line_three, l.city,
-			l.state, l.mail_code, c.id, c.name, lc.id, lc.class
-		FROM location l
-		JOIN entity_to_location ctl ON (ctl.location_id = l.id)
-		JOIN location_class lc ON (ctl.location_class = lc.id)
-		JOIN country c ON (c.id = l.country_id)
-		WHERE ctl.entity_id = in_entity_id
-		ORDER BY lc.id, l.id, c.name;
+                SELECT l.id, l.line_one, l.line_two, l.line_three, l.city,
+                        l.state, l.mail_code, c.id, c.name, lc.id, lc.class
+                FROM location l
+                JOIN entity_to_location ctl ON (ctl.location_id = l.id)
+                JOIN location_class lc ON (ctl.location_class = lc.id)
+                JOIN country c ON (c.id = l.country_id)
+                WHERE ctl.entity_id = in_entity_id
+                ORDER BY lc.id, l.id, c.name;
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION entity__list_locations(in_entity_id int) IS
@@ -914,19 +935,19 @@ $$ Lists all locations for an entity.$$;
 
 DROP TYPE IF EXISTS contact_list CASCADE;
 CREATE TYPE contact_list AS (
-	class text,
-	class_id int,
-	description text,
-	contact text
+        class text,
+        class_id int,
+        description text,
+        contact text
 );
 
 
 CREATE OR REPLACE FUNCTION entity__list_contacts(in_entity_id int)
 RETURNS SETOF contact_list AS $$
-		SELECT cl.class, cl.id, c.description, c.contact
-		FROM entity_to_contact c
-		JOIN contact_class cl ON (c.contact_class_id = cl.id)
-		WHERE c.entity_id = in_entity_id
+                SELECT cl.class, cl.id, c.description, c.contact
+                FROM entity_to_contact c
+                JOIN contact_class cl ON (c.contact_class_id = cl.id)
+                WHERE c.entity_id = in_entity_id
 $$ language sql;
 
 COMMENT ON FUNCTION entity__list_contacts(in_entity_id int) IS
@@ -945,12 +966,16 @@ DROP FUNCTION IF EXISTS entity__save_bank_account
 (in_entity_id int, in_credit_id int, in_bic text, in_iban text,
 in_bank_account_id int);
 
+drop function if exists entity__save_bank_account
+(in_entity_id int, in_credit_id int, in_bic text, in_iban text, in_remark text,
+in_bank_account_id int);
+
 CREATE OR REPLACE FUNCTION entity__save_bank_account
 (in_entity_id int, in_credit_id int, in_bic text, in_iban text, in_remark text,
 in_bank_account_id int)
-RETURNS int AS
+RETURNS entity_bank_account AS
 $$
-DECLARE out_id int;
+DECLARE out_bank entity_bank_account;
 BEGIN
         UPDATE entity_bank_account
            SET bic = coalesce(in_bic,''),
@@ -959,19 +984,20 @@ BEGIN
          WHERE id = in_bank_account_id;
 
         IF FOUND THEN
-                out_id = in_bank_account_id;
+             SELECT * INTO out_bank from entity_bank_account WHERE id = in_bank_account_id;
+
         ELSE
-	  	INSERT INTO entity_bank_account(entity_id, bic, iban, remark)
-		VALUES(in_entity_id, in_bic, in_iban, in_remark);
-	        SELECT CURRVAL('entity_bank_account_id_seq') INTO out_id ;
-	END IF;
+                INSERT INTO entity_bank_account(entity_id, bic, iban, remark)
+                VALUES(in_entity_id, in_bic, in_iban, in_remark);
+                SELECT * INTO out_bank from entity_bank_account WHERE id = CURRVAL('entity_bank_account_id_seq');
+        END IF;
 
-	IF in_credit_id IS NOT NULL THEN
-		UPDATE entity_credit_account SET bank_account = out_id
-		WHERE id = in_credit_id;
-	END IF;
+        IF in_credit_id IS NOT NULL THEN
+                UPDATE entity_credit_account SET bank_account = out_bank.id
+                WHERE id = in_credit_id;
+        END IF;
+        return out_bank;
 
-	RETURN out_id;
 END;
 $$ LANGUAGE PLPGSQL;
 
@@ -1019,24 +1045,24 @@ COMMENT ON FUNCTION eca__delete_contact
 $$ Returns true if at least one record was deleted.  False if no records were
 affected.$$;
 
+DROP FUNCTION IF EXISTS entity__save_contact
+(in_entity_id int, in_class_id int, in_description text, in_contact text,
+in_old_contact text, in_old_class_id int);
+
 CREATE OR REPLACE FUNCTION entity__save_contact
 (in_entity_id int, in_class_id int, in_description text, in_contact text,
  in_old_contact text, in_old_class_id int)
-RETURNS INT AS
+RETURNS entity_to_contact AS
 $$
-DECLARE out_id int;
-BEGIN
         DELETE FROM entity_to_contact
          WHERE entity_id = in_entity_id AND contact = in_old_contact
                AND contact_class_id = in_old_class_id;
 
-	INSERT INTO entity_to_contact
+        INSERT INTO entity_to_contact
                (entity_id, contact_class_id, description, contact)
-	VALUES (in_entity_id, in_class_id, in_description, in_contact);
-
-	RETURN 1;
-END;
-$$ LANGUAGE PLPGSQL;
+        VALUES (in_entity_id, in_class_id, in_description, in_contact)
+         RETURNING *;
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION entity__save_contact
 (in_entity_id int, in_contact_class int, in_description text, in_contact text,
@@ -1045,18 +1071,18 @@ $$ Saves company contact information.  The return value is meaningless. $$;
 
 DROP TYPE IF EXISTS entity_note_list CASCADE;
 CREATE TYPE entity_note_list AS (
-	id int,
-	note_class int,
-	note text
+        id int,
+        note_class int,
+        note text
 );
 
 CREATE OR REPLACE FUNCTION entity__list_notes(in_entity_id int)
 RETURNS SETOF entity_note AS
 $$
-		SELECT *
-		FROM entity_note
-		WHERE ref_key = in_entity_id
-		ORDER BY created
+                SELECT *
+                FROM entity_note
+                WHERE ref_key = in_entity_id
+                ORDER BY created
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION entity__list_notes(in_entity_id int) IS
@@ -1066,23 +1092,23 @@ CREATE OR REPLACE FUNCTION eca__list_notes(in_credit_id int)
 RETURNS SETOF note AS
 $$
 DECLARE out_row record;
-	t_entity_id int;
+        t_entity_id int;
 BEGIN
         -- ALERT: security definer function.  Be extra careful about EXECUTE
         -- in here. --CT
-	SELECT entity_id INTO t_entity_id
-	FROM entity_credit_account
-	WHERE id = in_credit_id;
+        SELECT entity_id INTO t_entity_id
+        FROM entity_credit_account
+        WHERE id = in_credit_id;
 
-	FOR out_row IN
-		SELECT *
-		FROM note
-		WHERE (note_class = 3 and ref_key = in_credit_id) or
-			(note_class = 1 and ref_key = t_entity_id)
-		ORDER BY created
-	LOOP
-		RETURN NEXT out_row;
-	END LOOP;
+        FOR out_row IN
+                SELECT *
+                FROM note
+                WHERE (note_class = 3 and ref_key = in_credit_id) or
+                        (note_class = 1 and ref_key = t_entity_id)
+                ORDER BY created
+        LOOP
+                RETURN NEXT out_row;
+        END LOOP;
 END;
 $$ LANGUAGE PLPGSQL SECURITY DEFINER;
 
@@ -1130,25 +1156,25 @@ create or replace function _entity_location_save(
     DECLARE
         l_row location;
         l_id INT;
-	t_company_id int;
+        t_company_id int;
     BEGIN
-	SELECT id INTO t_company_id
-	FROM company WHERE entity_id = in_entity_id;
+        SELECT id INTO t_company_id
+        FROM company WHERE entity_id = in_entity_id;
 
-	DELETE FROM entity_to_location
-	WHERE entity_id = in_entity_id
-		AND location_class = in_location_class
-		AND location_id = in_location_id;
+        DELETE FROM entity_to_location
+        WHERE entity_id = in_entity_id
+                AND location_class = in_location_class
+                AND location_id = in_location_id;
 
-	SELECT location_save(NULL, in_line_one, in_line_two, in_line_three, in_city,
-		in_state, in_mail_code, in_country_id)
-	INTO l_id;
+        SELECT location_save(NULL, in_line_one, in_line_two, in_line_three, in_city,
+                in_state, in_mail_code, in_country_id)
+        INTO l_id;
 
-	INSERT INTO entity_to_location
-		(entity_id, location_class, location_id)
-	VALUES  (in_entity_id, in_location_class, l_id);
+        INSERT INTO entity_to_location
+                (entity_id, location_class, location_id)
+        VALUES  (in_entity_id, in_location_class, l_id);
 
-	RETURN l_id;
+        RETURN l_id;
     END;
 
 $$ language 'plpgsql';
@@ -1193,7 +1219,7 @@ create or replace function eca__location_save(
                 in_mail_code,
                 in_country_id
             )
-        	INTO l_id;
+                INTO l_id;
         ELSE
             SELECT location_save(
                 NULL,
@@ -1205,14 +1231,14 @@ create or replace function eca__location_save(
                 in_mail_code,
                 in_country_id
             )
-        	INTO l_id;
+                INTO l_id;
             INSERT INTO eca_to_location
-        		(credit_id, location_class, location_id)
-        	VALUES  (in_credit_id, in_location_class, l_id);
+                        (credit_id, location_class, location_id)
+                VALUES  (in_credit_id, in_location_class, l_id);
 
         END IF;
 
-	RETURN l_id;
+        RETURN l_id;
     END;
 
 $$ language 'plpgsql';
@@ -1268,14 +1294,14 @@ found.$$;
 CREATE OR REPLACE FUNCTION eca__list_locations(in_credit_id int)
 RETURNS SETOF location_result AS
 $$
-		SELECT l.id, l.line_one, l.line_two, l.line_three, l.city,
-			l.state, l.mail_code, c.id, c.name, lc.id, lc.class
-		FROM location l
-		JOIN eca_to_location ctl ON (ctl.location_id = l.id)
-		JOIN location_class lc ON (ctl.location_class = lc.id)
-		JOIN country c ON (c.id = l.country_id)
-		WHERE ctl.credit_id = in_credit_id
-		ORDER BY lc.id, l.id, c.name
+                SELECT l.id, l.line_one, l.line_two, l.line_three, l.city,
+                        l.state, l.mail_code, c.id, c.name, lc.id, lc.class
+                FROM location l
+                JOIN eca_to_location ctl ON (ctl.location_id = l.id)
+                JOIN location_class lc ON (ctl.location_class = lc.id)
+                JOIN country c ON (c.id = l.country_id)
+                WHERE ctl.credit_id = in_credit_id
+                ORDER BY lc.id, l.id, c.name
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION eca__list_locations(in_credit_id int) IS
@@ -1285,14 +1311,14 @@ CREATE OR REPLACE FUNCTION eca__list_contacts(in_credit_id int)
 RETURNS SETOF contact_list AS $$
 DECLARE out_row contact_list;
 BEGIN
-	FOR out_row IN
-		SELECT cl.class, cl.id, c.description, c.contact
-		FROM eca_to_contact c
-		JOIN contact_class cl ON (c.contact_class_id = cl.id)
-		WHERE credit_id = in_credit_id
-	LOOP
-		return next out_row;
-	END LOOP;
+        FOR out_row IN
+                SELECT cl.class, cl.id, c.description, c.contact
+                FROM eca_to_contact c
+                JOIN contact_class cl ON (c.contact_class_id = cl.id)
+                WHERE credit_id = in_credit_id
+        LOOP
+                return next out_row;
+        END LOOP;
 END;
 $$ language plpgsql;
 
@@ -1304,9 +1330,9 @@ DROP FUNCTION IF EXISTS eca__save_contact(int, int, text, text, text, int);
 CREATE OR REPLACE FUNCTION eca__save_contact
 (in_credit_id int, in_class_id int, in_description text, in_contact text,
 in_old_contact text, in_old_class_id int)
-RETURNS INT AS
+RETURNS eca_to_contact AS
 $$
-DECLARE out_id int;
+DECLARE out_contact eca_to_contact;
 BEGIN
 
     PERFORM *
@@ -1322,15 +1348,16 @@ BEGIN
                contact_class_id = in_class_id
          WHERE credit_id = in_credit_id
            AND contact_class_id = in_old_class_id
-           AND contact = in_old_contact;
-    ELSE
+           AND contact = in_old_contact
+        returning * INTO out_contact;
+        return out_contact;
+    END IF;
         INSERT INTO eca_to_contact(credit_id, contact_class_id,
                 description, contact)
-        VALUES (in_credit_id, in_class_id, in_description, in_contact);
+        VALUES (in_credit_id, in_class_id, in_description, in_contact)
+        RETURNING * into out_contact;
+        return out_contact;
 
-    END IF;
-
-	RETURN 1;
 END;
 $$ LANGUAGE PLPGSQL;
 
@@ -1364,7 +1391,7 @@ RETURNS SETOF eca__pricematrix AS
 $$
 SELECT pc.parts_id, p.partnumber, p.description, pc.credit_id, pc.pricebreak,
        pc.sellprice, NULL::numeric, NULL::int, NULL::text, pc.validfrom,
-       pc.validto, pc.curr, pc.entry_id
+       pc.validto, pc.curr, pc.entry_id, pc.qty
   FROM partscustomer pc
   JOIN parts p on pc.parts_id = p.id
   JOIN entity_credit_account eca ON pc.pricegroup_id = eca.pricegroup_id
@@ -1377,7 +1404,7 @@ $$
 
 SELECT pc.parts_id, p.partnumber, p.description, pc.credit_id, pc.pricebreak,
        pc.sellprice, NULL, NULL::int, NULL, pc.validfrom, pc.validto, pc.curr,
-       pc.entry_id
+       pc.entry_id, pc.qty
   FROM partscustomer pc
   JOIN parts p on pc.parts_id = p.id
   JOIN entity_credit_account eca ON pc.credit_id = eca.id
@@ -1385,7 +1412,7 @@ SELECT pc.parts_id, p.partnumber, p.description, pc.credit_id, pc.pricebreak,
  UNION
 SELECT pv.parts_id, p.partnumber, p.description, pv.credit_id, NULL, NULL,
        pv.lastcost, pv.leadtime::int, pv.partnumber, NULL, NULL, pv.curr,
-       pv.entry_id
+       pv.entry_id, null
   FROM partsvendor pv
   JOIN parts p on pv.parts_id = p.id
   JOIN entity_credit_account eca ON pv.credit_id = eca.id
@@ -1458,7 +1485,7 @@ IF FOUND THEN -- VENDOR
 
     SELECT pv.parts_id, p.partnumber, p.description, pv.credit_id, NULL, NULL,
            pv.lastcost, pv.leadtime::int, pv.partnumber, NULL, NULL, pv.curr,
-           pv.entry_id
+           pv.entry_id, null
       INTO retval
       FROM partsvendor pv
       JOIN parts p ON p.id = pv.parts_id
@@ -1476,21 +1503,22 @@ IF FOUND THEN -- CUSTOMER
            sellprice  = in_price,
            validfrom  = in_validfrom,
            validto    = in_validto,
+           qty        = in_qty,
            curr       = in_curr
      WHERE entry_id = in_entry_id and credit_id = in_credit_id;
 
     IF NOT FOUND THEN
         INSERT INTO partscustomer
-               (parts_id, credit_id, sellprice, validfrom, validto, curr)
+               (parts_id, credit_id, sellprice, validfrom, validto, curr, qty)
         VALUES (in_parts_id, in_credit_id, in_price, in_validfrom, in_validto,
-                in_curr);
+                in_curr, in_qty);
 
         t_insert := true;
     END IF;
 
     SELECT pc.parts_id, p.partnumber, p.description, pc.credit_id,
            pc.pricebreak, pc.sellprice, NULL, NULL, NULL, pc.validfrom,
-           pc.validto, pc.curr, pc.entry_id
+           pc.validto, pc.curr, pc.entry_id, pc.qty
       INTO retval
       FROM partscustomer pc
       JOIN parts p on pc.parts_id = p.id
@@ -1541,7 +1569,7 @@ $$ language plpgsql;
 CREATE OR REPLACE FUNCTION pricelist__save
 (in_parts_id int, in_credit_id int, in_pricebreak numeric, in_price numeric,
  in_lead_time int2, in_partnumber text, in_validfrom date, in_validto date,
- in_curr char(3), in_entry_id int)
+ in_curr char(3), in_entry_id int, in_qty numeric)
 RETURNS eca__pricematrix AS
 $$
 DECLARE
@@ -1587,21 +1615,22 @@ ELSIF t_entity_class = 2 THEN -- CUSTOMER
            sellprice  = in_price,
            validfrom  = in_validfrom,
            validto    = in_validto,
+           qty        = in_qty,
            curr       = in_curr
      WHERE entry_id = in_entry_id and credit_id = in_credit_id;
 
     IF NOT FOUND THEN
         INSERT INTO partscustomer
-               (parts_id, credit_id, sellprice, validfrom, validto, curr)
+               (parts_id, credit_id, sellprice, validfrom, validto, curr, qty)
         VALUES (in_parts_id, in_credit_id, in_price, in_validfrom, in_validto,
-                in_curr);
+                in_curr, qty);
 
         t_insert := true;
     END IF;
 
     SELECT pc.parts_id, p.partnumber, p.description, pc.credit_id,
            pc.pricebreak, pc.sellprice, NULL, NULL, NULL, pc.validfrom,
-           pc.validto, pc.curr, pc.entry_id
+           pc.validto, pc.curr, pc.entry_id, qty
       INTO retval
       FROM partscustomer pc
       JOIN parts p on pc.parts_id = p.id

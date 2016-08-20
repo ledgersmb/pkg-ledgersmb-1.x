@@ -304,10 +304,14 @@ sub prepare_invoice {
 
 sub form_header {
     $form->{nextsub} = 'update';
+    $form->{ARAP} = 'AR';
+    $form->generate_selects(\%myconfig) unless $form->{selectAR};
 
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
     $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
 
+    $status_div_id = 'AR-invoice';
+    $status_div_id .= '-reverse' if $form->{reverse};
     $form->{exchangerate} =
       $form->format_amount( \%myconfig, $form->{exchangerate} );
 
@@ -336,7 +340,7 @@ sub form_header {
     else {
         $customer = qq|<input data-dojo-type="dijit/form/TextBox" id="customer" name="customer" value="$form->{customer}" size="35">
      <a target="new" id="new-contact"
-        href="contact.pl?action=add&entity_class=2">[| .
+        href="login.pl?action=login&company=$form->{company}#/contact.pl?action=add&entity_class=2">[| .
         $locale->text('New') . qq|]</a> |;
     }
 
@@ -382,20 +386,7 @@ sub form_header {
 
     print qq|
 <body class="lsmb $form->{dojo_theme}" onLoad="document.forms[0].${focus}.focus()" />
-| . $form->open_status_div . qq|
-<script>
-function on_return_submit(event){
-  var kc;
-  if (window.event){
-    kc = window.event.keyCode;
-  } else {
-    kc = event.which;
-  }
-  if (kc == '13' && document.activeElement.tagName != 'TEXTAREA'){
-        document.forms[0].submit();
-  }
-}
-</script>
+| . $form->open_status_div($status_div_id) . qq|
 <form method="post"
       id="invoice"
       data-dojo-type="lsmb/Invoice"
@@ -628,7 +619,7 @@ function on_return_submit(event){
                        ndx   => 3,
                        key   => 'O',
                        value => $locale->text('Post') };
-                   if (grep /^lsmb_$form->{company}__draft_modify$/, @{$form->{_roles}}){
+                   if ($form->is_allowed_role(['draft_modify'])){
                        $button{edit_and_save} = {
                            ndx   => 4,
                            key   => 'E',
@@ -1062,9 +1053,9 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
               print qq|
 <tr>
 <td><a href="file.pl?action=get&file_class=1&ref_key=$form->{id}&id=$file->{id}"
-            >$file->{file_name}</a></td>
+       target="_download">$file->{file_name}</a></td>
 <td>$file->{mime_type}</td>
-<td>|.$file->{uploaded_at}->to_output . qq|</td>
+<td>| . $file->{uploaded_at} . qq|</td>
 <td>$file->{uploaded_by_name}</td>
 </tr>
               |;
@@ -1116,9 +1107,6 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
 }
 
 sub update {
-    on_update(); # Used for overrides for POS invoices --CT
-
-    &invoice_links;
 
     delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
 
@@ -1251,6 +1239,7 @@ sub update {
 
             if ($rows) {
 
+                $form->{"sellprice_$i"} = $form->{item_list}->[0]->{sellprice};
                 $form->{"qty_$i"} =
                   ( $form->{"qty_$i"} * 1 ) ? $form->{"qty_$i"} : 1;
 
@@ -1349,6 +1338,7 @@ sub update {
             }
         }
     }
+    $form->generate_selects(\%myconfig);
     $form->{rowcount}--;
     display_form();
 }

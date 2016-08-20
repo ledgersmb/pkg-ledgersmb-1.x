@@ -108,6 +108,8 @@ sub prepare_message {
     for my $key (keys %args) {
         $self->{$key} = $args{$key};
     }
+    die 'No email from address' unless $self->{from};
+
 
     my $domain = $self->{from};
     $domain =~ s/(.*?\@|>)//g;
@@ -210,19 +212,23 @@ sub send {
     #     header set.  This ensures that MIME::Lite will not rewrite
     #     it during the preparation of the message.
     $self->{_message}->replace( 'X-Mailer' => "LedgerSMB::Mailer $VERSION" );
-    if ( $LedgerSMB::Sysconfig::smtphost ) {
-        $self->{_message}->send(
-            'smtp',
-            $LedgerSMB::Sysconfig::smtphost,
-            Timeout => $LedgerSMB::Sysconfig::smtptimeout
-            ) || return $!;
-    } else {
-        $self->{_message}->send(
-            'sendmail',
-            SendMail => $LedgerSMB::Sysconfig::sendmail,
-                SetSender => 1
-            ) || return $!;
-    }
+    local $@;
+    eval {
+        if ( $LedgerSMB::Sysconfig::smtphost ) {
+            $self->{_message}->send(
+                'smtp',
+                $LedgerSMB::Sysconfig::smtphost,
+                Timeout => $LedgerSMB::Sysconfig::smtptimeout
+                 ) || return "$!";
+        } else {
+            $self->{_message}->send(
+                'sendmail',
+                SendMail => $LedgerSMB::Sysconfig::sendmail,
+                     SetSender => 1
+                ) || return "$!";
+        }
+    };
+    die "Could not send email: $@.  Please check your configuration." if $@;
 }
 
 1;

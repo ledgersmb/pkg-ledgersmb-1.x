@@ -65,6 +65,9 @@ sub _get_database {
     my ($request) = @_;
     my $creds = LedgerSMB::Auth::get_credentials('setup');
 
+    LedgerSMB::Auth->http_error('401')
+        if ! defined $creds->{password};
+
     return LedgerSMB::Database->new(
                 username => $creds->{login},
                 password => $creds->{password},
@@ -89,66 +92,77 @@ sub _init_db {
 
 Processes the login and examines the database to determine appropriate steps to
 take.
+)
+=cut
+
+=item get_dispatch_table
+
+Returns the main dispatch table for the versions with supported upgrades
 
 =cut
 
-my @login_actions_dispatch_table =
-    ( { appname => 'sql-ledger',
+sub get_dispatch_table {
+    my ($request) = @_;
+    my $sl_detect = $request->{_locale}->text("SQL-Ledger database detected.");
+    my $migratemsg =  $request->{_locale}->text(
+               "Would you like to migrate the database?"
+    );
+    my $upgrademsg =  $request->{_locale}->text(
+               "Would you like to upgrade the database?"
+    );
+
+    return ( { appname => 'sql-ledger',
         version => '2.7',
-        message => "SQL-Ledger database detected.",
-        operation => "Would you like to migrate the database?",
+        message => $sl_detect,
+        operation => $migratemsg,
         next_action => 'upgrade' },
       { appname => 'sql-ledger',
         version => '2.8',
-        message => "SQL-Ledger database detected.",
-        operation => "Would you like to migrate the database?",
+        message => $sl_detect,
+        operation => $migratemsg,
         next_action => 'upgrade' },
       { appname => 'sql-ledger',
         version => '3.0',
-        message => "SQL-Ledger 3.0 database detected.",
-        operation => "Would you like to migrate the database?",
+        message => $request->{_locale}->text(
+                     "SQL-Ledger 3.0 database detected."
+                   ),
+        operation => $migratemsg,
         next_action => 'upgrade' },
       { appname => 'sql-ledger',
         version => undef,
-        message => "Unsupported SQL-Ledger version detected.",
-        operation => "Cancel.",
+        message => $request->{_locale}->text(
+                      "Unsupported SQL-Ledger version detected."
+                   ),
+        operation => $request->{_locale}->text("Cancel"),
         next_action => 'cancel' },
       { appname => 'ledgersmb',
         version => '1.2',
-        message => "LedgerSMB 1.2 db found.",
-        operation => "Would you like to upgrade the database?",
+        message => $request->{_locale}->text("LedgerSMB 1.2 db found."),
+        operation => $upgrademsg,
         next_action => 'upgrade' },
       { appname => 'ledgersmb',
-        version => '1.3dev',
-        message => 'Development version found.  Please upgrade manually first',
-        operation => 'Cancel?',
-        next_action => 'cancel' },
-      { appname => 'ledgersmb',
-        version => 'legacy',
-        message => 'Legacy version found.  Please upgrade first',
-        operation => 'Cancel?',
-        next_action => 'cancel' },
-      { appname => 'ledgersmb',
         version => '1.3',
-        message => "LedgerSMB 1.3 db found.",
-        operation => "Would you like to upgrade the database?",
+        message => $request->{_locale}->text("LedgerSMB 1.3 db found."),
+        operation => $upgrademsg,
         next_action => 'upgrade' },
       { appname => 'ledgersmb',
         version => '1.4',
-        message => "LedgerSMB 1.4 db found.",
-        operation => "Would you like to upgrade the database?",
+        message => $request->{_locale}->text("LedgerSMB 1.4 db found."),
+        operation => $upgrademsg,
         # rebuild_modules will upgrade 1.4->1.5 by applying (relevant) changes
         next_action => 'rebuild_modules' },
       { appname => 'ledgersmb',
         version => '1.5',
-        message => "LedgerSMB 1.5 db found.",
-        operation => 'Rebuild/Upgrade?',
+        message => $request->{_locale}->text("LedgerSMB 1.5 db found."),
+        operation => $request->{_locale}->text('Rebuild/Upgrade?'),
         next_action => 'rebuild_modules' },
       { appname => 'ledgersmb',
         version => undef,
-        message => "Unsupported LedgerSMB version detected.",
-        operation => "Cancel.",
+        message => $request->{_locale}->text("Unsupported LedgerSMB version detected."),
+        operation => $request->{_locale}->text("Cancel."),
         next_action => 'cancel' } );
+}
+
 
 
 sub login {
@@ -174,20 +188,18 @@ sub login {
     } else {
         my $dispatch_entry;
 
-        foreach $dispatch_entry (@login_actions_dispatch_table) {
+        foreach $dispatch_entry (get_dispatch_table($request)) {
             if ($version_info->{appname} eq $dispatch_entry->{appname}
                 && ($version_info->{version} eq $dispatch_entry->{version}
                     || ! defined $dispatch_entry->{version})) {
                 my $field;
-
                 foreach $field (qw|operation message next_action|) {
-                    $request->{$field} =
-                        $request->{_locale}->maketext($dispatch_entry->{$field});
+                    $request->{$field} = $dispatch_entry->{$field};
                 }
+
                 last;
             }
         }
-
 
         if (! defined $request->{next_action}) {
             $request->{message} = $request->{_locale}->text(
@@ -727,6 +739,7 @@ sub _failed_check {
     ];
     $template->render({
            form               => $request,
+           base_form          => 'dijit/form/Form',
            heading            => $header,
            headers            => [$check->display_name, $check->instructions],
            columns            => $check->display_cols,
@@ -820,9 +833,10 @@ sub select_coa {
     use LedgerSMB::Sysconfig;
 
     my ($request) = @_;
-
-    if ($request->{coa_lc} =~ /\.\./){
-       $request->error($request->{_locale}->text('Access Denied'));
+    { no warnings 'uninitialized'; # silence warnings if this is missing
+      if ($request->{coa_lc} =~ /\.\./){
+         $request->error($request->{_locale}->text('Access Denied'));
+      }
     }
     if ($request->{coa_lc}){
         if ($request->{chart}){
@@ -911,6 +925,7 @@ sub _render_new_user {
     @{$request->{countries}}
     = $request->call_procedure(funcname => 'location_list_country' );
     for my $country (@{$request->{countries}}){
+        last unless defined $request->{coa_lc};
         if (lc($request->{coa_lc}) eq lc($country->{short_name})){
            $request->{country_id} = $country->{id};
         }
@@ -1029,13 +1044,13 @@ sub process_and_run_upgrade_script {
     $dbh->commit;
 
     $database->load_base_schema({
-    log     => $temp . "_stdout",
-    errlog  => $temp . "_stderr"
-                });
+        log     => $temp . "_stdout",
+        errlog  => $temp . "_stderr",
+                                });
     $database->load_modules('LOADORDER', {
-    log     => $temp . "_stdout",
-    errlog  => $temp . "_stderr"
-                });
+        log     => $temp . "_stdout",
+        errlog  => $temp . "_stderr",
+                            });
 
     $dbh->do(qq(
        INSERT INTO defaults (setting_key, value)
@@ -1293,9 +1308,12 @@ sub rebuild_modules {
     my ($request) = @_;
     my $database = _init_db($request);
 
+    # The order is important here:
+    #  New modules should be able to depend on the latest changes
+    #  e.g. table definitions, etc.
+    $database->apply_changes;
     $database->upgrade_modules('LOADORDER', $LedgerSMB::VERSION)
         or die "Upgrade failed.";
-    $database->apply_changes;
     complete($request);
 }
 

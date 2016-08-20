@@ -4,53 +4,69 @@ use strict;
 use warnings;
 
 use Carp;
-use PageObject;
+#use PageObject;
 
 use PageObject::Setup::Admin;
-use PageObject::Setup::CreateConfirm;
-
+use Selenium::Remote::WDKeys;
 
 use Moose;
 extends 'PageObject';
 
-
-
-has driver => (is => 'ro', required => 1);
+__PACKAGE__->self_register(
+              'setup-login',
+              './/body[@id="setup-login"]',
+              tag_name => 'body',
+              attributes => {
+                  id => 'setup-login',
+              });
 
 sub url { return '/setup.pl'; }
 
-sub verify {
+sub _verify {
     my ($self) = @_;
-    my $driver = $self->driver;
 
-    $driver->find_element_by_label($_)
-        for ("Super-user login", "Password", "Database");
+    $self->find('*labeled', text => $_)
+        for ("Password", "Database", "Super-user login");
     return $self;
 };
 
 
 sub login {
-    my ($self, $user, $password, $company) = @_;
-    $self->driver->find_element_by_label("Super-user login")->click;
+    my ($self, %args) = @_;
+    my $user = $args{user};
+    my $password = $args{password};
+    my $company = $args{company};
+    my $next_page = $args{next_page} // '*setup-admin';
+
+    $self->find('*labeled', text => 'Super-user login')->click;
     do {
-        my $element = $self->driver->find_element_by_label($_->{label});
+        my $element =
+            $self->find('*labeled', text => $_->{label});
         $element->click;
         $element->send_keys($_->{value});
+        $element->send_keys(KEYS->{'tab'}) if defined $_->{list};
     } for ({ label => "Super-user login",
-             value => $user },
+             value => $user,
+             list => 1 },
            { label => "Password",
              value => $password },
            { label => "Database",
              value => $company });
-    $self->driver->find_button("Login")->click;
-    return $self->driver->page(PageObject::Setup::Admin->new(%$self));
+
+    my $btn = $self->find('*button', text => "Login");
+    $btn->click;
+
+    $self->session->page->wait_for_body;
+    return $self->session->page->body;
 }
 
 sub login_non_existent {
     my $self = shift @_;
 
-    $self->login(@_);
-    return $self->driver->page(PageObject::Setup::CreateConfirm->new(%$self));
+    return $self->login(@_,
+                        # also setup-admin,
+                        # but then CreateConfirm and Admin need merging
+        next_page => "PageObject::Setup::CreateConfirm");
 }
 
 

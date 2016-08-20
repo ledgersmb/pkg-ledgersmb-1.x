@@ -266,7 +266,7 @@ sub display_form
             { ndx => 9, key => 'N', value => $locale->text('New') },
           'copy_to_new' =>
             { ndx => 10, key => 'C', value => $locale->text('Copy to New') },
-	 );
+         );
 
           if ($form->{separate_duties}){
           $hiddens{separate_duties}=$form->{separate_duties};
@@ -295,7 +295,7 @@ sub display_form
         $a{approve} = 1;
         $a{edit_and_save} = 1;
         $a{update} = 1;
-        if (grep /__draft_edit$/, @{$form->{_roles}}){
+        if ($form->is_allowed_role(['draft_modify']));
             $button{edit_and_save} = {
             ndx   => 4,
             key   => 'O',

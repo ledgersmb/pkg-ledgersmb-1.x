@@ -9,15 +9,17 @@ use PageObject::App::Search;
 use Moose;
 extends 'PageObject::App::Search';
 
-my $page_heading = 'Search Budgets';
 
-sub verify {
+__PACKAGE__->self_register(
+              'search-budget',
+              './/form[@id="budget-search"]',
+              tag_name => 'form',
+              attributes => {
+                  id => 'budget-search',
+              });
+
+sub _verify {
     my ($self) = @_;
-
-    $self->driver
-        ->find_element("//*[\@id='maindiv']
-                           [.//*[\@class='listtop'
-                                 and text()='$page_heading']]");
 
     return $self;
 }

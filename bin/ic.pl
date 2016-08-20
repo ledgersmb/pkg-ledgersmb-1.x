@@ -118,7 +118,7 @@ sub link_part {
     # currencies
     $form->{selectcurrency} = "";
     for ( split /:/, $form->{currencies} ) {
-        $form->{selectcurrency} .= "<option>$_</option>\n";
+        $form->{selectcurrency} .= qq|<option value="$_">$_</option>\n|;
     }
 
     # readonly
@@ -320,6 +320,7 @@ qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}</option>\n|;
         $form->{"customer_mn_$i"} = $ref->{meta_number};
         $form->{"pricegroup_$i"} = "$ref->{pricegroup}--$ref->{gid}"
           if $ref->{gid};
+        $form->{"customerqty_$i"} = $ref->{qty};
 
         for (qw(validfrom validto pricebreak customerprice customercurr)) {
             $form->{"${_}_$i"} = $ref->{$_};
@@ -337,6 +338,7 @@ sub form_header {
     link_part();
 
 
+    $status_div_id = $form->{item};
     if ( $form->{lastcost} > 0 ) {
         $markup =
           $form->round_amount(
@@ -396,7 +398,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows="$rows
     for (qw(IC_inventory IC_income IC_expense IC_returns)) {
         if ( $form->{$_} ) {
             if ( $form->{orphaned} ) {
-                $form->{"select$_"} =~ s/ selected//;
+                $form->{"select$_"} =~ s/ selected="selected"//;
                 $form->{"select$_"} =~
                   s/option([^>]*)>\Q$form->{$_}\E/option $1 selected="selected">$form->{$_}/;
             }
@@ -720,7 +722,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows="$rows
 
     print qq|
 <body class="lsmb $form->{dojo_theme}">
-| . $form->open_status_div . qq|
+| . $form->open_status_div($status_div_id) . qq|
 
 <form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 |;
@@ -882,9 +884,9 @@ sub form_footer {
               print qq|
 <tr>
 <td><a href="file.pl?action=get&file_class=3&ref_key=$form->{id}&id=$file->{id}"
-            >$file->{file_name}</a></td>
+       target="_download">$file->{file_name}</a></td>
 <td>$file->{mime_type}</td>
-<td>|.$file->{uploaded_at}->to_output . qq|</td>
+<td>|.$file->{uploaded_at} . qq|</td>
 <td>$file->{uploaded_by_name}</td>
 </tr>
               |;
@@ -1029,9 +1031,9 @@ sub vendor_row {
     for $i ( 1 .. $numrows ) {
 
         if ( $form->{selectcurrency} ) {
-            $form->{selectcurrency} =~ s/ selected//;
+            $form->{selectcurrency} =~ s/ selected="selected"//;
             $form->{selectcurrency} =~
-s/option>$form->{"vendorcurr_$i"}/option selected>$form->{"vendorcurr_$i"}/;
+s/(value="$form->{"vendorcurr_$i"}")/$1 selected="selected"/;
             $currency = qq|
       <td><select data-dojo-type="dijit/form/Select" id="vendorcurr-$i" name="vendorcurr_$i">$form->{selectcurrency}</select></td>|;
         }
@@ -1121,20 +1123,21 @@ sub customer_row {
       <th class="listheading">| . $locale->text('Customer') . qq|</th>
       <th class="listheading">| . $locale->text('Account') . qq|</th>
       $pricegroup
-      <th class="listheading">| . $locale->text('Break') . qq|</th>
+      <th class="listheading">| . $locale->text('Discount') . qq|</th>
       <th class="listheading">| . $locale->text('Sell Price') . qq|</th>
       $currency
       <th class="listheading">| . $locale->text('From') . qq|</th>
       <th class="listheading">| . $locale->text('To') . qq|</th>
+      <th class="listheading">| . $locale->text('Min Qty') . qq|</th>
     </tr>
 |;
 
     for $i ( 1 .. $numrows ) {
 
         if ( $form->{selectcurrency} ) {
-            $form->{selectcurrency} =~ s/ selected//;
+            $form->{selectcurrency} =~ s/ selected="selected"//;
             $form->{selectcurrency} =~
-s/option>$form->{"customercurr_$i"}/option selected>$form->{"customercurr_$i"}/;
+s/(value="$form->{"customercurr_$i"}")/$1 selected="selected"/;
             $currency = qq|
       <td><select data-dojo-type="dijit/form/Select" id="customercurr-$i" name="customercurr_$i">$form->{selectcurrency}</select></td>|;
         }
@@ -1192,6 +1195,7 @@ s/option>$form->{"customercurr_$i"}/option selected>$form->{"customercurr_$i"}/;
       $currency
       <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="validfrom_$i" size=11 title="$myconfig{dateformat}" value="$form->{"validfrom_$i"}"></td>
       <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="validto_$i" size=11 title="$myconfig{dateformat}" value="$form->{"validto_$i"}"></td>
+      <td><input class="date" data-dojo-type="dijit/form/TextBox" name="customerqty_$i" size=11 value="$form->{"customerqty_$i"}"></td>
     </tr>
 |;
     }
@@ -1328,9 +1332,9 @@ sub assembly_row {
             $column_data{qty} =
 qq|<td><input data-dojo-type="dijit/form/TextBox" name="qty_$i" size=6 value="$form->{"qty_$i"}" accesskey="$i" title="[Alt-$i]"></td>|;
             $column_data{partnumber} =
-qq|<td><input data-dojo-type="lsmb/parts/PartSelector" name="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" data-dojo-props="linenum: $i"></td>|;
+qq|<td><input data-dojo-type="lsmb/parts/PartSelector" name="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" data-dojo-props="channel: '/part/part-select/$i'"></td>|;
             $column_data{description} =
-qq|<td><input data-dojo-type="lsmb/parts/PartDescription" name="description_$i" size=30 value="$form->{"description_$i"}" data-dojo-props="linenum: $i"></td>|;
+qq|<td><div data-dojo-type="lsmb/parts/PartDescription" name="description_$i" size=30 data-dojo-props="channel: '/part/part-select/$i'">$form->{"description_$i"}</div></td>|;
             $column_data{partsgroup} =
 qq|<td><select data-dojo-type="dijit/form/Select" id="partsgroup-$i" name="partsgroup_$i">$form->{selectassemblypartsgroup}</select></td>|;
 
@@ -1582,7 +1586,7 @@ qq|$form->{name_list}[0]->{name}--$form->{name_list}[0]->{id}|;
 sub check_customer {
 
     @flds =
-      qw(customer customer_mn validfrom validto pricebreak customerprice pricegroup customercurr);
+      qw(customer customer_mn validfrom validto pricebreak customerprice pricegroup customercurr customerqty);
     @a     = ();
     $count = 0;
 

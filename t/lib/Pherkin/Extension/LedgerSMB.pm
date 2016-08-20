@@ -7,7 +7,7 @@ Pherkin::Extension::LedgerSMB
 LedgerSMB super-user connection to the PostgreSQL cluster and test
 company management routines
 
-=cut 
+=cut
 
 package Pherkin::Extension::LedgerSMB;
 
@@ -35,10 +35,31 @@ has admin_user_password => (is => 'rw', default => 'password');
 
 has db => (is => 'rw');
 has super_dbh => (is => 'rw');
+has admin_dbh => (is => 'rw', lazy => 1,
+                  builder => '_build_admin_dbh',
+                  clearer => '_clear_admin_dbh',
+    );
 has template_created => (is => 'rw', default => 0);
 has last_scenario_stash => (is => 'rw');
 has last_feature_stash => (is => 'rw');
 
+
+sub _build_admin_dbh {
+    my ($self) = @_;
+
+    my $db = LedgerSMB::Database->new(
+        dbname    => $self->last_scenario_stash->{"the company"},
+        username  => $self->admin_user_name,
+        password  => $self->admin_user_password,
+        host      => $self->host);
+
+    my $dbh = $db->connect({ PrintError => 0,
+                             RaiseError => 1,
+                             AutoCommit => 1,
+                           });
+
+    return $dbh;
+}
 
 sub step_directories {
     return [ 'ledgersmb_steps/' ];
@@ -52,12 +73,12 @@ sub pre_feature {
         username => $self->username,
         password => $self->password,
         host     => $self->host);
-    
+
     my $dbh = $db->connect({ PrintError => 0,
                              RaiseError => 1,
                              AutoCommit => 1,
                            });
-    
+
     $self->db($db);
     $self->super_dbh($dbh);
     $stash->{ext_lsmb} = $self;
@@ -77,7 +98,7 @@ sub pre_scenario {
     my ($self, $scenario, $feature_stash, $stash) = @_;
 
     $self->last_scenario_stash($stash);
-    
+
     $stash->{ext_lsmb} = $self;
     $stash->{"the admin"} = $self->admin_user_name;
     $stash->{"the admin password"} = $self->admin_user_password;
@@ -100,7 +121,7 @@ sub create_template {
     my $admin = $self->admin_user_name;
     $self->super_dbh->do(qq(DROP DATABASE IF EXISTS "$template"));
     $self->super_dbh->do(qq(DROP ROLE IF EXISTS "$admin"));
-    
+
     my $db = LedgerSMB::Database->new(
         dbname   => $self->template_db_name,
         username => $self->username,
@@ -166,12 +187,14 @@ sub create_from_template {
 
     $self->last_feature_stash->{"the company"} = $company;
     $self->last_scenario_stash->{"the company"} = $company;
+    $self->_clear_admin_dbh;
 }
 
 sub ensure_nonexisting_company {
     my ($self, $company) = @_;
 
     $self->super_dbh->do(qq(DROP DATABASE IF EXISTS "$company"));
+    $self->_clear_admin_dbh;
 }
 
 sub ensure_nonexisting_user {
@@ -181,7 +204,74 @@ sub ensure_nonexisting_user {
     ###TODO: if a database $self->last_scenario_stash->{the company}
     ### exists, verify that the user doesn't exist there and delete it
     ### if it does
-}  
+}
 
+sub assert_closed_posting_date {
+    my ($self, $date) = @_;
+
+    sleep 1; # wait for any handling to finish
+    my $sth = $self->admin_dbh->prepare(
+        qq|
+   INSERT INTO gl (transdate, person_id)
+        VALUES (?, (SELECT entity_id FROM users WHERE username = ?))
+     RETURNING id
+|);
+
+    my $rv = eval {
+        $sth->execute($date,
+                      $self->last_scenario_stash->{"the admin user"});
+        1;
+    };
+
+    die "Posting on $date incorrectly accepted"
+        if $rv;
+}
+
+sub post_transaction {
+    my ($self, $posting_date, $lines) = @_;
+
+    my $acc_sth = $self->admin_dbh->prepare(
+        qq|
+SELECT id
+  FROM account
+ WHERE accno = ?
+|);
+
+    for my $line (@$lines) {
+        $line->{amount} = ($line->{credit} || 0) - ($line->{debit} || 0);
+        delete $line->{$_} for (qw/ credit debit /);
+
+        next if $line->{account_id};
+
+        $acc_sth->execute($line->{accno})
+            or die "Failed to retrieve account '$line->{accno}': "
+                   . $acc_sth->errstr;
+        my ($account_id) = $acc_sth->fetchrow_array();
+        $line->{account_id} = $account_id;
+    }
+
+    my $trans_sth = $self->admin_dbh->prepare(
+        qq|
+INSERT INTO gl(transdate, person_id)
+     VALUES (?, (SELECT entity_id FROM users WHERE username = ?))
+  RETURNING id
+|);
+    $trans_sth->execute($posting_date,
+                        $self->last_scenario_stash->{"the admin user"})
+        or die "Failed to create 'gl' table row: " . $trans_sth->errstr;
+    my ($trans_id) = $trans_sth->fetchrow_array();
+
+    my $line_sth = $self->admin_dbh->prepare(
+        qq|
+INSERT INTO acc_trans(trans_id, transdate, chart_id, amount)
+     VALUES (?, ?, ?, ?)
+|);
+    for my $line (@$lines) {
+        $line_sth->execute($trans_id, $posting_date,
+                           $line->{account_id}, $line->{amount})
+            or die "Failed to insert 'acc_trans' table row: " . $line_sth->errstr;
+    }
+    $self->admin_dbh->commit;
+}
 
 1;

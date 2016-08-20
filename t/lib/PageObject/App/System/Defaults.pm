@@ -9,15 +9,16 @@ use PageObject;
 use Moose;
 extends 'PageObject';
 
-my $page_heading = 'System Defaults';
+__PACKAGE__->self_register(
+              'system-settings',
+              './/form[@id="system-settings"]',
+              tag_name => 'form',
+              attributes => {
+                  id => 'system-settings',
+              });
 
-sub verify {
+sub _verify {
     my ($self) = @_;
-
-    $self->driver
-        ->find_element("//*[\@id='maindiv']
-                           [.//*[\@class='listtop'
-                                 and text()='$page_heading']]");
 
     return $self;
 }

@@ -1,3 +1,11 @@
+# This file is an example file for the configuration of LedgerSMB.
+# A copy should be in the ledgersmb root directory, or an environment
+# variable by the name LSMB_CONFIG_FILE should hold the name
+# of an alternative location
+#
+# e.g.
+# LSMB_CONFIG_FILE=/etc/ledgersmb/ledgersmb.conf
+
 [main]
 auth = DB
 logging  = 0
@@ -47,10 +55,6 @@ no_db_str = database
 # This is the Dojo theme to be used by default -- e.g. when no other theme
 # has been selected.
 #dojo_theme = claro
-
-# This is the boolean indicating if dojo's compacted output ("built output")
-# should be used or the development version [1 = 'true' ==> 'built version']
-#dojo_built = 1
 
 
 [environment]
@@ -106,6 +110,20 @@ host = localhost
 db_namespace = public
 # sslmode can be require, allow, prefer, or disable.  Defaults to prefer.
 sslmode = prefer
+
+[debug]
+
+# This is the boolean indicating if dojo's compacted output ("built output")
+# should be used or the development version [1 = 'true' ==> 'built version']
+#
+# this should be used in versions you download from packages, but should 
+# NOT be used when running directly from version control software because 
+# you cannot guarantee you are running the correct versions of dojo
+# widgets with your aplication in that case.
+#
+#dojo_built = 1
+
+
 
 [log4perl_config_modules_loglevel]
 LedgerSMB = INFO

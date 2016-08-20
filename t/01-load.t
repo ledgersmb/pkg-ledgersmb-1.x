@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 208;
+use Test::More tests => 201;
 use File::Find;
 
 my @on_disk;
@@ -24,13 +24,6 @@ my @exception_modules =
      'LedgerSMB::Template::LaTeX',
 
      # Exclude because tested conditionally on XML::Twig way below
-     'LedgerSMB::RESTXML::Document::Base',
-     'LedgerSMB::RESTXML::Document::Customer',
-     'LedgerSMB::RESTXML::Document::Customer_Search',
-     'LedgerSMB::RESTXML::Document::Part',
-     'LedgerSMB::RESTXML::Document::Part_Search',
-     'LedgerSMB::RESTXML::Document::SalesOrder',
-     'LedgerSMB::RESTXML::Document::Session',
      'LedgerSMB::Template::ODS',
 
      # Exclude because tested conditionally on XML::Simple way below
@@ -55,7 +48,7 @@ my @exception_modules =
 my @modules =
     (
           'LedgerSMB::App_State',
-          'LedgerSMB::DBH', 'LedgerSMB::DBTest', 'LedgerSMB::I18N',
+          'LedgerSMB::DBH', 'LedgerSMB::I18N',
           'LedgerSMB::Locale', 'LedgerSMB::Mailer', 'LedgerSMB::Session',
           'LedgerSMB::User', 'LedgerSMB::Entity',
           'LedgerSMB::GL', 'LedgerSMB::Group', 'LedgerSMB::Timecard',
@@ -171,7 +164,7 @@ my @modules =
           'LedgerSMB::Scripts::timecard', 'LedgerSMB::Scripts::vouchers',
           'LedgerSMB::Scripts::employee::country',
           'LedgerSMB::Setting::Sequence', 'LedgerSMB::Taxes::Simple',
-          'LedgerSMB::Template::Elements',
+          'LedgerSMB::Template::Elements', 'LedgerSMB::Template::DBProvider',
           'LedgerSMB::Template::TTI18N', 'LedgerSMB::Template::TXT',
           'LedgerSMB::Template::HTML', 'LedgerSMB::Template::CSV',
           'LedgerSMB::Template::DB', 'LedgerSMB::Timecard::Type',
@@ -208,19 +201,7 @@ SKIP: {
 
 SKIP: {
     eval { require XML::Twig };
-
-    skip 'XML::Twig not installed', 8 if $@;
-
-    for ('LedgerSMB::RESTXML::Document::Base',
-         'LedgerSMB::RESTXML::Document::Customer',
-         'LedgerSMB::RESTXML::Document::Customer_Search',
-         'LedgerSMB::RESTXML::Document::Part',
-         'LedgerSMB::RESTXML::Document::Part_Search',
-         'LedgerSMB::RESTXML::Document::SalesOrder',
-         'LedgerSMB::RESTXML::Document::Session',
-        ) {
-        use_ok($_);
-    }
+    skip 'XML::Twig not installed', 1 if $@;
 
     eval { require OpenOffice::OODoc };
     skip 'OpenOffice::OODoc not installed', 1 if $@;
@@ -229,17 +210,17 @@ SKIP: {
 }
 
 SKIP: {
-	eval { require XML::Simple };
+        eval { require XML::Simple };
 
-	skip 'XML::Simple not installed', 1 if $@;
-	use_ok('LedgerSMB::REST_Format::xml');
+        skip 'XML::Simple not installed', 1 if $@;
+        use_ok('LedgerSMB::REST_Format::xml');
 }
 
 SKIP: {
-	eval { require CGI::Emulate::PSGI };
+        eval { require CGI::Emulate::PSGI };
 
-	skip 'CGI::Emulate::PSGI not installed', 1 if $@;
-	use_ok('LedgerSMB::PSGI');
+        skip 'CGI::Emulate::PSGI not installed', 1 if $@;
+        use_ok('LedgerSMB::PSGI');
 }
 
 SKIP: {
