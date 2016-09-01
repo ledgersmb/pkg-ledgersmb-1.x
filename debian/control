@@ -39,7 +39,7 @@ Depends: adduser,
          ${misc:Depends},
          ${perl:Depends}
 Recommends: libmath-bigint-gmp-perl,
-            libtemplate-plugin-latex-perl,
+            libtemplate-plugin-latex-perl (>=3.09-1),
             libtex-encode-perl,
             texlive-latex-recommended
 Suggests: apache2 | httpd-cgi,
