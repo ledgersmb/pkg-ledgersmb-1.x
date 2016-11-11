@@ -6,6 +6,8 @@
 override_dh_auto_configure:
 	cp ledgersmb.conf.default ledgersmb.conf
 
+override_dh_auto_build:
+
 override_dh_auto_test:
 
 override_dh_auto_install:
