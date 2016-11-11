@@ -2,4 +2,8 @@
 ledgersmb-1.4 binary: package-contains-empty-directory usr/share/ledgersmb-1.4/bin/custom/
 ledgersmb-1.4 binary: package-contains-empty-directory usr/share/ledgersmb-1.4/scripts/custom/
 ledgersmb-1.4 binary: package-contains-empty-directory usr/share/ledgersmb-1.4/LedgerSMB/Reconciliation/CSV/Formats/
-
+# These are from the version of the dojo libraries distributed with the application.
+ledgersmb-1.4 binary: embedded-javascript-library
+ledgersmb-1.4 binary: extra-license-file
+ledgersmb-1.4 binary: privacy-breach-google-adsense
+ledgersmb-1.4 binary: privacy-breach-logo
