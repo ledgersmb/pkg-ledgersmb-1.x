@@ -1,7 +1,7 @@
 Author: Robert James Clay <jame@rocasa.us>
-Description: Changing paths in Apache config for use on Debian.
+Description: Changing paths in Apache config for use on Debian systems.
 Origin: vendor
-Last-Update: 2016-05-03
+Last-Update: 2016-11-11
 --- a/ledgersmb-httpd-2.0-2.2.conf.template
 +++ b/ledgersmb-httpd-2.0-2.2.conf.template
 @@ -1,8 +1,8 @@
@@ -22,7 +22,7 @@ Last-Update: 2016-05-03
 -<Directory WORKING_DIR/rest>
 +<Directory /usr/share/ledgersmb-1.4/rest>
     RewriteEngine On
-    RewriteBase /ledgersmb-1.4/rest/
+    RewriteBase /ledgersmb/rest/
     RewriteRule .* ../rest-handler.pl
  </Directory>
  
