@@ -11,8 +11,9 @@ Vcs-Browser: https://github.com/ledgersmb/LedgerSMB
 
 Package: ledgersmb-1.4
 Architecture: all
-Depends: libcarp-always-perl,
-         libcgi-emulate-psgi-perl,
+Depends: adduser,
+         apache2 | httpd-cgi,
+         libcarp-always-perl,
          libcgi-simple-perl,
          libconfig-inifiles-perl,
          libdatetime-format-strptime-perl,
@@ -21,7 +22,6 @@ Depends: libcarp-always-perl,
          libdbi-perl,
          liberror-perl,
          libfile-mimeinfo-perl,
-         libjs-dojo-dojox,
          libjson-perl,
          liblocale-maketext-lexicon-perl (>= 0.62-1),
          liblog-log4perl-perl,
@@ -29,16 +29,15 @@ Depends: libcarp-always-perl,
          libmoose-perl,
          libnamespace-autoclean-perl,
          libnumber-format-perl,
-         libplack-perl,
          libtemplate-perl (>=2.14-1),
          perl (>= 5.8.1-1),
          postgresql-client,
          postgresql-contrib,
          starman,
+         ucf,
          ${misc:Depends},
          ${perl:Depends}
-Recommends: apache2 | httpd-cgi,
-            default-mta | mail-transport-agent,
+Recommends: default-mta | mail-transport-agent,
             libjson-xs-perl,
             libmath-bigint-gmp-perl,
             libparse-recdescent-perl,
@@ -47,11 +46,14 @@ Recommends: apache2 | httpd-cgi,
             texlive-latex-recommended,
             texlive-xetex
 Suggests: latex-cjk-all,
+          libcgi-emulate-psgi-perl,
           libimage-size-perl,
           libopenoffice-oodoc-perl,
           libx12-parser-perl,
+          libplack-perl,
           lpr,
-          postgresql
+          postgresql,
+          starlet
 Description: financial accounting and ERP program
  LedgerSMB is a double-entry financial accounting and Enterprise Resource
  Planning system which offers "Accounts Receivable", "Accounts Payable" and
