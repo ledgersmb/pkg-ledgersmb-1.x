@@ -15,15 +15,15 @@ LedgerSMB Configuration
 
     One way that company databases can be created fairly easily is by directing
     your web browser to the setup.pl script, which by default can be accessed at
-    http://localhost/ledgersmb/setup.pl. This is very different from approaches
+    http://localhost/ledgersmb-1.4/setup.pl. This is very different from approaches
     taken by LedgerSMB 1.2.x and SQL-Ledger, but rather forms a wizard to walk
     you through the process of creating company databases and initial users for
     those databases.
 
     The standard database superuser used in the setup.pl script has the name
-    'ledgersmb'. If it is not created and its password set during the package
+    'lsmb_dbadmin'. If it is not created and its password set during the package
     installation, that can be done or its password changed by running the
-    following command: 'dpkg-reconfigure ledgersmb'.
+    following command: 'dpkg-reconfigure ledgersmb-1.4'.
 
     Configuration files for Apache 2.2 or 2.4 are installed as necessary, with
     an example Apache fastcgi configuration available at lsmb_13-fcgi.conf in
@@ -91,4 +91,4 @@ Company database removal
 
 
 
- -- Robert James Clay <jame@rocasa.us>  Sun, 12 Apr 2015 12:07:18 -0400
+ -- Robert James Clay <jame@rocasa.us>  Sat, 12 Nov 2016 11:00:07 -0500
