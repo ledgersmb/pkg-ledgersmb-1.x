@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ledgersmb\n"
-"Report-Msgid-Bugs-To: ledgersmb@packages.debian.org\n"
-"POT-Creation-Date: 2012-10-31 14:29+0000\n"
+"Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2016-11-11 20:02-0500\n"
 "PO-Revision-Date: 2012-10-31 23:29+0900\n"
 "Last-Translator: victory <victory.deb@gmail.com>\n"
 "Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
@@ -25,14 +25,19 @@ msgstr "データベース管理ユーザのログイン名:"
 #. Type: string
 #. Description
 #: ../templates:2001
+#, fuzzy
+#| msgid ""
+#| "Please enter the login of the LedgerSMB database administrative user. "
+#| "This login is needed for the administrative web user interface, typically "
+#| "at http://localhost/ledgersmb/setup.pl."
 msgid ""
 "Please enter the login of the LedgerSMB database administrative user. This "
 "login is needed for the administrative web user interface, typically at "
-"http://localhost/ledgersmb/setup.pl."
+"http://localhost/ledgersmb-1.4/setup.pl."
 msgstr ""
 "LedgerSMB データベース管理ユーザのログイン名を入力してください。これは通常 "
-"http://localhost/ledgersmb/setup.pl にあるウェブユーザインターフェイスの管理に"
-"必要となります。"
+"http://localhost/ledgersmb/setup.pl にあるウェブユーザインターフェイスの管理"
+"に必要となります。"
 
 #. Type: password
 #. Description
@@ -43,14 +48,19 @@ msgstr "データベース管理ユーザのパスワード:"
 #. Type: password
 #. Description
 #: ../templates:3001
+#, fuzzy
+#| msgid ""
+#| "Please enter the password of the LedgerSMB database administrative user. "
+#| "This password is needed for the administrative web user interface, "
+#| "typically at http://localhost/ledgersmb/setup.pl."
 msgid ""
 "Please enter the password of the LedgerSMB database administrative user. "
 "This password is needed for the administrative web user interface, typically "
-"at http://localhost/ledgersmb/setup.pl."
+"at http://localhost/ledgersmb-1.4/setup.pl."
 msgstr ""
-"LedgerSMB データベース管理ユーザのパスワードを入力してください。このパスワード"
-"は通常 http://localhost/ledgersmb/setup.pl にあるウェブユーザインターフェイス"
-"の管理に必要となります。"
+"LedgerSMB データベース管理ユーザのパスワードを入力してください。このパスワー"
+"ドは通常 http://localhost/ledgersmb/setup.pl にあるウェブユーザインターフェイ"
+"スの管理に必要となります。"
 
 #. Type: boolean
 #. Description
@@ -71,9 +81,13 @@ msgstr ""
 #. Type: boolean
 #. Description
 #: ../templates:4001
+#, fuzzy
+#| msgid ""
+#| "More general information about the initial configuration of the "
+#| "application can be found in /usr/share/doc/ledgersmb/README.Debian."
 msgid ""
 "More general information about the initial configuration of the application "
-"can be found in /usr/share/doc/ledgersmb/README.Debian."
+"can be found in /usr/share/doc/ledgersmb-1.4/README.Debian."
 msgstr ""
-"アプリケーションの初期設定についての一般的な情報は "
-"/usr/share/doc/ledgersmb/README.Debian にあります。"
+"アプリケーションの初期設定についての一般的な情報は /usr/share/doc/ledgersmb/"
+"README.Debian にあります。"

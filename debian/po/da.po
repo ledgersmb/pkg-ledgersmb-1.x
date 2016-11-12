@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ledgersmb\n"
-"Report-Msgid-Bugs-To: ledgersmb@packages.debian.org\n"
-"POT-Creation-Date: 2012-06-07 08:21+0200\n"
+"Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2016-11-11 20:02-0500\n"
 "PO-Revision-Date: 2012-06-24 23:51+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -25,10 +25,15 @@ msgstr "Logind for databasens administrative bruger:"
 #. Type: string
 #. Description
 #: ../templates:2001
+#, fuzzy
+#| msgid ""
+#| "Please enter the login of the LedgerSMB database administrative user. "
+#| "This login is needed for the administrative web user interface, typically "
+#| "at http://localhost/ledgersmb/setup.pl."
 msgid ""
 "Please enter the login of the LedgerSMB database administrative user. This "
 "login is needed for the administrative web user interface, typically at "
-"http://localhost/ledgersmb/setup.pl."
+"http://localhost/ledgersmb-1.4/setup.pl."
 msgstr ""
 "Indtast venligst logindet for LedgerSMB-databasens administrative bruger. "
 "Dette logind er krævet for den administrative brugerflade på nettet, typisk "
@@ -43,14 +48,19 @@ msgstr "Adgangskode for databasens administrative bruger"
 #. Type: password
 #. Description
 #: ../templates:3001
+#, fuzzy
+#| msgid ""
+#| "Please enter the password of the LedgerSMB database administrative user. "
+#| "This password is needed for the administrative web user interface, "
+#| "typically at http://localhost/ledgersmb/setup.pl."
 msgid ""
 "Please enter the password of the LedgerSMB database administrative user. "
 "This password is needed for the administrative web user interface, typically "
-"at http://localhost/ledgersmb/setup.pl."
+"at http://localhost/ledgersmb-1.4/setup.pl."
 msgstr ""
-"Indtast venligst adgangskoden for LedgerSMB-databasens administrative bruger. "
-"Denne adgangskode er krævet for den administrative brugerflade på nettet, "
-"typisk på http://localhost/ledgersmb/setup.pl."
+"Indtast venligst adgangskoden for LedgerSMB-databasens administrative "
+"bruger. Denne adgangskode er krævet for den administrative brugerflade på "
+"nettet, typisk på http://localhost/ledgersmb/setup.pl."
 
 #. Type: boolean
 #. Description
@@ -71,10 +81,13 @@ msgstr ""
 #. Type: boolean
 #. Description
 #: ../templates:4001
+#, fuzzy
+#| msgid ""
+#| "More general information about the initial configuration of the "
+#| "application can be found in /usr/share/doc/ledgersmb/README.Debian."
 msgid ""
 "More general information about the initial configuration of the application "
-"can be found in /usr/share/doc/ledgersmb/README.Debian."
+"can be found in /usr/share/doc/ledgersmb-1.4/README.Debian."
 msgstr ""
-"Mere generel information om startkonfigurationen af programmet kan ses i "
-"/usr/share/doc/ledgersmb/README.Debian."
-
+"Mere generel information om startkonfigurationen af programmet kan ses i /"
+"usr/share/doc/ledgersmb/README.Debian."

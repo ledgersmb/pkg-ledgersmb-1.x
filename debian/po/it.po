@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ledgersmb\n"
-"Report-Msgid-Bugs-To: ledgersmb@packages.debian.org\n"
-"POT-Creation-Date: 2012-06-07 08:21+0200\n"
+"Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2016-11-11 20:02-0500\n"
 "PO-Revision-Date: 2012-06-21 20:42+0200\n"
 "Last-Translator: Beatrice Torracca <beatricet@libero.it>\n"
 "Language-Team: Italian <debian-l10n-italian@lists.debian.org>\n"
@@ -26,10 +26,15 @@ msgstr "Login dell'utente amministratore per il database:"
 #. Type: string
 #. Description
 #: ../templates:2001
+#, fuzzy
+#| msgid ""
+#| "Please enter the login of the LedgerSMB database administrative user. "
+#| "This login is needed for the administrative web user interface, typically "
+#| "at http://localhost/ledgersmb/setup.pl."
 msgid ""
 "Please enter the login of the LedgerSMB database administrative user. This "
 "login is needed for the administrative web user interface, typically at "
-"http://localhost/ledgersmb/setup.pl."
+"http://localhost/ledgersmb-1.4/setup.pl."
 msgstr ""
 "Inserire il login dell'utente amministratore per il database di LedgerSMB. "
 "Questo login è necessario per l'interfaccia utente web per "
@@ -44,10 +49,15 @@ msgstr "Password dell'utente amministratore per il database:"
 #. Type: password
 #. Description
 #: ../templates:3001
+#, fuzzy
+#| msgid ""
+#| "Please enter the password of the LedgerSMB database administrative user. "
+#| "This password is needed for the administrative web user interface, "
+#| "typically at http://localhost/ledgersmb/setup.pl."
 msgid ""
 "Please enter the password of the LedgerSMB database administrative user. "
 "This password is needed for the administrative web user interface, typically "
-"at http://localhost/ledgersmb/setup.pl."
+"at http://localhost/ledgersmb-1.4/setup.pl."
 msgstr ""
 "Inserire la password dell'utente amministratore per il database di "
 "LedgerSMB. Questa password è necessaria per l'interfaccia utente web per "
@@ -72,9 +82,13 @@ msgstr ""
 #. Type: boolean
 #. Description
 #: ../templates:4001
+#, fuzzy
+#| msgid ""
+#| "More general information about the initial configuration of the "
+#| "application can be found in /usr/share/doc/ledgersmb/README.Debian."
 msgid ""
 "More general information about the initial configuration of the application "
-"can be found in /usr/share/doc/ledgersmb/README.Debian."
+"can be found in /usr/share/doc/ledgersmb-1.4/README.Debian."
 msgstr ""
 "Informazioni più generali sulla configurazione iniziale dell'applicazione "
 "sono disponibili in /usr/share/doc/ledgersmb/README.Debian."
