@@ -39,7 +39,7 @@ case "$1" in
                     apache2_invoke enmod rewrite || exit $?
                 fi
                 apache2_invoke enconf ledgersmb-1.4.conf
-                [ ! -h /etc/ledgersmb-1.4/ledgersmb-httpd-2.4.conf ] && ln -s /etc/apache2/conf-available/ledgersmb-1.4.conf /etc/ledgersmb/ledgersmb-httpd-2.4.conf
+                [ ! -h /etc/ledgersmb-1.4/ledgersmb-httpd-2.4.conf ] && ln -s /etc/apache2/conf-available/ledgersmb-1.4.conf /etc/ledgersmb-1.4/ledgersmb-httpd-2.4.conf
             elif  dpkg-query -f '${Version}'  -W 'apache2.2-common' > /dev/null 2>&1 ; then
                 # if the configuration uses <IfVersion> uncomment the next line
                 # a2enmod -q version
