@@ -30,7 +30,7 @@ case "$1" in
         # Do Apache related processing if it is present.
         if [ -d "/etc/apache2" ]; then
             if [ -e /usr/share/apache2/apache2-maintscript-helper ] ; then
-                [ -d /etc/apache2/conf-available/ ] && [ ! -e /etc/apache2/conf-available/ledgersmb.conf ] && cp /usr/share/ledgersmb-1.4/ledgersmb-httpd-2.4.conf.template /etc/apache2/conf-available/ledgersmb-1.4.conf
+                [ -d /etc/apache2/conf-available/ ] && [ ! -e /etc/apache2/conf-available/ledgersmb-1.4.conf ] && cp /usr/share/ledgersmb-1.4/ledgersmb-httpd-2.4.conf.template /etc/apache2/conf-available/ledgersmb-1.4.conf
                 . /usr/share/apache2/apache2-maintscript-helper
                 if ! a2query -qm cgi ; then
                     apache2_invoke enmod cgi || exit $?
