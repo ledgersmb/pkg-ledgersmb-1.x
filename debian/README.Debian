@@ -29,7 +29,10 @@ LedgerSMB Configuration
     an example Apache fastcgi configuration available at lsmb_13-fcgi.conf in
     the /usr/share/ledgersmb/tools directory. Also; some information for use
     with Plack is available in README.plack, and for use with nginx is in the
-    /usr/share/ledgersmb/contrib/nginx-fcgiwrap directory.
+    /usr/share/ledgersmb/contrib/nginx-fcgiwrap directory. Starman is also
+    installed by default and you can expermment with that by changing to the
+    package installation directory at /usr/share/ledgersmb-1.4 and then running
+    this as root:  "starman -I. tools/starman.psgi".
 
     The application css directory is /var/lib/ledgersmb/css and defaults for the
     files are installed there from the example files during an package install.
@@ -91,4 +94,4 @@ Company database removal
 
 
 
- -- Robert James Clay <jame@rocasa.us>  Sat, 12 Nov 2016 11:00:07 -0500
+ -- Robert James Clay <jame@rocasa.us>  Thu, 24 Nov 2016 05:14:11 -0500
