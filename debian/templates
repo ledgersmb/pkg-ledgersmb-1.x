@@ -30,6 +30,6 @@ Type: select
 Choices: ${lsmbproxy}, None, nginx, Apache
 Default: None
 _Description: Web Reverse Proxy to configure?
- The LedgerSMB appication now defaults to being made available on port 5055.
+ The LedgerSMB appication now defaults to being made available on port 5762.
  If other access is needed, a Reverse Proxy can be configured using ngninx
  or Apache, or leave the choice as None if it is not needed.
