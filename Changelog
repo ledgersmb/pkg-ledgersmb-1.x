@@ -1,6 +1,6 @@
                                                         -*- fundamental -*-
 Changelog for 1.5 Series
-Forthcoming
+Released 2016-12-24
 
 UI changes:
 * LedgerSMB now frameless (ChrisT)
@@ -55,6 +55,35 @@ JohnL is John Locke
 
 Changelog for 1.4 Series
 Released 2014-09-15
+
+
+Changelog for 1.4.36
+* Overpayments incorrectly not reduced when applied (Erik H, #2346)
+* Fix number formatting/processing in batch payment/receipt (Erik H, #2350)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.4.35
+* Fixed release process; 1.4.32+ included '-dev' in tar version (Erik H)
+* Fix 'existing account' check when saving account configuration (Yves L)
+* Add 'make clean' Makefile target (Erik H, #1828)
+* Fix failing upgrades from 1.3 due to 'locked_by' not NULL (Erik H, #2241)
+* Fix inability to add new business unit class (Erik H, #1023)
+
+Erik H is Erik Huelsmann
+Yves L is Yves Lavoie
+
+
+Changelog for 1.4.34
+* Fixed PNL comparison periods selection resulting in error (Erik H, #2148)
+* Fixed PNL hierarchies both selected (Erik H, #2147)
+* Fixed error at bottom of invoice, under Starman (Erik H)
+* Add test and hard fail on incorrect tempdir permissions  (David G)
+
+Erik H is Erik Huelsmann
+David G is David Godfrey
+
 
 Changelog for 1.4.33
 * Fixed issue with COA overview and tax accounts (Chris T, #2030)

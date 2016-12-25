@@ -161,11 +161,9 @@ sub edit {
     }
 
     &display_form;
-
 }
 
 sub display_form {
-     $form->generate_selects(\%myconfig);
     my $invnumber = "sinumber";
     if ( $form->{vc} eq 'vendor' ) {
         $invnumber = "vinumber";
@@ -176,6 +174,7 @@ sub display_form {
     $form->close_form;
     $form->open_form;
     AA->get_files($form, $locale);
+    $form->generate_selects(\%myconfig);
     &form_header;
     &form_footer;
 
@@ -197,7 +196,8 @@ sub create_links {
                                  vc => $form->{vc},
                                  billing => $form->{vc} eq 'customer'
                                       && $form->{type} eq 'invoice')
-          unless defined $form->{"$form->{ARAP}_links"};
+        unless $form->{"$form->{ARAP}_links"};
+
 
     $duedate     = $form->{duedate};
     $crdate     = $form->{crdate};
@@ -333,9 +333,8 @@ sub create_links {
     # taxincluded can't be calculated
     # this works only if all taxes are checked
 
-    @taxaccounts = Tax::init_taxes( $form, $form->{taxaccounts} );
-
     if ( !$form->{oldinvtotal} ) { # first round loading (or amount was 0)
+        my @taxaccounts = Tax::init_taxes($form, $form->{taxaccounts});
         for (@taxaccounts) { $form->{ "calctax_" . $_->account } = 1 }
     }
 
@@ -355,6 +354,7 @@ sub create_links {
         $form->{readonly} = 1
           if $myconfig{acs} =~ /$form->{ARAP}--Add Transaction/;
     }
+    #$form->generate_selects(\%myconfig);
 }
 
 sub form_header {
@@ -718,7 +718,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
                       for my $bu (@{$form->{b_units}->{"$cls->{id}"}}){
                          my $selected = '';
                          if ($form->{"b_unit_$cls->{id}_$i"} eq $bu->{id}){
-                            $selected = "SELECTED='SELECTED'";
+                            $selected = 'selected="selected"';
                          }
                          print qq|  <option value="$bu->{id}" $selected>
                                         $bu->{control_code}
@@ -738,11 +738,6 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
     }
      my $tax_base = $form->{invtotal};
     foreach $item ( split / /, $form->{taxaccounts} ) {
-
-        if($form->{"calctax_$item"} && $is_update){
-            $form->{"tax_$item"} = $form->{"${item}_rate"} * $tax_base;
-            $form->{invtotal} += $form->{"tax_$item"};
-        }
         $form->{"calctax_$item"} =
           ( $form->{"calctax_$item"} ) ? "checked" : "";
         $form->{"tax_$item"} =
@@ -751,7 +746,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
         <tr>
       <td><input data-dojo-type="dijit/form/TextBox" name="tax_$item" id="tax_$item"
                      size=10 value=$form->{"tax_$item"} /></td>
-      <td align=right><input data-dojo-type="dijit/form/TextBox" id="calctax_$item" name="calctax_$item"
+      <td align=right><input id="calctax_$item" name="calctax_$item"
                                  class="checkbox" type="checkbox" data-dojo-type="dijit/form/CheckBox" value=1
                                  $form->{"calctax_$item"}
                             title="Calculate automatically"></td>
@@ -843,7 +838,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
         $form->{"select$form->{ARAP}_paid_$i"} =
           $form->{"select$form->{ARAP}_paid"};
         $form->{"select$form->{ARAP}_paid_$i"} =~
-s/option>\Q$form->{"$form->{ARAP}_paid_$i"}\E/option selected>$form->{"$form->{ARAP}_paid_$i"}/;
+s/option>\Q$form->{"$form->{ARAP}_paid_$i"}\E/option selected="selected">$form->{"$form->{ARAP}_paid_$i"}/;
 
         # format amounts
         $form->{"paid_$i"} =
@@ -1172,7 +1167,6 @@ sub update {
     my $display = shift;
     $form->open_form() unless $form->check_form();
     $is_update = 1;
-    if ( !$display ) {
 
         $form->{invtotal} = 0;
 
@@ -1225,15 +1219,22 @@ sub update {
               &rebuild_vc( $form->{vc}, $form->{ARAP}, $form->{transdate} )
               if !$newname;
         }
-    }#!$display
+
     @taxaccounts = split / /, $form->{taxaccounts};
 
     for (@taxaccounts) {
         $form->{"tax_$_"} =
-          $form->parse_amount( \%myconfig, $form->{"tax_$_"} );
+            $form->parse_amount( \%myconfig, $form->{"tax_$_"} );
+        $form->{"calctax_$_"} = 1 if !$form->{invtotal};
     }
 
-    @taxaccounts = Tax::init_taxes( $form, $form->{taxaccounts} );
+    my $tax_base = $form->{invtotal};
+    foreach $item ( split / /, $form->{taxaccounts} ) {
+        if($form->{"calctax_$item"} && $is_update){
+            $form->{"tax_$item"} = $form->{"${item}_rate"} * $tax_base;
+        }
+        $form->{invtotal} += $form->{"tax_$item"};
+    }
 
     $j = 1;
     for $i ( 1 .. $form->{paidaccounts} ) {
@@ -1290,6 +1291,7 @@ sub update {
     # For 1.5, we are just skipping create_links if the id exists
     # for 1.6 we will probably remove it
     &create_links unless $form->{id};
+    $form->generate_selects(\%myconfig);
 
     &display_form;
 
@@ -1371,21 +1373,17 @@ sub post {
 
     if ( AA->post_transaction( \%myconfig, \%$form ) ) {
 
-       $form->update_status( \%myconfig );
-       if ( $form->{printandpost} ) {
-           &{"print_$form->{formname}"}( $old_form, 1 );
+        $form->update_status( \%myconfig );
+        if ( $form->{printandpost} ) {
+            &{"print_$form->{formname}"}( $old_form, 1 );
         }
 
         if(defined($form->{batch_id}) and $form->{batch_id}
-           and ($form->{callback} !~ /vouchers/))
-    {
+           and ($form->{callback} !~ /vouchers/)) {
             $form->{callback}.= qq|&batch_id=$form->{batch_id}|;
-    }
-        if ($form->{separate_duties}){
-            $form->{rowcount} = 0;
-            edit();
         }
-        else { edit(); }
+        $form->{rowcount} = 0;
+        edit();
     }
     else {
         $form->error( $locale->text('Cannot post transaction!') );

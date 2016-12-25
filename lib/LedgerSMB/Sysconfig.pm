@@ -10,6 +10,8 @@ use Cwd;
 use Config;
 use Config::IniFiles;
 use DBI qw(:sql_types);
+use English qw(-no_match_vars);
+
 binmode STDOUT, ':utf8';
 binmode STDERR, ':utf8';
 
@@ -19,7 +21,7 @@ if (-r $cfg_file) {
     $cfg = Config::IniFiles->new( -file => $cfg_file ) || die @Config::IniFiles::errors;
 }
 else {
-    warn "No configuration file; running with default settings";
+    warn "No configuration file; running with default settings\n";
     $cfg = Config::IniFiles->new();
 }
 
@@ -40,6 +42,8 @@ keys in %args can be:
 
 =item envvar
 
+=item suffix
+
 =back
 
 =cut
@@ -50,14 +54,19 @@ sub def {
     my $key = $args{key} // $name;
     my $default = $args{default};
     my $envvar = $args{envvar};
+    my $suffix = $args{suffix};
 
     $default = $default->()
         if ref $default && ref $default eq 'CODE';
 
     $docs{$sec}->{$key} = $args{doc};
     {
+        ## no critic (strict);
         no strict 'refs';
         ${$name} = $cfg->val($sec, $key, $default);
+        if (defined $suffix) {
+            ${$name} = "${$name}$suffix";
+        }
         $ENV{$envvar} = $cfg->val($sec, $key, $default)
             if $envvar && defined $cfg->val($sec, $key, $default);
 
@@ -166,8 +175,15 @@ def 'fs_cssdir',
 # Temporary files stored at"
 def 'tempdir',
     section => 'main', # SHOULD BE 'paths' ????
-    default => sub { $ENV{TEMP} || '/tmp' },
+    default => sub { $ENV{TEMP} || '/tmp/ledgersmb' },
     envvar => 'HOME',
+    suffix => "-$EUID",
+    doc => qq||;
+
+# Backup files stored at"
+def 'backupdir',
+    section => 'paths',
+    default => sub { $ENV{BACKUP} || "/tmp/ledgersmb-backups" },
     doc => qq||;
 
 # Path to the translation files
@@ -189,10 +205,7 @@ def 'templates',
     default => 'templates',
     doc => qq||;
 
-our $cache_template_dir =
-    LedgerSMB::Sysconfig::tempdir() . "/lsmb_templates";
-# Backup path
-our $backuppath = LedgerSMB::Sysconfig::tempdir();
+our $cache_template_subdir = "lsmb_templates"; # this is a subdir of $tempdir and shouldn't have a leading slash
 
 
 ### SECTION  ---   mail
@@ -389,5 +402,55 @@ if(!(-d LedgerSMB::Sysconfig::tempdir())){
      #$logger->info("created tempdir \$tempdir rc=\$rc"); log4perl not initialised yet!
      }
 }
+
+sub check_permissions {
+    use English qw(-no_match_vars);
+
+    if($EUID == 0){
+        die_pretty( "Running a Web Service as root is a security problem",
+                    "If you are starting LedgerSMB as a system service",
+                    "please make sure that you drop privlidges as per README.md",
+                    "and the example files in conf/",
+                    "This makes it difficult to run on a privlidged port (<1024)",
+                    "In theory you can pass the --user argument to starman,",
+                    "However starman drops privlidges too late, starting us as root."
+        )
+    }
+
+
+    my $tempdir = LedgerSMB::Sysconfig::tempdir();
+
+    sub die_pretty {
+        my $dieHeader = '==============================================================================';
+        my $msg = "== " . join("\n== ",@_);
+        die("$dieHeader\n$msg\n$dieHeader\n "); # trailing "<space>" prevents the location hint from being lost when pushing it to a newline
+    }
+
+    if(!(-d "$tempdir")){
+        die_pretty( "$tempdir wasn't created.",
+                    "Does UID $EUID have access to $tempdir\'s parent?"
+        );
+    }
+
+    if(!(-r "$tempdir")){
+        die_pretty(" $tempdir can't be read from.",
+                    "Does UID $EUID have read permission?"
+        );
+    }
+
+    if(!(-w "$tempdir")){
+        die_pretty( "$tempdir can't be written to.",
+                    "Does UID $EUID have write permission?"
+        );
+    }
+
+    if(!(-x "$tempdir")){
+        die_pretty( "$tempdir can't be listed.",
+                    "Does UID $EUID have execute permission?"
+        );
+    }
+}
+
+check_permissions;
 
 1;

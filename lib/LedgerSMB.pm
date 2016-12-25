@@ -168,7 +168,7 @@ use Carp;
 use DBI;
 
 use base qw(LedgerSMB::Request);
-our $VERSION = '1.5.0-dev';
+our $VERSION = '1.5.0';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 
@@ -379,6 +379,12 @@ sub _process_argstr {
     # my $params = $query->Vars; returns a tied hash with keys that
     # are not parameters of the CGI query.
     %params = $query->Vars;
+
+    # Some clients send the 'action' parameter twice;
+    # see UI/js-src/Form.js::submit() for more
+    $params{action} = (split "\0", $params{action})[0]
+        if defined $params{action};
+
     for my $p(keys %params){
         if ((! defined $params{$p}) or ($params{$p} eq '')){
             delete $params{$p};

@@ -27,6 +27,7 @@
 !1.4/account-translations.sql
 1.4/drop-je-functions.sql
 !1.4/templatetrans.sql
+1.4/business_unit_class_id_seq-fix.sql
 #1.5 changes
 !1.5/invoice-tbl-cogs-constraint.sql
 1.5/trial_balance_cleanup.sql
@@ -40,3 +41,5 @@
 1.5/remove_pos_template.sql
 1.5/template_menu.sql
 1.5/template_menu2.sql
+1.5/issue-2380-modify-tax_extended_entry_id-constraint.sql
+

@@ -170,6 +170,7 @@ ALTER TABLE gl ENABLE TRIGGER gl_audit_trail;
 INSERT INTO gifi SELECT * FROM lsmb13.gifi;
 SELECT setting__set(setting_key, value) FROM lsmb13.defaults
  where not setting_key = 'version';
+UPDATE lsmb13.batch SET locked_by = NULL;
 INSERT INTO batch SELECT * FROM lsmb13.batch;
 
 ALTER TABLE ar DISABLE TRIGGER ar_track_global_sequence;
@@ -494,12 +495,20 @@ INSERT INTO exchangerate SELECT * FROM lsmb13.exchangerate;
 INSERT INTO business_unit (id, class_id, control_code, description)
 SELECT id, 1, description, description
   FROM lsmb13.department;
+UPDATE business_unit_class
+   SET active = t
+ WHERE id = 1
+   AND EXISTS (select 1 from lsmb13.department);
 
 INSERT INTO business_unit
        (id, class_id, control_code, description, start_date, end_date,
        credit_id)
 SELECT id + 1000, 2, projectnumber, description, startdate, enddate,
         credit_id from lsmb13.project;
+UPDATE business_unit_class
+   SET active = t
+ WHERE id = 2
+   AND EXISTS (select 1 from lsmb13.project);
 
 INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
 SELECT ac.entry_id, 1, gl.department_id

@@ -22,11 +22,17 @@ require(["dojo/parser", "dojo/query", "dojo/on", "dijit/registry",
                     if (dnode.target || ! dnode.href)
                         return;
 
+                    var href = dnode.href + "#s";
                     on(dnode, "click", function(e) {
-                        event.stop(e);
-                        c++;
-                        hash(dnode.href + "#s" + c.toString(16));
+                        if ( !e.ctrlKey && !e.shiftKey && !e.button != 0 ) {
+                          event.stop(e);
+                          c++;
+                          hash(href + c.toString(16));
+                        }
                     });
+                    var l = window.location;
+                    dnode.href = l.origin + l.pathname
+                        + l.search + "#" + dnode.href;
                 };
                 if (mainDiv != null) {
                     mainDiv.interceptClick = interceptClick;
@@ -57,6 +63,7 @@ require([
         function (on, query, domclass, event) {
             query("a.t-submenu").forEach(function(node){
                 on(node, "click", function(e) {
+                  if ( !e.ctrlKey && !e.shiftKey && !e.button != 0 ) {
                     event.stop(e);
                     var parent = node.parentNode;
                     if (domclass.contains(parent, "menu_closed")) {
@@ -65,6 +72,7 @@ require([
                     else {
                         domclass.replace(parent, "menu_closed", "menu_open");
                     }
+                  }
                 });
             });
         });

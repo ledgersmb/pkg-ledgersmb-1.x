@@ -283,7 +283,7 @@ sub _display_report {
         $recon->{"$field"} = $recon->{"$field"}->to_output(money => 1);
     }
     $recon->{submit_allowed} = ( $recon->{their_total}           - $recon->{beginning_balance})
-                             - ( $recon->{total_cleared_credits} - $recon->{total_cleared_debits});
+                             + ( $recon->{total_cleared_credits} - $recon->{total_cleared_debits});
     $recon->{submit_allowed} = int($recon->{submit_allowed}*100)/100;
     return $template->render($recon);
 }
@@ -456,27 +456,6 @@ sub pending {
 
         return $template->render();
     }
-}
-
-sub __default {
-
-    my ($request) = @_;
-
-    my $recon = LedgerSMB::DBObject::Reconciliation->new({base=>$request, copy=>'all'});
-    my $template;
-
-    $template = LedgerSMB::Template->new(
-        user => $request->{_user},
-        template => 'reconciliation/list',
-        locale => $request->{_locale},
-        format=>'HTML',
-        path=>"UI"
-    );
-    return $template->render(
-        {
-            reports=>$recon->get_report_list()
-        }
-    );
 }
 
 ###TODO-LOCALIZE-DOLLAR-AT
