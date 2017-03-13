@@ -57,7 +57,7 @@
     a(f && f.slice(0), function(a) {
       a.apply(null, d(c) ? c : [c])
     })
-  }, G = s.on = function(a, b) {
+  }, H = s.on = function(a, b) {
     var c = v[a] || (v[a] = []);
     c.push(b);
     return{remove:function() {
@@ -68,15 +68,15 @@
         }
       }
     }}
-  }, J = [], M = {}, K = [], P = {}, U = s.map = {}, A = [], B = {}, F = "", C = {}, H = {};
+  }, J = [], M = {}, K = [], P = {}, U = s.map = {}, A = [], B = {}, F = "", C = {}, G = {};
   x = {};
   var N = 0, Z = function(a) {
     var b, c, f, q;
-    for(b in H) {
-      c = H[b], (f = b.match(/^url\:(.+)/)) ? C["url:" + xa(f[1], a)] = c : "*now" == b ? q = c : "*noref" != b && (f = ba(b, a, !0), C[f.mid] = C["url:" + f.url] = c)
+    for(b in G) {
+      c = G[b], (f = b.match(/^url\:(.+)/)) ? C["url:" + xa(f[1], a)] = c : "*now" == b ? q = c : "*noref" != b && (f = ba(b, a, !0), C[f.mid] = C["url:" + f.url] = c)
     }
     q && q(ka(a));
-    H = {}
+    G = {}
   }, V = function(a) {
     return a.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, function(a) {
       return"\\" + a
@@ -139,7 +139,7 @@
         f = Y(d, q), f.config = c(f.config || {}, b.config[d])
       }
     }
-    b.cache && (Z(), H = b.cache, b.cache["*noref"] && Z());
+    b.cache && (Z(), G = b.cache, b.cache["*noref"] && Z());
     D("config", [b, s.rawConfig])
   };
   u("dojo-cdn");
@@ -163,22 +163,22 @@
     la(function() {
       a(b.deps, ya)
     })
-  }, wa = function(a, b, k, r, u) {
+  }, wa = function(a, b, k, u, r) {
     var e;
     if(h(a)) {
-      if((e = Y(a, r, !0)) && e.executed) {
+      if((e = Y(a, u, !0)) && e.executed) {
         return e.result
       }
       throw f("undefinedModule", a);
     }
-    d(a) || (E(a, 0, r), a = b, b = k);
+    d(a) || (E(a, 0, u), a = b, b = k);
     if(d(a)) {
       if(a.length) {
         k = "require*" + q();
         for(var p, g = [], l = 0;l < a.length;) {
-          p = a[l++], g.push(Y(p, r))
+          p = a[l++], g.push(Y(p, u))
         }
-        e = c(ea("", k, 0, ""), {injected:2, deps:g, def:b || n, require:r ? r.require : s, gc:1});
+        e = c(ea("", k, 0, ""), {injected:2, deps:g, def:b || n, require:u ? u.require : s, gc:1});
         B[e.mid] = e;
         da(e);
         var t = aa && 0 != "sync";
@@ -191,7 +191,7 @@
         b && b()
       }
     }
-    return u
+    return r
   }, ka = function(a) {
     if(!a) {
       return s
@@ -234,7 +234,7 @@
     return b.join("/")
   }, ea = function(a, b, c, f) {
     return{pid:a, mid:b, pack:c, url:f, executed:0, def:0}
-  }, Aa = function(b, c, d, q, h, s, r, u, e) {
+  }, Aa = function(b, c, d, q, h, s, u, r, e) {
     var p, g, l, t;
     t = /^\./.test(b);
     if(/(^\/)|(\:)|(\.js$)/.test(b) || t && !c) {
@@ -249,17 +249,17 @@
     c = ($ = b.match(/^([^\/]+)(\/(.+))?$/)) ? $[1] : "";
     (p = d[c]) ? b = c + "/" + (g = $[3] || p.main) : c = "";
     var J = 0;
-    a(u, function(a) {
+    a(r, function(a) {
       var c = b.match(a[0]);
       c && 0 < c.length && (J = k(a[1]) ? b.replace(a[0], a[1]) : a[1])
     });
     if(J) {
-      return Aa(J, 0, d, q, h, s, r, u, e)
+      return Aa(J, 0, d, q, h, s, u, r, e)
     }
     if(d = q[b]) {
       return e ? ea(d.pid, d.mid, d.pack, d.url) : q[b]
     }
-    q = (l = oa(b, r)) ? l[1] + b.substring(l[3]) : c ? p.location + "/" + g : b;
+    q = (l = oa(b, u)) ? l[1] + b.substring(l[3]) : c ? p.location + "/" + g : b;
     /(^\/)|(\:)/.test(q) || (q = h + q);
     return ea(c, b, p, za(q + ".js"))
   }, ba = function(a, b, c) {
@@ -491,7 +491,7 @@
   };
   O.amd = {vendor:"dojotoolkit.org"};
   c(c(s, m.loaderPatch), g.loaderPatch);
-  G("error", function(a) {
+  H("error", function(a) {
     try {
       if(console.error(a), a instanceof Error) {
         for(var b in a) {
@@ -503,7 +503,7 @@
   c(s, {uid:q, cache:C, packs:P});
   r.define || (r.define = O, r.require = s, a(X, function(a) {
     E(a)
-  }), G = x.deps || g.deps || m.deps, x = x.callback || g.callback || m.callback, s.boot = G || x ? [G || [], x] : 0)
+  }), H = x.deps || g.deps || m.deps, x = x.callback || g.callback || m.callback, s.boot = H || x ? [H || [], x] : 0)
 })(this.dojoConfig || this.djConfig || this.require || {}, {async:1, hasCache:{"config-selectorEngine":"lite", "config-tlmSiblingOfDojo":1, "dojo-built":1, "dojo-loader":1, dom:1, "host-browser":1}, packages:[{location:"../lsmb", main:"src", name:"lsmb"}, {location:"../dijit", name:"dijit"}, {location:".", name:"dojo"}]});
 require({cache:{"dojo/request/default":function() {
   define(["exports", "require", "../has"], function(g, m, e) {
@@ -808,10 +808,10 @@ require({cache:{"dojo/request/default":function() {
       function a(a) {
         return a && "input" == a.tagName.toLowerCase() && a.type && "radio" == a.type.toLowerCase() && a.name && a.name.toLowerCase()
       }
-      var c, f, b, q, s, r, k = {}, l = h._isElementShown, g = h.effectiveTabIndex, t = function(d) {
+      var c, f, b, q, s, k, l = {}, g = h._isElementShown, u = h.effectiveTabIndex, t = function(d) {
         for(d = d.firstChild;d;d = d.nextSibling) {
-          if(!(1 != d.nodeType || 9 >= p("ie") && "HTML" !== d.scopeName || !l(d))) {
-            var h = g(d);
+          if(!(1 != d.nodeType || 9 >= p("ie") && "HTML" !== d.scopeName || !g(d))) {
+            var h = u(d);
             if(0 <= h) {
               if(0 == h) {
                 c || (c = d), f = d
@@ -820,20 +820,20 @@ require({cache:{"dojo/request/default":function() {
                   if(!b || h < q) {
                     q = h, b = d
                   }
-                  if(!s || h >= r) {
-                    r = h, s = d
+                  if(!s || h >= k) {
+                    k = h, s = d
                   }
                 }
               }
               h = a(d);
-              e.get(d, "checked") && h && (k[h] = d)
+              e.get(d, "checked") && h && (l[h] = d)
             }
             "SELECT" != d.nodeName.toUpperCase() && t(d)
           }
         }
       };
-      l(d) && t(d);
-      return{first:k[a(c)] || c, last:k[a(f)] || f, lowest:k[a(b)] || b, highest:k[a(s)] || s}
+      g(d) && t(d);
+      return{first:l[a(c)] || c, last:l[a(f)] || f, lowest:l[a(b)] || b, highest:l[a(s)] || s}
     }, getFirstInTabbingOrder:function(d, a) {
       var c = h._getTabNavigable(m.byId(d, a));
       return c.lowest ? c.lowest : c.first
@@ -860,8 +860,8 @@ require({cache:{"dojo/request/default":function() {
     d.baseUrl = d.config.baseUrl = e.baseUrl;
     d.isAsync = e.async;
     d.locale = m.locale;
-    m = "$Rev: 718461a $".match(/[0-9a-f]{7,}/);
-    d.version = {major:1, minor:10, patch:6, flag:"", revision:m ? m[0] : NaN, toString:function() {
+    m = "$Rev: 00f5aea $".match(/[0-9a-f]{7,}/);
+    d.version = {major:1, minor:10, patch:7, flag:"", revision:m ? m[0] : NaN, toString:function() {
       var a = d.version;
       return a.major + "." + a.minor + "." + a.patch + a.flag + " (" + a.revision + ")"
     }};
@@ -1114,7 +1114,7 @@ require({cache:{"dojo/request/default":function() {
     b("dijit-legacy-requires") && w(0, function() {
       g(["dijit/_base/manager"])
     });
-    var G = {};
+    var H = {};
     n = p("dijit._WidgetBase", [y, x], {id:"", _setIdAttr:"domNode", lang:"", _setLangAttr:D("lang"), dir:"", _setDirAttr:D("dir"), "class":"", _setClassAttr:{node:"domNode", type:"class"}, _setTypeAttr:null, style:"", title:"", tooltip:"", baseClass:"", srcNodeRef:null, domNode:null, containerNode:null, ownerDocument:null, _setOwnerDocumentAttr:function(a) {
       this._set("ownerDocument", a)
     }, attributeMap:{}, _blankGif:n.blankGif || g.toUrl("dojo/resources/blank.gif"), _introspect:function() {
@@ -1250,17 +1250,17 @@ require({cache:{"dojo/request/default":function() {
       }else {
         var f = this.focusNode && !s.isFunction(this.focusNode) ? "focusNode" : "domNode", q = this[f] && this[f].tagName, h;
         if(h = q) {
-          if(!(h = G[q])) {
+          if(!(h = H[q])) {
             h = this[f];
-            var k = {}, r;
-            for(r in h) {
-              k[r.toLowerCase()] = !0
+            var k = {}, e;
+            for(e in h) {
+              k[e.toLowerCase()] = !0
             }
-            h = G[q] = k
+            h = H[q] = k
           }
         }
-        r = h;
-        c = a in this.attributeMap ? this.attributeMap[a] : c.s in this ? this[c.s] : r && c.l in r && "function" != typeof b || /^aria-|^data-|^role$/.test(a) ? f : null;
+        e = h;
+        c = a in this.attributeMap ? this.attributeMap[a] : c.s in this ? this[c.s] : e && c.l in e && "function" != typeof b || /^aria-|^data-|^role$/.test(a) ? f : null;
         null != c && this._attrToDom(a, b, c);
         this._set(a, b)
       }
@@ -1383,25 +1383,25 @@ require({cache:{"dojo/request/default":function() {
       throw Error("declare" + (b ? " " + b : "") + ": " + a);
     }
     function l(a, b, c) {
-      var f, d, q, h, k, s, r, e = this._inherited = this._inherited || {};
+      var f, d, q, h, e, s, k, r = this._inherited = this._inherited || {};
       "string" == typeof a && (f = a, a = b, b = c);
       c = 0;
       h = a.callee;
       (f = f || h.nom) || n("can't deduce a name to call inherited()", this.declaredClass);
-      k = this.constructor._meta;
-      q = k.bases;
-      r = e.p;
+      e = this.constructor._meta;
+      q = e.bases;
+      k = r.p;
       if(f != D) {
-        if(e.c !== h && (r = 0, s = q[0], k = s._meta, k.hidden[f] !== h)) {
-          (d = k.chains) && "string" == typeof d[f] && n("calling chained method with inherited: " + f, this.declaredClass);
+        if(r.c !== h && (k = 0, s = q[0], e = s._meta, e.hidden[f] !== h)) {
+          (d = e.chains) && "string" == typeof d[f] && n("calling chained method with inherited: " + f, this.declaredClass);
           do {
-            if(k = s._meta, d = s.prototype, k && (d[f] === h && d.hasOwnProperty(f) || k.hidden[f] === h)) {
+            if(e = s._meta, d = s.prototype, e && (d[f] === h && d.hasOwnProperty(f) || e.hidden[f] === h)) {
               break
             }
-          }while(s = q[++r]);
-          r = s ? r : -1
+          }while(s = q[++k]);
+          k = s ? k : -1
         }
-        if(s = q[++r]) {
+        if(s = q[++k]) {
           if(d = s.prototype, s._meta && d.hasOwnProperty(f)) {
             c = d[f]
           }else {
@@ -1410,23 +1410,23 @@ require({cache:{"dojo/request/default":function() {
               if(d = s.prototype, (c = d[f]) && (s._meta ? d.hasOwnProperty(f) : c !== h)) {
                 break
               }
-            }while(s = q[++r])
+            }while(s = q[++k])
           }
         }
         c = s && c || t[f]
       }else {
-        if(e.c !== h && (r = 0, (k = q[0]._meta) && k.ctor !== h)) {
-          d = k.chains;
-          for((!d || "manual" !== d.constructor) && n("calling chained constructor with inherited", this.declaredClass);(s = q[++r]) && !((k = s._meta) && k.ctor === h);) {
+        if(r.c !== h && (k = 0, (e = q[0]._meta) && e.ctor !== h)) {
+          d = e.chains;
+          for((!d || "manual" !== d.constructor) && n("calling chained constructor with inherited", this.declaredClass);(s = q[++k]) && !((e = s._meta) && e.ctor === h);) {
           }
-          r = s ? r : -1
+          k = s ? k : -1
         }
-        for(;(s = q[++r]) && !(c = (k = s._meta) ? k.ctor : s);) {
+        for(;(s = q[++k]) && !(c = (e = s._meta) ? e.ctor : s);) {
         }
         c = s && c
       }
-      e.c = c;
-      e.p = r;
+      r.c = c;
+      r.p = k;
       if(c) {
         return!0 === b ? c : c.apply(this, b || a)
       }
@@ -1546,7 +1546,7 @@ require({cache:{"dojo/request/default":function() {
     function y(k, g, m) {
       "string" != typeof k && (m = g, g = k, k = "");
       m = m || {};
-      var w, z, A, B, F, C, H, N = 1, Z = g;
+      var w, z, A, B, F, C, G, N = 1, Z = g;
       if("[object Array]" == x.call(g)) {
         N = k;
         A = [];
@@ -1611,12 +1611,13 @@ require({cache:{"dojo/request/default":function() {
       A = m.constructor;
       A !== t.constructor && (A.nom = D, w.constructor = A);
       for(z = N - 1;z;--z) {
-        (A = C[z]._meta) && A.chains && (H = u(H || {}, A.chains))
+        (A = C[z]._meta) && A.chains && (G = u(G || {}, A.chains))
       }
-      w["-chains-"] && (H = u(H || {}, w["-chains-"]));
-      A = !H || !H.hasOwnProperty(D);
-      C[0] = B = H && "manual" === H.constructor ? q(C) : 1 == C.length ? b(m.constructor, A) : f(C, A);
-      B._meta = {bases:C, hidden:m, chains:H, parents:Z, ctor:m.constructor};
+      w["-chains-"] && (G = u(G || {}, w["-chains-"]));
+      g && (g.prototype && g.prototype["-chains-"]) && (G = u(G || {}, g.prototype["-chains-"]));
+      A = !G || !G.hasOwnProperty(D);
+      C[0] = B = G && "manual" === G.constructor ? q(C) : 1 == C.length ? b(m.constructor, A) : f(C, A);
+      B._meta = {bases:C, hidden:m, chains:G, parents:Z, ctor:m.constructor};
       B.superclass = g && g.prototype;
       B.extend = a;
       B.createSubclass = c;
@@ -1624,17 +1625,17 @@ require({cache:{"dojo/request/default":function() {
       w.constructor = B;
       w.getInherited = p;
       w.isInstanceOf = h;
-      w.inherited = G;
+      w.inherited = H;
       w.__inherited = l;
       k && (w.declaredClass = k, e.setObject(k, B));
-      if(H) {
-        for(F in H) {
-          w[F] && ("string" == typeof H[F] && F != D) && (A = w[F] = s(F, C, "after" === H[F]), A.nom = F)
+      if(G) {
+        for(F in G) {
+          w[F] && ("string" == typeof G[F] && F != D) && (A = w[F] = s(F, C, "after" === G[F]), A.nom = F)
         }
       }
       return B
     }
-    var u = e.mixin, t = Object.prototype, x = t.toString, z = new Function, v = 0, D = "constructor", G = g.config.isDebug ? k : l;
+    var u = e.mixin, t = Object.prototype, x = t.toString, z = new Function, v = 0, D = "constructor", H = g.config.isDebug ? k : l;
     g.safeMixin = y.safeMixin = function(a, b) {
       var c, f;
       for(c in b) {
@@ -1759,11 +1760,11 @@ require({cache:{"dojo/request/default":function() {
       if(!h.isRight(b)) {
         var q = f(b.target);
         if(u = !b.target.disabled && q && q.dojoClick) {
-          if(x = (t = "useTarget" == u) ? q : b.target, t && b.preventDefault(), z = b.changedTouches ? b.changedTouches[0].pageX - a.global.pageXOffset : b.clientX, v = b.changedTouches ? b.changedTouches[0].pageY - a.global.pageYOffset : b.clientY, D = ("object" == typeof u ? u.x : "number" == typeof u ? u : 0) || 4, G = ("object" == typeof u ? u.y : "number" == typeof u ? u : 0) || 4, !y) {
+          if(x = (t = "useTarget" == u) ? q : b.target, t && b.preventDefault(), z = b.changedTouches ? b.changedTouches[0].pageX - a.global.pageXOffset : b.clientX, v = b.changedTouches ? b.changedTouches[0].pageY - a.global.pageYOffset : b.clientY, D = ("object" == typeof u ? u.x : "number" == typeof u ? u : 0) || 4, H = ("object" == typeof u ? u.y : "number" == typeof u ? u : 0) || 4, !y) {
             y = !0;
             var s = function(b) {
               u = t ? e.isDescendant(a.doc.elementFromPoint(b.changedTouches ? b.changedTouches[0].pageX - a.global.pageXOffset : b.clientX, b.changedTouches ? b.changedTouches[0].pageY - a.global.pageYOffset : b.clientY), x) : u && (b.changedTouches ? b.changedTouches[0].target : b.target) == x && Math.abs((b.changedTouches ? b.changedTouches[0].pageX - a.global.pageXOffset : b.clientX) - z) <= D && Math.abs((b.changedTouches ? b.changedTouches[0].pageY - a.global.pageYOffset : b.clientY) - v) <= 
-              G
+              H
             };
             a.doc.addEventListener(c, function(a) {
               h.isRight(a) || (s(a), t && a.preventDefault())
@@ -1805,7 +1806,7 @@ require({cache:{"dojo/request/default":function() {
         a[b] = k("MSPointer") ? "MSPointer" + b.charAt(0).toUpperCase() + b.slice(1) : "pointer" + b
       }
       return a
-    }(), w = k("touch-events"), y, u, t = !1, x, z, v, D, G, J, M, K;
+    }(), w = k("touch-events"), y, u, t = !1, x, z, v, D, H, J, M, K;
     k("touch") && (s ? d(function() {
       a.doc.addEventListener(r.down, function(a) {
         b(a, r.move, r.up)
@@ -1888,15 +1889,15 @@ require({cache:{"dojo/request/default":function() {
       if(c.slice && "px" == c.slice(-2)) {
         return parseFloat(c)
       }
-      var f = a.style, d = a.runtimeStyle, h = f.left, e = d.left;
+      var f = a.style, d = a.runtimeStyle, e = f.left, h = d.left;
       d.left = a.currentStyle.left;
       try {
         f.left = c, c = f.pixelLeft
       }catch(k) {
         c = 0
       }
-      f.left = h;
-      d.left = e;
+      f.left = e;
+      d.left = h;
       return c
     } : function(a, c) {
       return parseFloat(c) || 0
@@ -1938,28 +1939,28 @@ require({cache:{"dojo/request/default":function() {
       var g = l.getComputedStyle(d);
       return 1 == k ? g : e(d, c, g[c] || d.style[c])
     };
-    l.set = function(a, c, h) {
-      var e = m.byId(a), k = arguments.length, g = "opacity" == c;
-      c = f[c] ? "cssFloat" in e.style ? "cssFloat" : "styleFloat" : c;
+    l.set = function(a, c, e) {
+      var h = m.byId(a), k = arguments.length, g = "opacity" == c;
+      c = f[c] ? "cssFloat" in h.style ? "cssFloat" : "styleFloat" : c;
       if(3 == k) {
-        return g ? d(e, h) : e.style[c] = h
+        return g ? d(h, e) : h.style[c] = e
       }
       for(var p in c) {
         l.set(a, p, c[p])
       }
-      return l.getComputedStyle(e)
+      return l.getComputedStyle(h)
     };
     return l
   })
 }, "dojo/dom-geometry":function() {
   define(["./sniff", "./_base/window", "./dom", "./dom-style"], function(g, m, e, n) {
-    function l(a, c, f, b, d, h) {
-      h = h || "px";
+    function l(a, c, f, b, d, e) {
+      e = e || "px";
       a = a.style;
-      isNaN(c) || (a.left = c + h);
-      isNaN(f) || (a.top = f + h);
-      0 <= b && (a.width = b + h);
-      0 <= d && (a.height = d + h)
+      isNaN(c) || (a.left = c + e);
+      isNaN(f) || (a.top = f + e);
+      0 <= b && (a.width = b + e);
+      0 <= d && (a.height = d + e)
     }
     function p(a) {
       return"button" == a.tagName.toLowerCase() || "input" == a.tagName.toLowerCase() && "button" == (a.getAttribute("type") || "").toLowerCase()
@@ -2054,8 +2055,8 @@ require({cache:{"dojo/request/default":function() {
       c = c || m.doc;
       var f = g("ie");
       if(f && !h.isBodyLtr(c)) {
-        var b = g("quirks"), d = b ? m.body(c) : c.documentElement, k = m.global;
-        6 == f && (!b && k.frameElement && d.scrollHeight > d.clientHeight) && (a += d.clientLeft);
+        var b = g("quirks"), d = b ? m.body(c) : c.documentElement, e = m.global;
+        6 == f && (!b && e.frameElement && d.scrollHeight > d.clientHeight) && (a += d.clientLeft);
         return 8 > f || b ? a + d.clientWidth - d.scrollWidth : -a
       }
       return a
@@ -2399,7 +2400,7 @@ require({cache:{"dojo/request/default":function() {
   })
 }, "dijit/BackgroundIframe":function() {
   define("require ./main dojo/_base/config dojo/dom-construct dojo/dom-style dojo/_base/lang dojo/on dojo/sniff".split(" "), function(g, m, e, n, l, p, k, h) {
-    h.add("config-bgIframe", h("ie") && !/IEMobile\/10\.0/.test(navigator.userAgent) || h("trident") && /Windows NT 6.[01]/.test(navigator.userAgent));
+    h.add("config-bgIframe", (h("ie") || h("trident")) && !/IEMobile\/10\.0/.test(navigator.userAgent));
     var d = new function() {
       var a = [];
       this.pop = function() {
@@ -2665,18 +2666,18 @@ require({cache:{"dojo/request/default":function() {
     }, _processTemplateNode:function(a, b, c) {
       var d = !0, e = this.attachScope || this, h = b(a, "dojoAttachPoint") || b(a, "data-dojo-attach-point");
       if(h) {
-        for(var k = h.split(/\s*,\s*/);h = k.shift();) {
+        for(var g = h.split(/\s*,\s*/);h = g.shift();) {
           l.isArray(e[h]) ? e[h].push(a) : e[h] = a, d = "containerNode" != h, this._attachPoints.push(h)
         }
       }
       if(b = b(a, "dojoAttachEvent") || b(a, "data-dojo-attach-event")) {
         h = b.split(/\s*,\s*/);
-        for(k = l.trim;b = h.shift();) {
+        for(g = l.trim;b = h.shift();) {
           if(b) {
-            var g = null;
-            -1 != b.indexOf(":") ? (g = b.split(":"), b = k(g[0]), g = k(g[1])) : b = k(b);
-            g || (g = b);
-            this._attachEvents.push(c(a, b, l.hitch(e, g)))
+            var k = null;
+            -1 != b.indexOf(":") ? (k = b.split(":"), b = g(k[0]), k = g(k[1])) : b = g(b);
+            k || (k = b);
+            this._attachEvents.push(c(a, b, l.hitch(e, k)))
           }
         }
       }
@@ -2944,11 +2945,11 @@ require({cache:{"dojo/request/default":function() {
             if(!k(d)) {
               for(;t;) {
                 t == f && (t = c);
-                var v = l.position(t), D = k(t), G = "rtl" == p.getComputedStyle(t).direction.toLowerCase();
+                var v = l.position(t), D = k(t), H = "rtl" == p.getComputedStyle(t).direction.toLowerCase();
                 if(t == c) {
                   v.w = w;
                   v.h = y;
-                  if(c == b && (h || m("trident")) && G) {
+                  if(c == b && (h || m("trident")) && H) {
                     v.x += c.offsetWidth - v.w
                   }
                   v.x = 0;
@@ -2960,7 +2961,7 @@ require({cache:{"dojo/request/default":function() {
                   v.x += J.l;
                   v.y += J.t;
                   var M = t.clientWidth, K = v.w - M;
-                  0 < M && 0 < K && (G && m("rtl-adjust-position-for-verticalScrollBar") && (v.x += K), v.w = M);
+                  0 < M && 0 < K && (H && m("rtl-adjust-position-for-verticalScrollBar") && (v.x += K), v.w = M);
                   M = t.clientHeight;
                   K = v.h - M;
                   0 < M && 0 < K && (v.h = M)
@@ -2969,7 +2970,7 @@ require({cache:{"dojo/request/default":function() {
                 var P = u.x - v.x, U = u.y - v.y, A = P + u.w - v.w, B = U + u.h - v.h, F, C;
                 if(0 < A * P && (t.scrollLeft || t == c || t.scrollWidth > t.offsetHeight)) {
                   F = Math[0 > P ? "max" : "min"](P, A);
-                  if(G && (8 == h && !g || 5 <= m("trident"))) {
+                  if(H && (8 == h && !g || 5 <= m("trident"))) {
                     F = -F
                   }
                   C = t.scrollLeft;
@@ -2985,8 +2986,8 @@ require({cache:{"dojo/request/default":function() {
             }
           }
         }
-      }catch(H) {
-        console.error("scrollIntoView: " + H), d.scrollIntoView(!1)
+      }catch(G) {
+        console.error("scrollIntoView: " + G), d.scrollIntoView(!1)
       }
     }};
     g.setObject("dojo.window", h);
@@ -3041,7 +3042,7 @@ require({cache:{"dojo/request/default":function() {
       return h(a, f, e)
     }, around:function(a, c, f, b, d) {
       function k(a, b) {
-        J.push({aroundCorner:a, corner:b, pos:{x:{L:z, R:z + D, M:z + (D >> 1)}[a.charAt(1)], y:{T:v, B:v + G, M:v + (G >> 1)}[a.charAt(0)]}})
+        J.push({aroundCorner:a, corner:b, pos:{x:{L:z, R:z + D, M:z + (D >> 1)}[a.charAt(1)], y:{T:v, B:v + H, M:v + (H >> 1)}[a.charAt(0)]}})
       }
       var r;
       if("string" == typeof c || "offsetWidth" in c || "ownerSVGElement" in c) {
@@ -3070,7 +3071,7 @@ require({cache:{"dojo/request/default":function() {
           c = c.parentNode
         }
       }
-      var z = r.x, v = r.y, D = "w" in r ? r.w : r.w = r.width, G = "h" in r ? r.h : (n.deprecated("place.around: dijit/place.__Rectangle: { x:" + z + ", y:" + v + ", height:" + r.height + ", width:" + D + " } has been deprecated.  Please use { x:" + z + ", y:" + v + ", h:" + r.height + ", w:" + D + " }", "", "2.0"), r.h = r.height), J = [];
+      var z = r.x, v = r.y, D = "w" in r ? r.w : r.w = r.width, H = "h" in r ? r.h : (n.deprecated("place.around: dijit/place.__Rectangle: { x:" + z + ", y:" + v + ", height:" + r.height + ", width:" + D + " } has been deprecated.  Please use { x:" + z + ", y:" + v + ", h:" + r.height + ", w:" + D + " }", "", "2.0"), r.h = r.height), J = [];
       g.forEach(f, function(a) {
         var c = b;
         switch(a) {
@@ -3107,7 +3108,7 @@ require({cache:{"dojo/request/default":function() {
             k(a.aroundCorner, a.corner)
         }
       });
-      a = h(a, J, d, {w:D, h:G});
+      a = h(a, J, d, {w:D, h:H});
       a.aroundNodePos = r;
       return a
     }}
@@ -3173,7 +3174,7 @@ require({cache:{"dojo/request/default":function() {
       this.bgIframe = new r(this.domNode);
       this.fadeIn = e.fadeIn({node:this.domNode, duration:this.duration, onEnd:h.hitch(this, "_onShow")});
       this.fadeOut = e.fadeOut({node:this.domNode, duration:this.duration, onEnd:h.hitch(this, "_onHide")})
-    }, show:function(a, c, f, d, e, g, r) {
+    }, show:function(a, c, f, d, e, g, q) {
       if(!this.aroundNode || !(this.aroundNode === c && this.containerNode.innerHTML == a)) {
         if("playing" == this.fadeOut.status()) {
           this._onDeck = arguments
@@ -3181,14 +3182,14 @@ require({cache:{"dojo/request/default":function() {
           this.containerNode.innerHTML = a;
           e && this.set("textDir", e);
           this.containerNode.align = d ? "right" : "left";
-          var q = b.around(this.domNode, c, f && f.length ? f : x.defaultPosition, !d, h.hitch(this, "orient")), l = q.aroundNodePos;
-          "M" == q.corner.charAt(0) && "M" == q.aroundCorner.charAt(0) ? (this.connectorNode.style.top = l.y + (l.h - this.connectorNode.offsetHeight >> 1) - q.y + "px", this.connectorNode.style.left = "") : "M" == q.corner.charAt(1) && "M" == q.aroundCorner.charAt(1) ? this.connectorNode.style.left = l.x + (l.w - this.connectorNode.offsetWidth >> 1) - q.x + "px" : (this.connectorNode.style.left = "", this.connectorNode.style.top = "");
+          var l = b.around(this.domNode, c, f && f.length ? f : x.defaultPosition, !d, h.hitch(this, "orient")), r = l.aroundNodePos;
+          "M" == l.corner.charAt(0) && "M" == l.aroundCorner.charAt(0) ? (this.connectorNode.style.top = r.y + (r.h - this.connectorNode.offsetHeight >> 1) - l.y + "px", this.connectorNode.style.left = "") : "M" == l.corner.charAt(1) && "M" == l.aroundCorner.charAt(1) ? this.connectorNode.style.left = r.x + (r.w - this.connectorNode.offsetWidth >> 1) - l.x + "px" : (this.connectorNode.style.left = "", this.connectorNode.style.top = "");
           k.set(this.domNode, "opacity", 0);
           this.fadeIn.play();
           this.isShowingNow = !0;
           this.aroundNode = c;
           this.onMouseEnter = g || u;
-          this.onMouseLeave = r || u
+          this.onMouseLeave = q || u
         }
       }
     }, orient:function(a, b, f, d, e) {
@@ -3197,14 +3198,14 @@ require({cache:{"dojo/request/default":function() {
       d = d.w;
       a.className = "dijitTooltip " + {"MR-ML":"dijitTooltipRight", "ML-MR":"dijitTooltipLeft", "TM-BM":"dijitTooltipAbove", "BM-TM":"dijitTooltipBelow", "BL-TL":"dijitTooltipBelow dijitTooltipABLeft", "TL-BL":"dijitTooltipAbove dijitTooltipABLeft", "BR-TR":"dijitTooltipBelow dijitTooltipABRight", "TR-BR":"dijitTooltipAbove dijitTooltipABRight", "BR-BL":"dijitTooltipRight", "BL-BR":"dijitTooltipLeft"}[b + "-" + f];
       this.domNode.style.width = "auto";
-      var k = p.position(this.domNode);
+      var g = p.position(this.domNode);
       if(c("ie") || c("trident")) {
-        k.w += 2
+        g.w += 2
       }
-      var g = Math.min(Math.max(d, 1), k.w);
-      p.setMarginBox(this.domNode, {w:g});
+      var k = Math.min(Math.max(d, 1), g.w);
+      p.setMarginBox(this.domNode, {w:k});
       "B" == f.charAt(0) && "B" == b.charAt(0) ? (a = p.position(a), b = this.connectorNode.offsetHeight, a.h > h ? (this.connectorNode.style.top = h - (e.h + b >> 1) + "px", this.connectorNode.style.bottom = "") : (this.connectorNode.style.bottom = Math.min(Math.max(e.h / 2 - b / 2, 0), a.h - b) + "px", this.connectorNode.style.top = "")) : (this.connectorNode.style.top = "", this.connectorNode.style.bottom = "");
-      return Math.max(0, k.w - d)
+      return Math.max(0, g.w - d)
     }, _onShow:function() {
       c("ie") && (this.domNode.style.filter = "")
     }, hide:function(a) {
@@ -3356,16 +3357,16 @@ require({cache:{"dojo/request/default":function() {
       }
     }, h = function(c, b, e, h) {
       h = c[b];
-      var k = c.deferred;
+      var g = c.deferred;
       if(h) {
         try {
-          var g = h(e);
-          0 === b ? "undefined" !== typeof g && a(k, b, g) : g && "function" === typeof g.then ? (c.cancel = g.cancel, g.then(d(k, 1), d(k, 2), d(k, 0))) : a(k, 1, g)
+          var k = h(e);
+          0 === b ? "undefined" !== typeof k && a(g, b, k) : k && "function" === typeof k.then ? (c.cancel = k.cancel, k.then(d(g, 1), d(g, 2), d(g, 0))) : a(g, 1, k)
         }catch(l) {
-          a(k, 2, l)
+          a(g, 2, l)
         }
       }else {
-        a(k, b, e)
+        a(g, b, e)
       }
     }, d = function(c, b) {
       return function(d) {
@@ -3385,7 +3386,7 @@ require({cache:{"dojo/request/default":function() {
         }
       }
     }, c = function(a) {
-      var b = this.promise = new n, d = this, g, r, l = !1, m = [];
+      var b = this.promise = new n, d = this, g, l, m = !1, y = [];
       this.isResolved = b.isResolved = function() {
         return 1 === g
       };
@@ -3396,7 +3397,7 @@ require({cache:{"dojo/request/default":function() {
         return!!g
       };
       this.isCanceled = b.isCanceled = function() {
-        return l
+        return m
       };
       this.progress = function(a, c) {
         if(g) {
@@ -3405,7 +3406,7 @@ require({cache:{"dojo/request/default":function() {
           }
           return b
         }
-        k(m, 0, a, null, d);
+        k(y, 0, a, null, d);
         return b
       };
       this.resolve = function(a, c) {
@@ -3415,8 +3416,8 @@ require({cache:{"dojo/request/default":function() {
           }
           return b
         }
-        k(m, g = 1, r = a, null, d);
-        m = null;
+        k(y, g = 1, l = a, null, d);
+        y = null;
         return b
       };
       var u = this.reject = function(a, c) {
@@ -3426,8 +3427,8 @@ require({cache:{"dojo/request/default":function() {
           }
           return b
         }
-        k(m, g = 2, r = a, void 0, d);
-        m = null;
+        k(y, g = 2, l = a, void 0, d);
+        y = null;
         return b
       };
       this.then = b.then = function(a, f, d) {
@@ -3436,7 +3437,7 @@ require({cache:{"dojo/request/default":function() {
         e.deferred = new c(function(a) {
           return e.cancel && e.cancel(a)
         });
-        g && !m ? h(e, g, r, void 0) : m.push(e);
+        g && !y ? h(e, g, l, void 0) : y.push(e);
         return e.deferred.promise
       };
       this.cancel = b.cancel = function(b, c) {
@@ -3449,9 +3450,9 @@ require({cache:{"dojo/request/default":function() {
             var d = a(b);
             b = "undefined" === typeof d ? b : d
           }
-          l = !0;
+          m = !0;
           if(g) {
-            if(2 === g && r === b) {
+            if(2 === g && l === b) {
               return b
             }
           }else {
@@ -3670,25 +3671,25 @@ require({cache:{"dojo/request/default":function() {
     }});
     d._templateCache = {};
     d.getCachedTemplate = function(a, c, f) {
-      var b = d._templateCache, h = a, g = b[h];
-      if(g) {
+      var b = d._templateCache, g = a, h = b[g];
+      if(h) {
         try {
-          if(!g.ownerDocument || g.ownerDocument == (f || document)) {
-            return g
+          if(!h.ownerDocument || h.ownerDocument == (f || document)) {
+            return h
           }
-        }catch(r) {
+        }catch(l) {
         }
-        e.destroy(g)
+        e.destroy(h)
       }
       a = k.trim(a);
       if(c || a.match(/\$\{([^\}]+)\}/g)) {
-        return b[h] = a
+        return b[g] = a
       }
       c = e.toDom(a, f);
       if(1 != c.nodeType) {
         throw Error("Invalid template: " + a);
       }
-      return b[h] = c
+      return b[g] = c
     };
     p("ie") && l(window, "unload", function() {
       var a = d._templateCache, c;
@@ -4368,25 +4369,25 @@ require({cache:{"dojo/request/default":function() {
     }, registerIframe:function(a) {
       return this.registerWin(a.contentWindow, a)
     }, registerWin:function(a, b) {
-      var f = this, e = a.document && a.document.body;
-      if(e) {
+      var e = this, f = a.document && a.document.body;
+      if(f) {
         var g = c("pointer-events") ? "pointerdown" : c("MSPointer") ? "MSPointerDown" : c("touch-events") ? "mousedown, touchstart" : "mousedown", h = d(a.document, g, function(a) {
           if(!a || !(a.target && null == a.target.parentNode)) {
-            f._onTouchNode(b || a.target, "mouse")
+            e._onTouchNode(b || a.target, "mouse")
           }
-        }), k = d(e, "focusin", function(a) {
+        }), k = d(f, "focusin", function(a) {
           if(a.target.tagName) {
             var c = a.target.tagName.toLowerCase();
-            "#document" == c || "body" == c || (s.isFocusable(a.target) ? f._onFocusNode(b || a.target) : f._onTouchNode(b || a.target))
+            "#document" == c || "body" == c || (s.isFocusable(a.target) ? e._onFocusNode(b || a.target) : e._onTouchNode(b || a.target))
           }
-        }), l = d(e, "focusout", function(a) {
-          f._onBlurNode(b || a.target)
+        }), l = d(f, "focusout", function(a) {
+          e._onBlurNode(b || a.target)
         });
         return{remove:function() {
           h.remove();
           k.remove();
           l.remove();
-          e = h = k = l = null
+          f = h = k = l = null
         }}
       }
     }, _onBlurNode:function(a) {
@@ -4405,9 +4406,9 @@ require({cache:{"dojo/request/default":function() {
       var d = [];
       try {
         for(;a;) {
-          var f = n.get(a, "dijitPopupParent");
-          if(f) {
-            a = r.byId(f).domNode
+          var e = n.get(a, "dijitPopupParent");
+          if(e) {
+            a = r.byId(e).domNode
           }else {
             if(a.tagName && "body" == a.tagName.toLowerCase()) {
               if(a === b.body()) {
@@ -4415,8 +4416,8 @@ require({cache:{"dojo/request/default":function() {
               }
               a = q.get(a.ownerDocument).frameElement
             }else {
-              var e = a.getAttribute && a.getAttribute("widgetId"), g = e && r.byId(e);
-              g && !("mouse" == c && g.get("disabled")) && d.unshift(e);
+              var f = a.getAttribute && a.getAttribute("widgetId"), g = f && r.byId(f);
+              g && !("mouse" == c && g.get("disabled")) && d.unshift(f);
               a = a.parentNode
             }
           }
@@ -4427,17 +4428,17 @@ require({cache:{"dojo/request/default":function() {
     }, _onFocusNode:function(a) {
       a && 9 != a.nodeType && (y = (new Date).getTime(), this._clearFocusTimer && (clearTimeout(this._clearFocusTimer), delete this._clearFocusTimer), this._onTouchNode(a), a != this.curNode && (this.set("prevNode", this.curNode), this.set("curNode", a)))
     }, _setStack:function(a, b) {
-      var c = this.activeStack, d = c.length - 1, f = a.length - 1;
-      if(a[f] != c[d]) {
+      var c = this.activeStack, d = c.length - 1, e = a.length - 1;
+      if(a[e] != c[d]) {
         this.set("activeStack", a);
-        var e;
-        for(e = d;0 <= e && c[e] != a[e];e--) {
-          if(d = r.byId(c[e])) {
+        var f;
+        for(f = d;0 <= f && c[f] != a[f];f--) {
+          if(d = r.byId(c[f])) {
             d._hasBeenBlurred = !0, d.set("focused", !1), d._focusManager == this && d._onBlur(b), this.emit("widget-blur", d, b)
           }
         }
-        for(e++;e <= f;e++) {
-          if(d = r.byId(a[e])) {
+        for(f++;f <= e;f++) {
+          if(d = r.byId(a[f])) {
             d.set("focused", !0), d._focusManager == this && d._onFocus(b), this.emit("widget-focus", d, b)
           }
         }
