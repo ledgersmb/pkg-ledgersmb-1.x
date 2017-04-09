@@ -1,10 +1,12 @@
-Build started: Tue Mar 14 2017 14:04:17 GMT-0000 (UTC)
+Build started: Sun Apr 09 2017 15:05:32 GMT-0000 (UTC)
 Build application version: 1.10.7 (52b43d4)
 Messages:
 info(102) Optimizing module
 	module: lsmb/accounts/AccountSelector
 	module: lsmb/ResizingTextarea
+	module: lsmb/reports/ComparisonSelector
 	module: lsmb/PublishRadioButton
+	module: lsmb/reports/PeriodSelector
 	module: lsmb/parts/PartDescription
 	module: lsmb/PublishSelect
 	module: lsmb/TabularForm
@@ -50,14 +52,12 @@ info(102) Optimizing module
 	module: lsmb/SetupLoginButton
 	module: lsmb/parts/PartStore
 	module: lsmb/PublishNumberTextBox
-	module: lsmb/ComparisonSelectionBalance
 	module: lsmb/parts/PartRestStore
 	module: lsmb/MaximizeMinimize
 	module: lsmb/SubscribeSelect
 	module: lsmb/layout/TableContainer
 	module: lsmb/PrintButton
 	module: lsmb/InvoiceLines
-	module: lsmb/ComparisonSelectionIncome
 	module: lsmb/SubscribeShowHide
 	module: lsmb/SubscribeCheckBox
 	module: lsmb/users/ChangePassword
@@ -1143,160 +1143,160 @@ info(102) Optimizing module
 	module: dojo/cldr/nls/ar/ethiopic
 	module: dojo/cldr/nls/ar/gregorian
 info(106) Optimizing CSS.
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/Dialog_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/layout/TabContainer.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/layout/AccordionContainer.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/layout/AccordionContainer.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/form/Slider_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/form/Slider_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/form/TimeTextBox.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/layout/AccordionContainer.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/soria.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/nihilo.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/ColorPalette.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/Editor.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/form/Common_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/form/Checkbox.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/layout/TabContainer_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/TimePicker.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/icons/editorIcons.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/form/Slider.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/Calendar_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/form/Slider.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/Dialog.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/Tree.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/tundra.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/TitlePane_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/form/Checkbox.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/form/Slider_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/ColorPalette.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/Editor.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/claro_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/Menu.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/Toolbar.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/icons/editorIcons_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/Common.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/Menu_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/TitlePane.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/Calendar_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/TitlePane.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/layout/AccordionContainer_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/Menu_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/Dialog.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/Editor_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/Toolbar_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/Menu_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/TitlePane.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/ColorPalette.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/Tree.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/form/Button.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/soria_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/form/Common.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/Menu.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/layout/TabContainer.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/TimePicker.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/form/Button_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/form/TimeTextBox.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/ColorPalette.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/TitlePane_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/claro.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/ProgressBar.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/form/Button_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/layout/TabContainer.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/Common.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/Toolbar.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/layout/TabContainer_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/InlineEditBox.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/Menu_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/Dialog_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/Editor_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/layout/SplitContainer.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/form/Select.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/Editor.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/form/Common.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/layout/BorderContainer.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/layout/TabContainer.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/form/Checkbox.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/layout/ContentPane.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/layout/AccordionContainer_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/layout/ContentPane.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/Dialog.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/Tree_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/layout/TabContainer_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/dijit_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/layout/BorderContainer.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/TitlePane_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/Calendar.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/ProgressBar.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/Common.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/Toolbar.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/ProgressBar.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/Editor.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/form/Button_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/form/RadioButton.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/form/Button.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/icons/commonIcons_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/icons/commonIcons.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/TimePicker.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/document.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/tundra_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/form/Common.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/form/Button.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/Tree.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/form/Button.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/TimePicker.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/form/Common.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/Dialog_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/layout/TabContainer_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/Menu.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/Dialog.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/layout/ContentPane.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/Calendar.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/ProgressBar_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/Tree_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/ProgressBar.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/Tree.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/form/Slider.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/Menu.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/Editor_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/Tree_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/Calendar.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/Editor_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/TimePicker_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/dijit.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/layout/BorderContainer.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/Calendar.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/layout/AccordionContainer.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/TitlePane_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/form/NumberSpinner.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/form/Select.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/ProgressBar_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/ProgressBar_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/form/Checkbox.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/form/Select.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/layout/BorderContainer.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/form/Select.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/Calendar_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/Common.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/nihilo_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/layout/SplitContainer.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/form/Slider_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/TitlePane.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/claro/form/RadioButton.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/TimePicker_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/TimePicker_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/layout/SplitContainer.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/form/Slider.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/form/RadioButton.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/form/RadioButton.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/ProgressBar_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/Dialog_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/soria/Toolbar.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/nihilo/Calendar_rtl.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dijit/themes/tundra/layout/ContentPane.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dojo/_firebug/firebug.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dojo/resources/dojo.css
-	file: /tmp/tmp.mL1KNLeRXr/LedgerSMB/UI/js-src/dojo/resources/dnd.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/Dialog_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/layout/TabContainer.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/layout/AccordionContainer.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/layout/AccordionContainer.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/form/Slider_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/form/Slider_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/form/TimeTextBox.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/layout/AccordionContainer.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/soria.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/nihilo.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/ColorPalette.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/Editor.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/form/Common_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/form/Checkbox.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/layout/TabContainer_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/TimePicker.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/icons/editorIcons.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/form/Slider.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/Calendar_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/form/Slider.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/Dialog.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/Tree.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/tundra.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/TitlePane_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/form/Checkbox.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/form/Slider_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/ColorPalette.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/Editor.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/claro_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/Menu.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/Toolbar.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/icons/editorIcons_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/Common.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/Menu_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/TitlePane.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/Calendar_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/TitlePane.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/layout/AccordionContainer_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/Menu_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/Dialog.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/Editor_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/Toolbar_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/Menu_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/TitlePane.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/ColorPalette.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/Tree.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/form/Button.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/soria_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/form/Common.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/Menu.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/layout/TabContainer.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/TimePicker.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/form/Button_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/form/TimeTextBox.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/ColorPalette.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/TitlePane_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/claro.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/ProgressBar.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/form/Button_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/layout/TabContainer.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/Common.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/Toolbar.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/layout/TabContainer_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/InlineEditBox.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/Menu_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/Dialog_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/Editor_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/layout/SplitContainer.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/form/Select.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/Editor.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/form/Common.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/layout/BorderContainer.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/layout/TabContainer.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/form/Checkbox.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/layout/ContentPane.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/layout/AccordionContainer_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/layout/ContentPane.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/Dialog.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/Tree_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/layout/TabContainer_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/dijit_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/layout/BorderContainer.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/TitlePane_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/Calendar.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/ProgressBar.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/Common.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/Toolbar.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/ProgressBar.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/Editor.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/form/Button_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/form/RadioButton.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/form/Button.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/icons/commonIcons_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/icons/commonIcons.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/TimePicker.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/document.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/tundra_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/form/Common.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/form/Button.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/Tree.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/form/Button.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/TimePicker.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/form/Common.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/Dialog_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/layout/TabContainer_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/Menu.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/Dialog.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/layout/ContentPane.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/Calendar.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/ProgressBar_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/Tree_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/ProgressBar.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/Tree.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/form/Slider.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/Menu.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/Editor_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/Tree_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/Calendar.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/Editor_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/TimePicker_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/dijit.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/layout/BorderContainer.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/Calendar.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/layout/AccordionContainer.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/TitlePane_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/form/NumberSpinner.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/form/Select.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/ProgressBar_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/ProgressBar_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/form/Checkbox.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/form/Select.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/layout/BorderContainer.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/form/Select.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/Calendar_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/Common.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/nihilo_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/layout/SplitContainer.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/form/Slider_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/TitlePane.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/claro/form/RadioButton.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/TimePicker_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/TimePicker_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/layout/SplitContainer.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/form/Slider.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/form/RadioButton.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/form/RadioButton.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/ProgressBar_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/Dialog_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/soria/Toolbar.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/nihilo/Calendar_rtl.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dijit/themes/tundra/layout/ContentPane.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dojo/_firebug/firebug.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dojo/resources/dojo.css
+	file: /tmp/tmp.X6A1t5pZmd/LedgerSMB/UI/js-src/dojo/resources/dnd.css
 info(107) Package Version:
 	package: lsmb; version: 1.5.0
 	package: dijit; version: 1.10.7
@@ -1317,118 +1317,6 @@ warn(224) A plugin dependency was encountered but there was no build-time plugin
 	module: dojo/request; plugin: dojo/request/default
 	module: dojo/request/registry; plugin: dojo/request/default
 Layer Contents:
-lsmb/main:
-	dojo/request/xhr
-	dijit/form/nls/validate
-	dijit/form/TextBox
-	dijit/_CssStateMixin
-	lsmb/PublishCheckBox
-	lsmb/SetupLoginButton
-	lsmb/PublishSelect
-	dijit/_HasDropDown
-	lsmb/SubscribeCheckBox
-	dijit/_MenuBase
-	dojo/_base/xhr
-	dojo/i18n
-	lsmb/ComparisonSelectionBalance
-	dojo/parser
-	dijit/form/templates/DropDownButton.html
-	lsmb/DateTextBox
-	dijit/form/ToggleButton
-	dojo/date/stamp
-	dijit/form/DateTextBox
-	dijit/templates/Calendar.html
-	lsmb/main
-	dijit/form/MappedTextBox
-	dijit/form/_TextBoxMixin
-	dijit/form/RadioButton
-	lsmb/PublishRadioButton
-	dojo/NodeList-dom
-	dijit/form/_RadioButtonMixin
-	lsmb/MainContentPane
-	dojo/cookie
-	dijit/form/templates/DropDownBox.html
-	lsmb/layout/TableContainer
-	dojo/request/util
-	dojo/promise/all
-	dijit/form/NumberTextBox
-	dijit/form/templates/Button.html
-	dojo/_base/url
-	dijit/templates/MenuItem.html
-	dijit/form/templates/CheckBox.html
-	dojo/cldr/nls/gregorian
-	dijit/templates/MenuSeparator.html
-	dijit/form/DropDownButton
-	dijit/form/_FormValueMixin
-	dijit/form/_FormWidgetMixin
-	dojo/request/handlers
-	dojo/date
-	dijit/layout/_ContentPaneResizeMixin
-	dijit/form/RangeBoundTextBox
-	dijit/nls/loading
-	dojo/_base/Deferred
-	dojo/cldr/nls/number
-	lsmb/Form
-	lsmb/PublishNumberTextBox
-	dijit/MenuItem
-	dojo/cldr/supplemental
-	dojo/hash
-	dijit/layout/_LayoutWidget
-	dijit/popup
-	dijit/templates/Menu.html
-	dijit/form/Button
-	dijit/form/Form
-	dojo/errors/RequestTimeoutError
-	lsmb/Invoice
-	dojo/request/iframe
-	dojo/regexp
-	dijit/form/_FormMixin
-	dijit/DropDownMenu
-	dijit/form/_CheckBoxMixin
-	dijit/layout/ContentPane
-	dijit/form/templates/ValidationTextBox.html
-	dijit/form/templates/TextBox.html
-	dijit/layout/utils
-	dijit/_KeyNavContainer
-	dijit/_Contained
-	dijit/form/CheckBox
-	lsmb/ComparisonSelectionIncome
-	dijit/_Container
-	dojo/html
-	dijit/form/ValidationTextBox
-	dojo/number
-	dijit/_WidgetsInTemplateMixin
-	lsmb/iframe
-	lsmb/SubscribeNumberTextBox
-	lsmb/PrintButton
-	dojo/request/watch
-	dojo/data/util/sorter
-	dijit/form/_ButtonMixin
-	dojo/io-query
-	dojo/date/locale
-	dijit/form/_FormSelectWidget
-	dijit/form/Select
-	dojo/_base/json
-	lsmb/SubscribeShowHide
-	dojo/store/util/QueryResults
-	dijit/_KeyNavMixin
-	lsmb/MaximizeMinimize
-	dijit/form/_FormWidget
-	dojo/errors/RequestError
-	dijit/CalendarLite
-	lsmb/InvoiceLines
-	lsmb/InvoiceLine
-	dijit/MenuSeparator
-	dijit/form/_DateTimeTextBox
-	dijit/Calendar
-	dijit/form/_ToggleButtonMixin
-	dojo/json
-	dijit/form/templates/Select.html
-	lsmb/SubscribeSelect
-	dojo/dom-form
-	lsmb/TabularForm
-	dijit/form/_FormValueWidget
-
 dojo/dojo:
 	dojo/_base/fx
 	dojo/request/default
@@ -1497,9 +1385,119 @@ dojo/dojo:
 	dojo/ready
 	dojo/errors/CancelError
 
+lsmb/main:
+	dojo/request/xhr
+	dijit/form/nls/validate
+	dijit/form/TextBox
+	dijit/_CssStateMixin
+	lsmb/PublishCheckBox
+	lsmb/SetupLoginButton
+	lsmb/PublishSelect
+	dijit/_HasDropDown
+	lsmb/SubscribeCheckBox
+	dijit/_MenuBase
+	dojo/_base/xhr
+	dojo/i18n
+	dojo/parser
+	dijit/form/templates/DropDownButton.html
+	lsmb/DateTextBox
+	dijit/form/ToggleButton
+	dojo/date/stamp
+	dijit/form/DateTextBox
+	dijit/templates/Calendar.html
+	lsmb/main
+	dijit/form/MappedTextBox
+	dijit/form/_TextBoxMixin
+	dijit/form/RadioButton
+	lsmb/PublishRadioButton
+	dojo/NodeList-dom
+	dijit/form/_RadioButtonMixin
+	lsmb/MainContentPane
+	dojo/cookie
+	dijit/form/templates/DropDownBox.html
+	lsmb/layout/TableContainer
+	dojo/request/util
+	dojo/promise/all
+	dijit/form/NumberTextBox
+	dijit/form/templates/Button.html
+	dojo/_base/url
+	dijit/templates/MenuItem.html
+	dijit/form/templates/CheckBox.html
+	dojo/cldr/nls/gregorian
+	dijit/templates/MenuSeparator.html
+	dijit/form/DropDownButton
+	dijit/form/_FormValueMixin
+	dijit/form/_FormWidgetMixin
+	dojo/request/handlers
+	dojo/date
+	dijit/layout/_ContentPaneResizeMixin
+	dijit/form/RangeBoundTextBox
+	dijit/nls/loading
+	dojo/_base/Deferred
+	dojo/cldr/nls/number
+	lsmb/Form
+	lsmb/PublishNumberTextBox
+	dijit/MenuItem
+	dojo/cldr/supplemental
+	dojo/hash
+	dijit/layout/_LayoutWidget
+	dijit/popup
+	dijit/templates/Menu.html
+	dijit/form/Button
+	dijit/form/Form
+	dojo/errors/RequestTimeoutError
+	lsmb/Invoice
+	dojo/request/iframe
+	dojo/regexp
+	dijit/form/_FormMixin
+	dijit/DropDownMenu
+	dijit/form/_CheckBoxMixin
+	dijit/layout/ContentPane
+	dijit/form/templates/ValidationTextBox.html
+	dijit/form/templates/TextBox.html
+	dijit/layout/utils
+	dijit/_KeyNavContainer
+	dijit/_Contained
+	dijit/form/CheckBox
+	dijit/_Container
+	dojo/html
+	dijit/form/ValidationTextBox
+	dojo/number
+	dijit/_WidgetsInTemplateMixin
+	lsmb/iframe
+	lsmb/SubscribeNumberTextBox
+	lsmb/PrintButton
+	dojo/request/watch
+	dojo/data/util/sorter
+	dijit/form/_ButtonMixin
+	dojo/io-query
+	dojo/date/locale
+	dijit/form/_FormSelectWidget
+	dijit/form/Select
+	dojo/_base/json
+	lsmb/SubscribeShowHide
+	dojo/store/util/QueryResults
+	dijit/_KeyNavMixin
+	lsmb/MaximizeMinimize
+	dijit/form/_FormWidget
+	dojo/errors/RequestError
+	dijit/CalendarLite
+	lsmb/InvoiceLines
+	lsmb/InvoiceLine
+	dijit/MenuSeparator
+	dijit/form/_DateTimeTextBox
+	dijit/Calendar
+	dijit/form/_ToggleButtonMixin
+	dojo/json
+	dijit/form/templates/Select.html
+	lsmb/SubscribeSelect
+	dojo/dom-form
+	lsmb/TabularForm
+	dijit/form/_FormValueWidget
+
 
 
 Process finished normally
 	errors: 0
 	warnings: 13
-	build time: 13.779 seconds
+	build time: 14.221 seconds
