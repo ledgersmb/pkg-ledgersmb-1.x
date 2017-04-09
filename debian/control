@@ -48,6 +48,7 @@ Depends: adduser,
          ${misc:Depends},
          ${perl:Depends}
 Recommends: libjson-xs-perl,
+            liblatex-driver-perl (>= 0.300.2),
             libmath-bigint-gmp-perl,
             libtemplate-plugin-latex-perl (>=3.09-1),
             libtex-encode-perl,
