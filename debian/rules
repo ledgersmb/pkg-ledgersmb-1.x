@@ -30,7 +30,7 @@ override_dh_fixperms:
 	find debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/templates -type d -empty -delete
 
 get-orig-source:
-	uscan --force-download --rename --destdir ..
+	uscan --force-download --rename --destdir .
 
 .PHONY: get-orig-source
 
