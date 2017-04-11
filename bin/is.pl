@@ -124,6 +124,9 @@ sub add {
 
 sub edit {
 
+    &invoice_links;
+    &prepare_invoice;
+
     if ($form->{is_return}){
         $form->{title} = $locale->text('Edit Customer Return');
         $form->{subtype} = 'credit_invoice';
@@ -133,8 +136,6 @@ sub edit {
     } else {
         $form->{title} = $locale->text('Edit Sales Invoice');
     }
-    &invoice_links;
-    &prepare_invoice;
     &display_form;
 
 }
@@ -1099,10 +1100,12 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
                                   {text=> $locale->text('Shipping Label'), value=> 'shipping_label'},
                                 ]
                    };
+    if ($button{print}) {
     print_select($form, $formname);
     print_select($form, $printops->{lang});
     print_select($form, $printops->{format});
     print_select($form, $printops->{media});
+    }
     print qq|
     </td>
   </tr>

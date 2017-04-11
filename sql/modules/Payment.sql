@@ -865,7 +865,15 @@ BEGIN
                         in_source[out_count], in_memo[out_count]);
                 INSERT INTO payment_links 
                 VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
+                IF (in_ovp_payment_id IS NOT NULL
+                    AND in_ovp_payment_id[out_count] IS NOT NULL) THEN
+                   INSERT INTO payment_links
+                   VALUES (in_ovp_payment_id[out_count],
+                           currval('acc_trans_entry_id_seq'), 0);
+                END IF;
 
+
+                IF current_exchangerate <> 1 THEN
                 INSERT INTO acc_trans (chart_id, amount, fx_transaction,
                                        trans_id, transdate, approved, source, memo)
                 VALUES (in_cash_account_id[out_count], 
@@ -876,13 +884,15 @@ BEGIN
                         in_source[out_count], in_memo[out_count]);
                 INSERT INTO payment_links 
                 VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
-
-
-                IF (in_ovp_payment_id IS NOT NULL AND in_ovp_payment_id[out_count] IS NOT NULL) THEN
+                   IF (in_ovp_payment_id IS NOT NULL
+                       AND in_ovp_payment_id[out_count] IS NOT NULL) THEN
                         INSERT INTO payment_links
-                        VALUES (in_ovp_payment_id[out_count], currval('acc_trans_entry_id_seq'), 0);
+                      VALUES (in_ovp_payment_id[out_count],
+                              currval('acc_trans_entry_id_seq'), 0);
+                   END IF;
                 END IF;
                 
+
         END LOOP;
         -- NOW LETS HANDLE THE AR/AP ACCOUNTS
         -- WE RECEIVED THE TRANSACTIONS_ID AND WE CAN OBTAIN THE ACCOUNT FROM THERE
@@ -1203,17 +1213,16 @@ BEGIN
                         FROM ap WHERE in_entity_class = 1
                         ) arap ON (arap.entity_credit_account = c.id)
                 JOIN acc_trans a ON (arap.id = a.trans_id)
-                JOIN chart ch ON (ch.id = a.chart_id)
+                JOIN account ch ON (ch.id = a.chart_id)
                 JOIN entity e ON (c.entity_id = e.id)
                 LEFT JOIN voucher v ON (v.id = a.voucher_id)
                 LEFT JOIN batch b ON (b.id = v.batch_id)
-                WHERE (ch.accno = in_cash_accno OR ch.id IN (select account_id 
+                WHERE ((ch.accno = in_cash_accno
+                        OR (in_cash_accno IS NULL
+                            AND ch.id IN (select account_id
                                                                FROM account_link
-                                                              WHERE description
-                                                                    IN(
-                                                                     'AR_paid',
-                                                                     'AP_paid'
-                                                                    )))
+                                           WHERE description IN('AR_paid',
+                                                                'AP_paid')))))
                         AND (in_currency IS NULL OR in_currency = arap.curr)
                         AND (c.id = in_credit_id OR in_credit_id IS NULL)
                         AND (a.transdate >= in_from_date
@@ -1299,7 +1308,18 @@ BEGIN
                 t_voucher_inserted := FALSE;
         END IF;
         FOR pay_row IN 
-                SELECT a.*, c.ar_ap_account_id, arap.curr, arap.fxrate
+                SELECT a.*,
+                       (select distinct chart_id
+                          from acc_trans ac
+                               join account at on ac.chart_id = at.id
+                               join account_link al on at.id = al.account_id
+                         where ((al.description = 'AP'
+                                   and in_account_class = 1)
+                                 or (al.description = 'AR'
+                                    and in_account_class = 2))
+                               and ac.trans_id = a.trans_id)
+                             as ar_ap_account_id,
+                       arap.curr, arap.fxrate
                 FROM acc_trans a
                 JOIN (select id, curr, entity_credit_account, 
                              CASE WHEN curr = t_currs[1] THEN 1
