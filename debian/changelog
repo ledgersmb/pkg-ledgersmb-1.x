@@ -1,5 +1,5 @@
-ledgersmb-1.4 (1.4.36-0~1) UNRELEASED; urgency=low
+ledgersmb-1.4 (1.4.41-0~1) UNRELEASED; urgency=low
 
   * Create initial version of 'ledgersmb-1.4' package.
 
- -- Robert James Clay <jame@rocasa.us>  Sat, 10 Dec 2016 06:51:12 -0500
+ -- Robert James Clay <jame@rocasa.us>  Tue, 11 Apr 2017 01:28:51 -0400
