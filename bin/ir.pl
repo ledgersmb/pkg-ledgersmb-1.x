@@ -136,6 +136,10 @@ sub add {
 }
 
 sub edit {
+
+    &invoice_links;
+    &prepare_invoice;
+
     if ($form->{is_return}){
         $form->{title} = $locale->text('Edit Vendor Return');
         $form->{subtype} = 'debit_invoice';
@@ -145,10 +149,6 @@ sub edit {
     } else {
         $form->{title} = $locale->text('Edit Vendor Invoice');
     }
-
-
-    &invoice_links;
-    &prepare_invoice;
     &display_form;
 
 }
@@ -1007,10 +1007,12 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="memo_$i" id
                                   {text=> $locale->text('Product Receipt'), value => 'product_receipt'},
                                 ]
                    };
+    if ($button{print}) {
     print_select($form, $formname);
     print_select($form, $printops->{lang});
     print_select($form, $printops->{format});
     print_select($form, $printops->{media});
+    }
   print qq|
   </td></tr>
   <tr>
