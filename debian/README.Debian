@@ -15,15 +15,19 @@ LedgerSMB Configuration
 
     One way that company databases can be created fairly easily is by directing
     your web browser to the setup.pl script, which by default can be accessed at
-    http://localhost/ledgersmb-1.4/setup.pl. This is very different from approaches
-    taken by LedgerSMB 1.2.x and SQL-Ledger, but rather forms a wizard to walk
-    you through the process of creating company databases and initial users for
-    those databases.
+    http://localhost/ledgersmb-1.4/setup.pl. This is very different from the
+    approache taken by LedgerSMB 1.2.x and SQL-Ledger, but rather forms a wizard
+    to walk you through the process of creating company databases and initial
+    users for those databases.
 
     The standard database superuser used in the setup.pl script has the name
-    'lsmb_dbadmin'. If it is not created and its password set during the package
-    installation, that can be done or its password changed by running the
-    following command: 'dpkg-reconfigure ledgersmb-1.4'.
+    'lsmb_dbadmin'. If it is not created and its password set up during the
+    initial installation, it can be created using the following sql statement:
+
+CREATE ROLE ledgersmb WITH SUPERUSER LOGIN NOINHERIT ENCRYPTED PASSWORD 'password';
+
+    You can use 'ALTER' instead of 'CREATE' if it was created incorrectly or to
+    change the password it has been created initially.
 
     Configuration files for Apache 2.2 or 2.4 are installed as necessary, with
     an example Apache fastcgi configuration available at lsmb_13-fcgi.conf in
@@ -90,8 +94,9 @@ Company database removal
     In the /usr/share/ledgersmb/tools/ directory, there's a script which will
     remove a company database and all the standard authorization data that had
     been created by the 'prepare-company-database.sh' script.  The script is
-    named 'delete-company-database.sh'.
+    named 'delete-company-database.sh'. There is also a script named as
+    delete-mycompany-roles.sh which can be used to drop roles in the database.
 
 
 
- -- Robert James Clay <jame@rocasa.us>  Thu, 24 Nov 2016 05:14:11 -0500
+ -- Robert James Clay <jame@rocasa.us>  Sun, 16 Apr 2017 07:00:14 -0400
