@@ -1,8 +1,5 @@
-ledgersmb-1.4 (1.4.41-0~3) UNRELEASED; urgency=low
+ledgersmb-1.4 (1.4.41-0~4) UNRELEASED; urgency=low
 
-  TODO:
-    - Resolve issue with the debian/adm/config-lsmb-db-user.sh acript not being
-      able to handle user names that have a dash in them.
   * Create initial version of 'ledgersmb-1.4' package.
 
- -- Robert James Clay <jame@rocasa.us>  Sun, 16 Apr 2017 07:28:17 -0400
+ -- Robert James Clay <jame@rocasa.us>  Sun, 23 Apr 2017 07:12:28 -0400
