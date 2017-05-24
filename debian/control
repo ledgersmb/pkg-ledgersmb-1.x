@@ -12,6 +12,7 @@ Vcs-Browser: https://github.com/ledgersmb/pkg-ledgersmb-1.5
 Package: ledgersmb-1.5
 Architecture: all
 Depends: adduser,
+         libcarp-always-perl,
          libcgi-emulate-psgi-perl,
          libcgi-simple-perl,
          libconfig-inifiles-perl,
