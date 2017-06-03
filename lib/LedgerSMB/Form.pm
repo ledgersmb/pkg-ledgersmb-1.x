@@ -181,8 +181,8 @@ sub new {
     #menubar will be deprecated, replaced with below
     $self->{lynx} = 1 if ( ( defined $self->{path} ) && ( $self->{path} =~ /lynx/i ) );
 
-    $self->{version}   = "1.5.6";
-    $self->{dbversion} = "1.5.6";
+    $self->{version}   = "1.5.7";
+    $self->{dbversion} = "1.5.7";
 
     bless $self, $type;
 
@@ -1283,7 +1283,7 @@ sub generate_selects {
     }
 
     # sales staff
-    if ( $form->{all_employees} && @{ $form->{all_employee} } ) {
+    if ( $form->{all_employee} && @{ $form->{all_employee} } ) {
         $form->{selectemployee} = "";
         for ( @{ $form->{all_employee} } ) {
             $form->{selectemployee} .=
@@ -2556,6 +2556,8 @@ sub create_links {
         ($val) = $sth->fetchrow_array();
         if ( $_ eq 'curr' ) {
             $self->{currencies} = $val;
+            my @currencies = split /:/, $val;
+            $self->{defaultcurrency} = $currencies[0];
         }
         else {
             $self->{$_} = $val;

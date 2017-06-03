@@ -5262,7 +5262,7 @@ require({cache:{"dojo/_base/Deferred":function() {
 }, "dijit/_HasDropDown":function() {
   define("dojo/_base/declare dojo/_base/Deferred dojo/dom dojo/dom-attr dojo/dom-class dojo/dom-geometry dojo/dom-style dojo/has dojo/keys dojo/_base/lang dojo/on dojo/touch ./registry ./focus ./popup ./_FocusMixin".split(" "), function(d, l, k, g, b, c, m, h, a, f, e, q, t, s, w, r) {
     return d("dijit._HasDropDown", r, {_buttonNode:null, _arrowWrapperNode:null, _popupStateNode:null, _aroundNode:null, dropDown:null, autoWidth:!0, forceWidth:!1, maxHeight:-1, dropDownPosition:["below", "above"], _stopClickEvents:!0, _onDropDownMouseDown:function(a) {
-      !this.disabled && !this.readOnly && ("MSPointerDown" != a.type && "pointerdown" != a.type && a.preventDefault(), this.own(e.once(this.ownerDocument, q.release, f.hitch(this, "_onDropDownMouseUp"))), this.toggleDropDown())
+      !this.disabled && !this.readOnly && ("MSPointerDown" != a.type && a.preventDefault(), this.own(e.once(this.ownerDocument, q.release, f.hitch(this, "_onDropDownMouseUp"))), this.toggleDropDown())
     }, _onDropDownMouseUp:function(a) {
       var d = this.dropDown, e = !1;
       if(a && this._opened) {

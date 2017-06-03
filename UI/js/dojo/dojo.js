@@ -860,8 +860,8 @@ require({cache:{"dojo/request/default":function() {
     d.baseUrl = d.config.baseUrl = e.baseUrl;
     d.isAsync = e.async;
     d.locale = m.locale;
-    m = "$Rev: 00f5aea $".match(/[0-9a-f]{7,}/);
-    d.version = {major:1, minor:10, patch:7, flag:"", revision:m ? m[0] : NaN, toString:function() {
+    m = "$Rev: f8ee3a9 $".match(/[0-9a-f]{7,}/);
+    d.version = {major:1, minor:10, patch:8, flag:"", revision:m ? m[0] : NaN, toString:function() {
       var a = d.version;
       return a.major + "." + a.minor + "." + a.patch + a.flag + " (" + a.revision + ")"
     }};
@@ -1252,15 +1252,15 @@ require({cache:{"dojo/request/default":function() {
         if(h = q) {
           if(!(h = H[q])) {
             h = this[f];
-            var k = {}, e;
-            for(e in h) {
-              k[e.toLowerCase()] = !0
+            var e = {}, k;
+            for(k in h) {
+              e[k.toLowerCase()] = !0
             }
-            h = H[q] = k
+            h = H[q] = e
           }
         }
-        e = h;
-        c = a in this.attributeMap ? this.attributeMap[a] : c.s in this ? this[c.s] : e && c.l in e && "function" != typeof b || /^aria-|^data-|^role$/.test(a) ? f : null;
+        k = h;
+        c = a in this.attributeMap ? this.attributeMap[a] : c.s in this ? this[c.s] : k && c.l in k && "function" != typeof b || /^aria-|^data-|^role$/.test(a) ? f : null;
         null != c && this._attrToDom(a, b, c);
         this._set(a, b)
       }
@@ -1347,6 +1347,7 @@ require({cache:{"dojo/request/default":function() {
     e.add("touch-events", "ontouchstart" in document);
     e.add("pointer-events", "pointerEnabled" in window.navigator ? window.navigator.pointerEnabled : "PointerEvent" in window);
     e.add("MSPointer", window.navigator.msPointerEnabled);
+    e.add("touch-action", e("touch") && e("pointer-events"));
     e.add("device-width", screen.availWidth || innerWidth);
     var n = document.createElement("form");
     e.add("dom-attributes-explicit", 0 == n.attributes.length);
@@ -1383,50 +1384,50 @@ require({cache:{"dojo/request/default":function() {
       throw Error("declare" + (b ? " " + b : "") + ": " + a);
     }
     function l(a, b, c) {
-      var f, d, q, h, e, s, k, r = this._inherited = this._inherited || {};
+      var f, d, q, h, e, k, s, r = this._inherited = this._inherited || {};
       "string" == typeof a && (f = a, a = b, b = c);
       c = 0;
       h = a.callee;
       (f = f || h.nom) || n("can't deduce a name to call inherited()", this.declaredClass);
       e = this.constructor._meta;
       q = e.bases;
-      k = r.p;
+      s = r.p;
       if(f != D) {
-        if(r.c !== h && (k = 0, s = q[0], e = s._meta, e.hidden[f] !== h)) {
+        if(r.c !== h && (s = 0, k = q[0], e = k._meta, e.hidden[f] !== h)) {
           (d = e.chains) && "string" == typeof d[f] && n("calling chained method with inherited: " + f, this.declaredClass);
           do {
-            if(e = s._meta, d = s.prototype, e && (d[f] === h && d.hasOwnProperty(f) || e.hidden[f] === h)) {
+            if(e = k._meta, d = k.prototype, e && (d[f] === h && d.hasOwnProperty(f) || e.hidden[f] === h)) {
               break
             }
-          }while(s = q[++k]);
-          k = s ? k : -1
+          }while(k = q[++s]);
+          s = k ? s : -1
         }
-        if(s = q[++k]) {
-          if(d = s.prototype, s._meta && d.hasOwnProperty(f)) {
+        if(k = q[++s]) {
+          if(d = k.prototype, k._meta && d.hasOwnProperty(f)) {
             c = d[f]
           }else {
             h = t[f];
             do {
-              if(d = s.prototype, (c = d[f]) && (s._meta ? d.hasOwnProperty(f) : c !== h)) {
+              if(d = k.prototype, (c = d[f]) && (k._meta ? d.hasOwnProperty(f) : c !== h)) {
                 break
               }
-            }while(s = q[++k])
+            }while(k = q[++s])
           }
         }
-        c = s && c || t[f]
+        c = k && c || t[f]
       }else {
-        if(r.c !== h && (k = 0, (e = q[0]._meta) && e.ctor !== h)) {
+        if(r.c !== h && (s = 0, (e = q[0]._meta) && e.ctor !== h)) {
           d = e.chains;
-          for((!d || "manual" !== d.constructor) && n("calling chained constructor with inherited", this.declaredClass);(s = q[++k]) && !((e = s._meta) && e.ctor === h);) {
+          for((!d || "manual" !== d.constructor) && n("calling chained constructor with inherited", this.declaredClass);(k = q[++s]) && !((e = k._meta) && e.ctor === h);) {
           }
-          k = s ? k : -1
+          s = k ? s : -1
         }
-        for(;(s = q[++k]) && !(c = (e = s._meta) ? e.ctor : s);) {
+        for(;(k = q[++s]) && !(c = (e = k._meta) ? e.ctor : k);) {
         }
-        c = s && c
+        c = k && c
       }
       r.c = c;
-      r.p = k;
+      r.p = s;
       if(c) {
         return!0 === b ? c : c.apply(this, b || a)
       }
@@ -1472,13 +1473,13 @@ require({cache:{"dojo/request/default":function() {
       return function() {
         var c = arguments, f = c, d = c[0], q, h;
         h = a.length;
-        var s;
+        var k;
         if(!(this instanceof c.callee)) {
           return w(c)
         }
         if(b && (d && d.preamble || this.preamble)) {
-          s = Array(a.length);
-          s[0] = c;
+          k = Array(a.length);
+          k[0] = c;
           for(q = 0;;) {
             if(d = c[0]) {
               (d = d.preamble) && (c = d.apply(this, c) || c)
@@ -1488,11 +1489,11 @@ require({cache:{"dojo/request/default":function() {
             if(++q == h) {
               break
             }
-            s[q] = c
+            k[q] = c
           }
         }
         for(q = h - 1;0 <= q;--q) {
-          d = a[q], (d = (h = d._meta) ? h.ctor : d) && d.apply(this, s ? s[q] : c)
+          d = a[q], (d = (h = d._meta) ? h.ctor : d) && d.apply(this, k ? k[q] : c)
         }
         (d = this.postscript) && d.apply(this, f)
       }
@@ -1762,15 +1763,15 @@ require({cache:{"dojo/request/default":function() {
         if(u = !b.target.disabled && q && q.dojoClick) {
           if(x = (t = "useTarget" == u) ? q : b.target, t && b.preventDefault(), z = b.changedTouches ? b.changedTouches[0].pageX - a.global.pageXOffset : b.clientX, v = b.changedTouches ? b.changedTouches[0].pageY - a.global.pageYOffset : b.clientY, D = ("object" == typeof u ? u.x : "number" == typeof u ? u : 0) || 4, H = ("object" == typeof u ? u.y : "number" == typeof u ? u : 0) || 4, !y) {
             y = !0;
-            var s = function(b) {
+            var k = function(b) {
               u = t ? e.isDescendant(a.doc.elementFromPoint(b.changedTouches ? b.changedTouches[0].pageX - a.global.pageXOffset : b.clientX, b.changedTouches ? b.changedTouches[0].pageY - a.global.pageYOffset : b.clientY), x) : u && (b.changedTouches ? b.changedTouches[0].target : b.target) == x && Math.abs((b.changedTouches ? b.changedTouches[0].pageX - a.global.pageXOffset : b.clientX) - z) <= D && Math.abs((b.changedTouches ? b.changedTouches[0].pageY - a.global.pageYOffset : b.clientY) - v) <= 
               H
             };
             a.doc.addEventListener(c, function(a) {
-              h.isRight(a) || (s(a), t && a.preventDefault())
+              h.isRight(a) || (k(a), t && a.preventDefault())
             }, !0);
             a.doc.addEventListener(d, function(a) {
-              if(!h.isRight(a) && (s(a), u)) {
+              if(!h.isRight(a) && (k(a), u)) {
                 J = (new Date).getTime();
                 var b = t ? x : a.target;
                 "LABEL" === b.tagName && (b = e.byId(b.getAttribute("for")) || b);
@@ -1779,11 +1780,11 @@ require({cache:{"dojo/request/default":function() {
                   f._dojo_click = !0;
                   f.initMouseEvent(b, !0, !0, a.view, a.detail, c.screenX, c.screenY, c.clientX, c.clientY, a.ctrlKey, a.altKey, a.shiftKey, a.metaKey, 0, null);
                   return f
-                }, d = f("mousedown"), q = f("mouseup"), k = f("click");
+                }, d = f("mousedown"), q = f("mouseup"), s = f("click");
                 setTimeout(function() {
                   p.emit(b, "mousedown", d);
                   p.emit(b, "mouseup", q);
-                  p.emit(b, "click", k);
+                  p.emit(b, "click", s);
                   J = (new Date).getTime()
                 }, 0)
               }
@@ -2055,8 +2056,8 @@ require({cache:{"dojo/request/default":function() {
       c = c || m.doc;
       var f = g("ie");
       if(f && !h.isBodyLtr(c)) {
-        var b = g("quirks"), d = b ? m.body(c) : c.documentElement, e = m.global;
-        6 == f && (!b && e.frameElement && d.scrollHeight > d.clientHeight) && (a += d.clientLeft);
+        var b = g("quirks"), d = b ? m.body(c) : c.documentElement, k = m.global;
+        6 == f && (!b && k.frameElement && d.scrollHeight > d.clientHeight) && (a += d.clientLeft);
         return 8 > f || b ? a + d.clientWidth - d.scrollWidth : -a
       }
       return a
@@ -2320,26 +2321,26 @@ require({cache:{"dojo/request/default":function() {
       });
       w(b)
     });
-    g.toDom = function(h, k) {
-      k = k || n.doc;
-      var q = k[b];
-      q || (k[b] = q = ++f + "", c[q] = k.createElement("div"));
-      8 >= e("ie") && !k.__dojo_html5_tested && k.body && s(k);
-      h += "";
-      var g = h.match(a), r = g ? g[1].toLowerCase() : "", q = c[q];
+    g.toDom = function(k, h) {
+      h = h || n.doc;
+      var q = h[b];
+      q || (h[b] = q = ++f + "", c[q] = h.createElement("div"));
+      8 >= e("ie") && !h.__dojo_html5_tested && h.body && s(h);
+      k += "";
+      var g = k.match(a), r = g ? g[1].toLowerCase() : "", q = c[q];
       if(g && d[r]) {
         g = d[r];
-        q.innerHTML = g.pre + h + g.post;
+        q.innerHTML = g.pre + k + g.post;
         for(g = g.length;g;--g) {
           q = q.firstChild
         }
       }else {
-        q.innerHTML = h
+        q.innerHTML = k
       }
       if(1 == q.childNodes.length) {
         return q.removeChild(q.firstChild)
       }
-      for(r = k.createDocumentFragment();g = q.firstChild;) {
+      for(r = h.createDocumentFragment();g = q.firstChild;) {
         r.appendChild(g)
       }
       return r
@@ -2666,18 +2667,18 @@ require({cache:{"dojo/request/default":function() {
     }, _processTemplateNode:function(a, b, c) {
       var d = !0, e = this.attachScope || this, h = b(a, "dojoAttachPoint") || b(a, "data-dojo-attach-point");
       if(h) {
-        for(var g = h.split(/\s*,\s*/);h = g.shift();) {
+        for(var k = h.split(/\s*,\s*/);h = k.shift();) {
           l.isArray(e[h]) ? e[h].push(a) : e[h] = a, d = "containerNode" != h, this._attachPoints.push(h)
         }
       }
       if(b = b(a, "dojoAttachEvent") || b(a, "data-dojo-attach-event")) {
         h = b.split(/\s*,\s*/);
-        for(g = l.trim;b = h.shift();) {
+        for(k = l.trim;b = h.shift();) {
           if(b) {
-            var k = null;
-            -1 != b.indexOf(":") ? (k = b.split(":"), b = g(k[0]), k = g(k[1])) : b = g(b);
-            k || (k = b);
-            this._attachEvents.push(c(a, b, l.hitch(e, k)))
+            var g = null;
+            -1 != b.indexOf(":") ? (g = b.split(":"), b = k(g[0]), g = k(g[1])) : b = k(b);
+            g || (g = b);
+            this._attachEvents.push(c(a, b, l.hitch(e, g)))
           }
         }
       }
@@ -3198,14 +3199,14 @@ require({cache:{"dojo/request/default":function() {
       d = d.w;
       a.className = "dijitTooltip " + {"MR-ML":"dijitTooltipRight", "ML-MR":"dijitTooltipLeft", "TM-BM":"dijitTooltipAbove", "BM-TM":"dijitTooltipBelow", "BL-TL":"dijitTooltipBelow dijitTooltipABLeft", "TL-BL":"dijitTooltipAbove dijitTooltipABLeft", "BR-TR":"dijitTooltipBelow dijitTooltipABRight", "TR-BR":"dijitTooltipAbove dijitTooltipABRight", "BR-BL":"dijitTooltipRight", "BL-BR":"dijitTooltipLeft"}[b + "-" + f];
       this.domNode.style.width = "auto";
-      var g = p.position(this.domNode);
+      var k = p.position(this.domNode);
       if(c("ie") || c("trident")) {
-        g.w += 2
+        k.w += 2
       }
-      var k = Math.min(Math.max(d, 1), g.w);
-      p.setMarginBox(this.domNode, {w:k});
+      var g = Math.min(Math.max(d, 1), k.w);
+      p.setMarginBox(this.domNode, {w:g});
       "B" == f.charAt(0) && "B" == b.charAt(0) ? (a = p.position(a), b = this.connectorNode.offsetHeight, a.h > h ? (this.connectorNode.style.top = h - (e.h + b >> 1) + "px", this.connectorNode.style.bottom = "") : (this.connectorNode.style.bottom = Math.min(Math.max(e.h / 2 - b / 2, 0), a.h - b) + "px", this.connectorNode.style.top = "")) : (this.connectorNode.style.top = "", this.connectorNode.style.bottom = "");
-      return Math.max(0, g.w - d)
+      return Math.max(0, k.w - d)
     }, _onShow:function() {
       c("ie") && (this.domNode.style.filter = "")
     }, hide:function(a) {
@@ -3357,16 +3358,16 @@ require({cache:{"dojo/request/default":function() {
       }
     }, h = function(c, b, e, h) {
       h = c[b];
-      var g = c.deferred;
+      var k = c.deferred;
       if(h) {
         try {
-          var k = h(e);
-          0 === b ? "undefined" !== typeof k && a(g, b, k) : k && "function" === typeof k.then ? (c.cancel = k.cancel, k.then(d(g, 1), d(g, 2), d(g, 0))) : a(g, 1, k)
+          var g = h(e);
+          0 === b ? "undefined" !== typeof g && a(k, b, g) : g && "function" === typeof g.then ? (c.cancel = g.cancel, g.then(d(k, 1), d(k, 2), d(k, 0))) : a(k, 1, g)
         }catch(l) {
-          a(g, 2, l)
+          a(k, 2, l)
         }
       }else {
-        a(g, b, e)
+        a(k, b, e)
       }
     }, d = function(c, b) {
       return function(d) {
@@ -4166,9 +4167,11 @@ require({cache:{"dojo/request/default":function() {
               return a.call(this, c)
             }
             "rotation" in c || (c.rotation = 0, c.scale = 1);
-            var d = c.changedTouches[0], h;
-            for(h in d) {
-              delete c[h], c[h] = d[h]
+            if(window.TouchEvent && b instanceof TouchEvent) {
+              var d = c.changedTouches[0], h;
+              for(h in d) {
+                delete c[h], c[h] = d[h]
+              }
             }
           }
           return a.call(this, c)
