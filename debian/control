@@ -3,7 +3,7 @@ Section: web
 Priority: optional
 Maintainer: Development discussion for LedgerSMB <ledger-smb-devel@lists.sourceforge.net>
 Uploaders: Robert James Clay <jame@rocasa.us>
-Build-Depends: debhelper (>= 9), po-debconf
+Build-Depends: debhelper (>= 9), dh-systemd, po-debconf
 Standards-Version: 3.9.8
 Homepage: http://www.ledgersmb.org/
 Vcs-Git: https://github.com/ledgersmb/pkg-ledgersmb-1.5.git
