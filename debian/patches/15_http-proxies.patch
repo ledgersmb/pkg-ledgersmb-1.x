@@ -1,0 +1,39 @@
+Author: Robert James Clay <jame@rocasa.us>
+Description: Set working directory in the optional apache-vhost.conf
+ and nginx-vhost.conf http proxy configuration files.
+Origin: vendor
+Last-Update: 2017-06-06
+--- a/conf/apache-vhost.conf
++++ b/conf/apache-vhost.conf
+@@ -18,9 +18,9 @@
+ # NameVirtualHost is ignored by Apache 2.4
+ NameVirtualHost *:443
+ <VirtualHost *:443>
+-  ServerName YOUR_SERVER_NAME
++  #ServerName YOUR_SERVER_NAME
+ 
+-  DocumentRoot WORKING_DIR/UI
++  DocumentRoot /usr/share/ledgersmb-1.5/UI
+ 
+   # If you own a publicly exposed server, consider submitting it
+   # to the SSL security tests available at
+--- a/conf/nginx-vhost.conf
++++ b/conf/nginx-vhost.conf
+@@ -13,7 +13,7 @@
+   listen 443 ssl;
+   listen [::]:443 ssl ipv6only=on;
+ 
+-  server_name YOUR_SERVER_NAME;
++  #server_name YOUR_SERVER_NAME;
+ 
+   # If you own a publicly exposed server, consider submitting it
+   # to the SSL security tests available at
+@@ -27,7 +27,7 @@
+   # ssl_certificate /etc/certs/example.com.pem;
+   #ssl_certificate_key SSL_KEY_FILE;
+ 
+-  root WORKING_DIR/UI;
++  root /usr/share/ledgersmb-1.5/UI;
+ 
+   # Configuration files don't exist
+   location ^~ \.conf$ {
