@@ -1,0 +1,27 @@
+Author: Robert James Clay <jame@rocasa.us>
+Description: Set working directory in both the required starman-ledgersmb.service
+ file as well as the optional plack-fcgi-ledgersmb.service file.
+Origin: vendor
+Last-Update: 2017-06-06
+--- a/conf/systemd/plack-fcgi-ledgersmb.service
++++ b/conf/systemd/plack-fcgi-ledgersmb.service
+@@ -7,7 +7,7 @@
+ After=network.target
+ 
+ [Service]
+-WorkingDirectory=WORKING_DIR
++WorkingDirectory=/usr/share/ledgersmb-1.5
+ 
+ # In case you installed dependencies into a 'local::lib'
+ # make sure you set the PERL5LIB environment variable
+--- a/conf/systemd/starman-ledgersmb.service
++++ b/conf/systemd/starman-ledgersmb.service
+@@ -7,7 +7,7 @@
+ After=network.target
+ 
+ [Service]
+-WorkingDirectory=WORKING_DIR
++WorkingDirectory=/usr/share/ledgersmb-1.5
+ 
+ # In case you installed dependencies into a 'local::lib'
+ # make sure you set the PERL5LIB environment variable
