@@ -19,7 +19,7 @@ old_version=$2
 case "$1" in
     install)
         # Configure the 'ledgersmb' user.
-        getent passwd ledgersmb >/dev/null 2>&1 || adduser --system --group --quiet --disabled-password --home /var/run/ledgersmb --gecos "LedgerSMB" ledgersmb
+        getent passwd ledgersmb15 >/dev/null 2>&1 || adduser --system --group --quiet --disabled-password --home /var/run/ledgersmb-1.5 --gecos "LedgerSMB-1.5" ledgersmb-1.5
     ;;
 
     upgrade|abort-upgrade)
