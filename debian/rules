@@ -4,6 +4,7 @@
 	dh $@ --with systemd
 
 override_dh_auto_configure:
+	cp conf/ledgersmb.conf.default ledgersmb.conf
 
 override_dh_auto_build:
 
