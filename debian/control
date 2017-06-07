@@ -48,6 +48,7 @@ Depends: adduser,
          postgresql-client,
          postgresql-contrib,
          starman,
+         ucf,
          ${misc:Depends},
          ${perl:Depends}
 Recommends: libjson-xs-perl,
