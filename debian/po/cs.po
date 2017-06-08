@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ledgersmb 1.3.15-3\n"
-"Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2017-06-07 21:18-0400\n"
+"Report-Msgid-Bugs-To: ledgersmb-1.5@packages.debian.org\n"
+"POT-Creation-Date: 2017-06-08 15:39-0400\n"
 "PO-Revision-Date: 2012-06-07 11:31+0200\n"
 "Last-Translator: Michal Simunek <michal.simunek@gmail.com>\n"
 "Language-Team: \n"
@@ -91,20 +91,3 @@ msgstr ""
 "Zadejte prosím heslo pro správce databáze LedgerSMB. Toto heslo je třeba pro "
 "správcovské webové rozhraní, obvykle dostupném na http://localhost/ledgersmb/"
 "setup.pl."
-
-#. Type: select
-#. Description
-#: ../templates:5001
-msgid "Web Reverse Proxy to configure?"
-msgstr ""
-
-#. Type: select
-#. Description
-#: ../templates:5001
-msgid ""
-"The LedgerSMB application now defaults to being made available on port 5762, "
-"and being run directly by Starman instead of by Apache. If other access is "
-"needed, a Reverse Proxy can be configured using nginx or apache, or you can "
-"leave the choice as None if it is not needed or if the web proxy will be set "
-"up remotely."
-msgstr ""
