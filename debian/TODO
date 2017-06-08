@@ -2,31 +2,112 @@ debian/TODO for LedgerSMB ledgersmb-1.5 package
 
 
 ====================================================================================================
+  - See also https://github.com/ledgersmb/pkg-ledgersmb-1.5/issues
+
+-----------------------------------------------------------------------------------
+- lintian results from pkg build for 0~1 test build on 7 Jun 2017
+
+W: ledgersmb-1.5 source: newer-debconf-templates
+I: ledgersmb-1.5 source: no-complete-debconf-translation
+  -->> Ran debconf-updatepo to update the debiah/po files and will now still need
+  to redo/update at least the existing debian/po/*po files.
+
+W: ledgersmb-1.5: init.d-script-not-marked-as-conffile etc/init.d/ledgersmb-1.5
+E: ledgersmb-1.5: init.d-script-not-included-in-package etc/init.d/ledgersmb-1.5
+  Only a service file is included with upstream; just create an debian/*init ?
+
+W: ledgersmb-1.5: script-not-executable usr/share/ledgersmb-1.5/bin/old-handler.pl
+W: ledgersmb-1.5: script-not-executable usr/share/ledgersmb-1.5/bin/rest-handler.pl
+W: ledgersmb-1.5: executable-not-elf-or-script usr/share/ledgersmb-1.5/tools/installer.pl
+  - Thought I'd taken care of those so will need to investigate them again.
+
+I: ledgersmb-1.5: systemd-service-file-missing-documentation-key lib/systemd/system/ledgersmb-1.5.service
+N: 346 tags overridden (341 errors, 2 warnings, 3 info)
+-------------------------------------------------------------------------------
+  - debian/adm/conmfig-lsmb-db-user.sh
+- Use 'pg_roles' and 'rolname' rather than 'pg_users' and 'usename', as I 
+found that one can actually create two roles with the same name, one with the
+login attribute and one without.
+- Use only the postgresql tools, like createuser, to set the user name and 
+password for the LSMB DB Admin user.  David G pointed out that using SQL
+can allow the unencrypted password to prehaps show up in logs, etc, which
+is a security concern.
+- Take out defaulting for doing the SQL 'ALTER' instead of a 'CREATE'
+if the LSMB DBAdmin user already exits.  It was pointed out by both David
+and Erik that they really don't think it's a good idea to reset that password
+by default when, for instance, upgradeing the package;  which is what it did
+if doing the configure was enabled.  Add option to reset the password if the
+user ID already exists, but not by default; would have to explicitly agree
+to it, each time, and that agreement isn't saved so the question gets asked
+each time and by default is not to do the reset.
+
+-----------------------------------------------------------------------------------
+ehuelsmann (31 Jul in IRC)
+now that's interesting.
+is that the case with the other one as well? that it has partial payments  applied?
+dcg_mx, ylavoie, jame_mx: added a note to the readme on the 'make dojo' section about
+ using unbuilt dojo in case building dojo is too complex.
+-----------------------------------------------------------------------------------
+
+  - for 1.5: Install copy of 'ledgersmb.conf.default' as 'ledgersmb.conf'?
+  instead of copying it  And installing a sym link?
+
+ehuelsmann
+jame_mx: regarding 1.5.0 and its packaging:
+we support an environment variable now which allows selection of an alternative path for 'ledgersmb.conf'
+if you set LSMB_CONFIG_FILE in the systemd service file,
+you can use any location which is "debian compliant"
+e.g. something in /etc.
+08:34
+Options
+
+- Add to patch for the service file setting the enviornment for that variable?
+
+  -----------------------------------------------------------------------------------
 
 Update debian/Readme.Debian as necessary.
 Update debian/Readme.sources as necessary.
 
 -----------------------------------------------------------------------------------
-- lintian results from pkg build for beta6
-
-  - This is because the new debconf question has not been translated yet.
-I: ledgersmb-1.5 source: no-complete-debconf-translation
-
-  - This is because the new debconf question isn't used in the maintainer scripts
-    as yet.
-I: ledgersmb-1.5: unused-debconf-template ledgersmb-1.5/lsmb_proxy
+  - Update d/copyright regarding UI/js
 
 -----------------------------------------------------------------------------------
-- Add a get-orig-source target added to debian rules ?
+Is there an equivelent for 'httpd-cgi' as for a reverse proxy? May have to 
+specically list the ones that we know work and also move it to Recommends instead
+of just Suggests (?)
+
 -----------------------------------------------------------------------------------
 
-- App::LedgerSMB::DBAdmin is still needed for it's library functions, even though
+- App::LedgerSMB::DBAdmin was still needed for it's library functions, even though
  it's an app not just a module.
+-->> but Erik is importing what's needed from it into LSMB proper so will be able
+to remove the depends for it then.
+
+	- 6 Jun 2016
+- Emailed the ITP for packaging App::LedgerSMB::Admin that upstream has removed
+the requriement for the module, citing the upstream commit that did it, and
+advising that ITP would be closed when the change appeared in a release.
+
+-----------------------------------------------------------------------------------
+  - Use a separate source tarball for the UI/js directories?  Devs have discussed
+it some but nothing has come of it as yet. If it's provided, then a way to bypass
+all (330) source-is-missing lintian errors could be to use the multiple upstream
+tarballs functionality that's available in the debian pkg format being used.
+
+https://wiki.debian.org/Projects/DebSrc3.0
+https://raphaelhertzog.com/2010/09/07/how-to-use-multiple-upstream-tarballs-in-debian-source-packages/  
+
+google search: debian package multiple source files
 
 -----------------------------------------------------------------------------------
 - debian/watch: expand the uversionmangle regular expression to exclude the v1.2,
 v1.3, and v1.4 versions.
 
+-----------------------------------------------------------------------------------
+
+    - google search:  debconf preload
+
+http://blog.delgurth.com/2009/01/19/pre-loading-debconf-values-for-easy-installation/
 -----------------------------------------------------------------------------------
 
 - A debian/po debconf Japanese translation has been provided. Currently,
@@ -49,4 +130,4 @@ the apache config also need to be updated to allow that?)
 
 
 
- -- Robert James Clay <jame@rocasa.us>  Tue, 10 May 2016 09:17 -0400
+ -- Robert James Clay <jame@rocasa.us>  Wed,  7 Jun 2017 12:52 -0400
