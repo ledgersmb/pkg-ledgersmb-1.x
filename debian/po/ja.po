@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ledgersmb\n"
 "Report-Msgid-Bugs-To: ledgersmb-1.5@packages.debian.org\n"
-"POT-Creation-Date: 2016-05-26 15:26-0400\n"
+"POT-Creation-Date: 2017-06-07 21:18-0400\n"
 "PO-Revision-Date: 2012-10-31 23:29+0900\n"
 "Last-Translator: victory <victory.deb@gmail.com>\n"
 "Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
@@ -16,38 +16,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#. Type: string
-#. Description
-#: ../templates:2001
-msgid "Database administrative user login:"
-msgstr "データベース管理ユーザのログイン名:"
-
-#. Type: string
-#. Description
-#: ../templates:2001
-#, fuzzy
-#| msgid ""
-#| "Please enter the login of the LedgerSMB database administrative user. "
-#| "This login is needed for the administrative web user interface, typically "
-#| "at http://localhost/ledgersmb/setup.pl."
-msgid ""
-"Please enter the login of the LedgerSMB database administrative user. This "
-"login is needed for the administrative web user interface, typically at "
-"http://localhost/ledgersmb-1.5/setup.pl."
-msgstr ""
-"LedgerSMB データベース管理ユーザのログイン名を入力してください。これは通常 "
-"http://localhost/ledgersmb/setup.pl にあるウェブユーザインターフェイスの管理"
-"に必要となります。"
-
 #. Type: boolean
 #. Description
-#: ../templates:3001
+#: ../templates:2001
 msgid "Configure LedgerSMB automatically?"
 msgstr "LedgerSMB を自動的に設定しますか?"
 
 #. Type: boolean
 #. Description
-#: ../templates:3001
+#: ../templates:2001
 msgid ""
 "The configuration program for the package can automatically configure some "
 "aspects of LedgerSMB, such as the LedgerSMB database user."
@@ -57,7 +34,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../templates:3001
+#: ../templates:2001
 #, fuzzy
 #| msgid ""
 #| "More general information about the initial configuration of the "
@@ -69,29 +46,65 @@ msgstr ""
 "アプリケーションの初期設定についての一般的な情報は /usr/share/doc/ledgersmb/"
 "README.Debian にあります。"
 
-#. Type: select
+#. Type: string
+#. Description
+#: ../templates:3001
+msgid "Database administrative user login:"
+msgstr "データベース管理ユーザのログイン名:"
+
+#. Type: string
+#. Description
+#: ../templates:3001
+#, fuzzy
+#| msgid ""
+#| "Please enter the login of the LedgerSMB database administrative user. "
+#| "This login is needed for the administrative web user interface, typically "
+#| "at http://localhost/ledgersmb/setup.pl."
+msgid ""
+"Please enter the login of the LedgerSMB database administrative user. This "
+"login is needed for the administrative web user interface, typically at "
+"http://localhost:5762/setup.pl."
+msgstr ""
+"LedgerSMB データベース管理ユーザのログイン名を入力してください。これは通常 "
+"http://localhost/ledgersmb/setup.pl にあるウェブユーザインターフェイスの管理"
+"に必要となります。"
+
+#. Type: password
 #. Description
 #: ../templates:4001
+msgid "Database administrative user password:"
+msgstr "データベース管理ユーザのパスワード:"
+
+#. Type: password
+#. Description
+#: ../templates:4001
+#, fuzzy
+#| msgid ""
+#| "Please enter the password of the LedgerSMB database administrative user. "
+#| "This password is needed for the administrative web user interface, "
+#| "typically at http://localhost/ledgersmb/setup.pl."
+msgid ""
+"Please enter the password of the LedgerSMB database administrative user. "
+"This password is needed for the administrative web user interface, typically "
+"at http://localhost:5762/setup.pl."
+msgstr ""
+"LedgerSMB データベース管理ユーザのパスワードを入力してください。このパスワー"
+"ドは通常 http://localhost/ledgersmb/setup.pl にあるウェブユーザインターフェイ"
+"スの管理に必要となります。"
+
+#. Type: select
+#. Description
+#: ../templates:5001
 msgid "Web Reverse Proxy to configure?"
 msgstr ""
 
 #. Type: select
 #. Description
-#: ../templates:4001
+#: ../templates:5001
 msgid ""
-"The LedgerSMB appication now defaults to being made available on port 5055. "
-"If other access is needed, a Reverse Proxy can be configured using ngninx or "
-"Apache, or leave the choice as None if it is not needed."
+"The LedgerSMB application now defaults to being made available on port 5762, "
+"and being run directly by Starman instead of by Apache. If other access is "
+"needed, a Reverse Proxy can be configured using nginx or apache, or you can "
+"leave the choice as None if it is not needed or if the web proxy will be set "
+"up remotely."
 msgstr ""
-
-#~ msgid "Database administrative user password:"
-#~ msgstr "データベース管理ユーザのパスワード:"
-
-#~ msgid ""
-#~ "Please enter the password of the LedgerSMB database administrative user. "
-#~ "This password is needed for the administrative web user interface, "
-#~ "typically at http://localhost/ledgersmb/setup.pl."
-#~ msgstr ""
-#~ "LedgerSMB データベース管理ユーザのパスワードを入力してください。このパス"
-#~ "ワードは通常 http://localhost/ledgersmb/setup.pl にあるウェブユーザイン"
-#~ "ターフェイスの管理に必要となります。"

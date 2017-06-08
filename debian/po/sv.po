@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ledgersmb\n"
 "Report-Msgid-Bugs-To: ledgersmb-1.5@packages.debian.org\n"
-"POT-Creation-Date: 2016-05-26 15:26-0400\n"
+"POT-Creation-Date: 2017-06-07 21:18-0400\n"
 "PO-Revision-Date: 2012-06-07 20:39+0100\n"
 "Last-Translator: Martin Bagge / brother <brother@bsnet.se>\n"
 "Language-Team: Swedish <debian-l10n-swedish@lists.debian.org>\n"
@@ -18,38 +18,15 @@ msgstr ""
 "X-Poedit-Language: Swedish\n"
 "X-Poedit-Country: Sweden\n"
 
-#. Type: string
-#. Description
-#: ../templates:2001
-msgid "Database administrative user login:"
-msgstr "Administrativ användare för databasen:"
-
-#. Type: string
-#. Description
-#: ../templates:2001
-#, fuzzy
-#| msgid ""
-#| "Please enter the login of the LedgerSMB database administrative user. "
-#| "This login is needed for the administrative web user interface, typically "
-#| "at http://localhost/ledgersmb/setup.pl."
-msgid ""
-"Please enter the login of the LedgerSMB database administrative user. This "
-"login is needed for the administrative web user interface, typically at "
-"http://localhost/ledgersmb-1.5/setup.pl."
-msgstr ""
-"Ange användarnamnet för administration av LedgerSMB-databasen. "
-"Användarnamnet behövs för det administrativa webbgränssnittet, vanligen "
-"tillgängligt på http://localhost/ledgersmb/setup.pl."
-
 #. Type: boolean
 #. Description
-#: ../templates:3001
+#: ../templates:2001
 msgid "Configure LedgerSMB automatically?"
 msgstr "Ska inställningar för LedgerSMB göras automatiskt?"
 
 #. Type: boolean
 #. Description
-#: ../templates:3001
+#: ../templates:2001
 msgid ""
 "The configuration program for the package can automatically configure some "
 "aspects of LedgerSMB, such as the LedgerSMB database user."
@@ -59,7 +36,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../templates:3001
+#: ../templates:2001
 #, fuzzy
 #| msgid ""
 #| "More general information about the initial configuration of the "
@@ -71,29 +48,65 @@ msgstr ""
 "Mer generell information om de grundläggande inställningarna av "
 "applikationen kan hittas i /usr/share/doc/ledgersmb/README.Debian."
 
-#. Type: select
+#. Type: string
+#. Description
+#: ../templates:3001
+msgid "Database administrative user login:"
+msgstr "Administrativ användare för databasen:"
+
+#. Type: string
+#. Description
+#: ../templates:3001
+#, fuzzy
+#| msgid ""
+#| "Please enter the login of the LedgerSMB database administrative user. "
+#| "This login is needed for the administrative web user interface, typically "
+#| "at http://localhost/ledgersmb/setup.pl."
+msgid ""
+"Please enter the login of the LedgerSMB database administrative user. This "
+"login is needed for the administrative web user interface, typically at "
+"http://localhost:5762/setup.pl."
+msgstr ""
+"Ange användarnamnet för administration av LedgerSMB-databasen. "
+"Användarnamnet behövs för det administrativa webbgränssnittet, vanligen "
+"tillgängligt på http://localhost/ledgersmb/setup.pl."
+
+#. Type: password
 #. Description
 #: ../templates:4001
+msgid "Database administrative user password:"
+msgstr "Lösenord för databasens administrativa användare:"
+
+#. Type: password
+#. Description
+#: ../templates:4001
+#, fuzzy
+#| msgid ""
+#| "Please enter the password of the LedgerSMB database administrative user. "
+#| "This password is needed for the administrative web user interface, "
+#| "typically at http://localhost/ledgersmb/setup.pl."
+msgid ""
+"Please enter the password of the LedgerSMB database administrative user. "
+"This password is needed for the administrative web user interface, typically "
+"at http://localhost:5762/setup.pl."
+msgstr ""
+"Ange lösenordet för LedgerSMBs administrativa användare. Lösenordet behövs "
+"för det administrativa webbgränssnittet, vanligen tillgängligt på http://"
+"localhost/ledgersmb/setup.pl."
+
+#. Type: select
+#. Description
+#: ../templates:5001
 msgid "Web Reverse Proxy to configure?"
 msgstr ""
 
 #. Type: select
 #. Description
-#: ../templates:4001
+#: ../templates:5001
 msgid ""
-"The LedgerSMB appication now defaults to being made available on port 5055. "
-"If other access is needed, a Reverse Proxy can be configured using ngninx or "
-"Apache, or leave the choice as None if it is not needed."
+"The LedgerSMB application now defaults to being made available on port 5762, "
+"and being run directly by Starman instead of by Apache. If other access is "
+"needed, a Reverse Proxy can be configured using nginx or apache, or you can "
+"leave the choice as None if it is not needed or if the web proxy will be set "
+"up remotely."
 msgstr ""
-
-#~ msgid "Database administrative user password:"
-#~ msgstr "Lösenord för databasens administrativa användare:"
-
-#~ msgid ""
-#~ "Please enter the password of the LedgerSMB database administrative user. "
-#~ "This password is needed for the administrative web user interface, "
-#~ "typically at http://localhost/ledgersmb/setup.pl."
-#~ msgstr ""
-#~ "Ange lösenordet för LedgerSMBs administrativa användare. Lösenordet "
-#~ "behövs för det administrativa webbgränssnittet, vanligen tillgängligt på "
-#~ "http://localhost/ledgersmb/setup.pl."
