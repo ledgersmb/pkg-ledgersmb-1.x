@@ -20,27 +20,23 @@ set -e
 #  Set old_version variable for use later in the script.
 old_version=$2
 
-# Source debconf
-if [ -f /usr/share/debconf/confmodule ]; then
-    . /usr/share/debconf/confmodule
-fi
-
 case "$1" in
     configure)
         # Do Apache related processing if it is present.
-        # If enabled, do the debconf supported configuration
-        db_get ledgersmb-1.5/debconf_install
-        if [ "$RET" = true ]; then 
-            # Get user name.
-            db_get ledgersmb-1.5/admin_login
-            LSMBDBUSER=$RET
-            # Get password
-            db_get ledgersmb-1.5/admin_password
-            LSMBDBPW=$RET
-            # Configure database administrative user
-            /usr/share/ledgersmb-1.5/tools/config-lsmb-db-user.sh $LSMBDBUSER $LSMBDBPW
+        if [ -d "/etc/apache2" ]; then
+            if [ -e /usr/share/apache2/apache2-maintscript-helper ] ; then
+                [ -d /etc/apache2/conf-available/ ] && [ ! -e /etc/apache2/conf-available/ledgersmb-1.5-proxy.conf ] && ucf --debconf-ok /usr/share/ledgersmb-1.5/conf/apache-proxy.copy /etc/apache2/conf-available/ledgersmb-1.5-proxy.conf
+                . /usr/share/apache2/apache2-maintscript-helper
+                if ! a2query -qm cgi ; then
+                    apache2_invoke enmod cgi || exit $?
+                fi
+                if ! a2query -qm rewrite ; then
+                    apache2_invoke enmod rewrite || exit $?
+                fi
+                apache2_invoke enconf ledgersmb-1.5-proxy.conf
+                [ ! -h /etc/ledgersmb-1.5/apache-proxy.conf ] && ln -s /etc/apache2/conf-available/ledgersmb-1.5-proxy.conf /etc/ledgersmb-1.5/apache-proxy.conf
+            fi
         fi
-        db_stop
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

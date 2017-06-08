@@ -20,32 +20,11 @@ set -e
 
 case "$1" in
     purge)
-        # If Apache 2.4 in use, disable use of ledgersmb-1.5.conf.
-        if [ -e /usr/share/apache2/apache2-maintscript-helper ] ; then
-            . /usr/share/apache2/apache2-maintscript-helper
-            apache2_invoke disconf ledgersmb-1.5-proxy.conf || exit $?
-        fi
-        # When being purged; if /etc/ledgersmb-httpd-2.4.conf exists, remove it.
-        if [ -h "/etc/ledgersmb-1.5/apache-proxy.conf" ]; then
-            rm -f /etc/ledgersmb-1.5/apache-proxy.conf
-        fi
-        # When being purged; if /etc/apache2/conf-available/ledgersmb-1.5.conf exists, remove it.
-        if [ -f "/etc/apache2/conf-available/ledgersmb-1.5-proxy.conf" ]; then
-            rm -f /etc/apache2/conf-available/ledgersmb-1.5-proxy.conf
-        fi
         deluser --system --quiet ledgersmb15
         delgroup --system --quiet ledgersmb15
     ;;
 
-    remove)
-        # If Apache 2.4 in use, disable use of ledgersmb-1.5-proxy.conf.
-        if [ -e /usr/share/apache2/apache2-maintscript-helper ] ; then
-            . /usr/share/apache2/apache2-maintscript-helper
-            apache2_invoke disconf ledgersmb-1.5-proxy.conf || exit $?
-        fi
-    ;;
-
-    upgrade|abort-install|abort-upgrade|failed-upgrade|disappear)
+    remove|upgrade|abort-install|abort-upgrade|failed-upgrade|disappear)
     ;;
 
     *)
