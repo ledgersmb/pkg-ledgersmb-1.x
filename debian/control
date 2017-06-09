@@ -87,7 +87,7 @@ Depends: ledgersmb-1.5,
          ucf,
          ${misc:Depends},
          ${perl:Depends}
-Description: financial accounting and ERP program
+Description: financial accounting and ERP program - web proxy via Apache
  LedgerSMB is a double-entry financial accounting and Enterprise Resource
  Planning system which offers "Accounts Receivable", "Accounts Payable" and
  "General Ledger" tracking as well as inventory control and fixed assets
@@ -99,7 +99,7 @@ Description: financial accounting and ERP program
  The application now defaults to being made available on port 5762 and being
  run directly by Starman instead of by Apache. If other access is needed, a
  Reverse Proxy can be configured locally using Nginx or Apache, and this
- package provides the proxy configuration using Apache.
+ package provides a local proxy configuration using Apache.
 
 Package: ledgersmb-1.5-nginx
 Architecture: all
@@ -108,7 +108,7 @@ Depends: ledgersmb-1.5,
          ucf,
          ${misc:Depends},
          ${perl:Depends}
-Description: financial accounting and ERP program
+Description: financial accounting and ERP program - web proxy via Nginx
  LedgerSMB is a double-entry financial accounting and Enterprise Resource
  Planning system which offers "Accounts Receivable", "Accounts Payable" and
  "General Ledger" tracking as well as inventory control and fixed assets
@@ -120,5 +120,5 @@ Description: financial accounting and ERP program
  The application now defaults to being made available on port 5762 and being
  run directly by Starman instead of by Apache. If other access is needed, a
  Reverse Proxy can be configured locally using Nginx or Apache, and this
- package provides the proxy configuration using Nginx.
+ package provides a local proxy configuration using Nginx.
 

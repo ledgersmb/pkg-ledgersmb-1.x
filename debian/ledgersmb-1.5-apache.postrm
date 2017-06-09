@@ -33,9 +33,9 @@ case "$1" in
         if [ -f "/etc/apache2/conf-available/ledgersmb-1.5-proxy.conf" ]; then
             rm -f /etc/apache2/conf-available/ledgersmb-1.5-proxy.conf
         fi
-        # When being purged; if /etc/apache2/conf-available/ledgersmb-proxy.conf exists, remove
+        # When being purged; if /etc/apache2/conf-available/ledgersmb-1.5-proxy.conf exists, remove
         # it and deregister it with ucf.
-        if [ -f "/etc/apache2/conf-available/ledgersmb-proxy.conf" ]; then
+        if [ -f "/etc/apache2/conf-available/ledgersmb-1.5-proxy.conf" ]; then
             # Remove the possible backup extensions of the configuration file.
             for ext in '~' '%' .bak .ucf-new .ucf-old .ucf-dist;  do
                 rm -f /etc/apache2/conf-available/ledgersmb-1.5-proxy.conf$ext
