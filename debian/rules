@@ -18,10 +18,8 @@ override_dh_install:
 
 override_dh_fixperms:
 	dh_fixperms
-	chmod -x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/bin/lsmb-request.pl
-	chmod -x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/bin/rest-handler.pl
-	chmod -x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/bin/gl.pl
-	chmod -x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/locale/po/*
+	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/bin/lsmb-request.pl
+	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/bin/rest-handler.pl
 	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/tools/*.pl
 	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/tools/*.psgi
 	find debian/ledgersmb-1.5/usr/share/ledgersmb-1.5 -name '*.sh' -exec chmod +x '{}' \;
