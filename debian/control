@@ -85,8 +85,7 @@ Architecture: all
 Depends: ledgersmb-1.5,
          apache2,
          ucf,
-         ${misc:Depends},
-         ${perl:Depends}
+         ${misc:Depends}
 Description: financial accounting and ERP program - web proxy via Apache
  LedgerSMB is a double-entry financial accounting and Enterprise Resource
  Planning system which offers "Accounts Receivable", "Accounts Payable" and
@@ -106,8 +105,7 @@ Architecture: all
 Depends: ledgersmb-1.5,
          nginx-light | nginx-full | nginx-extra,
          ucf,
-         ${misc:Depends},
-         ${perl:Depends}
+         ${misc:Depends}
 Description: financial accounting and ERP program - web proxy via Nginx
  LedgerSMB is a double-entry financial accounting and Enterprise Resource
  Planning system which offers "Accounts Receivable", "Accounts Payable" and
