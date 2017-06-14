@@ -47,7 +47,7 @@ case "$1" in
                 ucfr --purge ledgersmb-1.5 /etc/nginx/sites-available/ledgersmb-1.5-proxy.conf
             fi
         fi
-        service nginx reload
+        /usr/sbin/nginx -s reload
     ;;
 
     remove)
@@ -55,7 +55,7 @@ case "$1" in
         # sites-enabled, then remove it & reload ngnix
         if [ -h /etc/nginx/sites-enabled/ledgersmb-1.5-proxy.conf ] ; then
             rm -f /etc/nginx/sites-enabled/ledgersmb-1.5-proxy.conf 
-            service nginx reload
+            /usr/sbin/nginx -s reload
         fi
     ;;
 

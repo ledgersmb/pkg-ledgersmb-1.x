@@ -28,7 +28,7 @@ case "$1" in
             # Enable nginx proxy configuration 
             if [ ! -h /etc/nginx/sites-enabled/ledgersmb-1.5-proxy.conf ] ; then
                 ln -s /etc/nginx/sites-available/ledgersmb-1.5-proxy.conf /etc/nginx/sites-enabled/ledgersmb-1.5-proxy.conf
-                    service nginx reload
+                    /usr/sbin/nginx -s reload
             fi
             [ ! -h /etc/ledgersmb-1.5/nginx-proxy.conf ] && ln -s /etc/nginx/sites-available/ledgersmb-1.5-proxy.conf /etc/ledgersmb-1.5/ngnix-proxy.conf
         fi
