@@ -8,5 +8,5 @@ opts="pgpsigurlmangle=s/$/.asc/, \
 filenamemangle=s/.+\/v?(\d\S+)\.tar\.gz/<project>-$1\.tar\.gz/, \
 dversionmangle=s/\-1.5[\d]?//, \
 uversionmangle=s/^1\.5\.99\d*/0/" \
-https://github.com/ledgersmb/ledgersmb/releases .*/v?(\d\S+)\.tar\.gz
+https://github.com/ledgersmb/LedgerSMB/releases .*/v?(\d\S+)\.tar\.gz
 
