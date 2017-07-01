@@ -21,17 +21,22 @@ override_dh_installdocs:
 
 override_dh_fixperms:
 	dh_fixperms
-	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/bin/lsmb-request.pl
-	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/bin/rest-handler.pl
-	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/tools/*.pl
-	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/tools/*.psgi
-	find debian/ledgersmb-1.5/usr/share/ledgersmb-1.5 -name '*.sh' -exec chmod +x '{}' \;
-	find debian/ledgersmb-1.5/usr/share/ledgersmb-1.5 -name '*.html' -exec chmod -x '{}' \;
-	find debian/ledgersmb-1.5/usr/share/ledgersmb-1.5 -name '*.pm' -exec chmod -x '{}' \;
-	find debian/ledgersmb-1.5/usr/share/ledgersmb-1.5 -name '*.sql' -exec chmod -x '{}' \;
-	find debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/locale/po -name '*.po' -exec chmod -x '{}' \;
-	find debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/utils -name '*.pl*' -exec chmod +x '{}' \;
-	find debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/templates -type d -empty -delete
+	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/sql/modules/reload_modules.sh
+	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/tools/dbsetup.pl
+	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/tools/drop-roles.pl
+	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/tools/install_interactive.pl
+	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/tools/pre-release-tests.sh
+	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/tools/starman.psgi
+	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/utils/notify_short/config.pl
+	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/utils/notify_short/listener.pl
+	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/process_queue/config.pl.default
+	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/process_queue/process_queue.pl
+	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/replication/configure-replication.sh
+	chmod -x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/locale/html/splash.html
+	chmod -x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/lib/LedgerSMB/Template/TXT.pm
+	chmod -x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/lib/LedgerSMB/Template/HTML.pm
+	chmod -x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/lib/LedgerSMB/Template/CSV.pm
+	chmod -x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/lib/LedgerSMB/Template/LaTeX.pm
 
 get-orig-source:
 	uscan --force-download --rename --destdir .
