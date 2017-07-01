@@ -29,9 +29,9 @@ override_dh_fixperms:
 	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/tools/starman.psgi
 	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/utils/notify_short/config.pl
 	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/utils/notify_short/listener.pl
-	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/process_queue/config.pl.default
-	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/process_queue/process_queue.pl
-	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/replication/configure-replication.sh
+	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/utils/process_queue/config.pl.default
+	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/utils/process_queue/process_queue.pl
+	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/utils/replication/configure-replication.sh
 	chmod -x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/locale/html/splash.html
 	chmod -x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/lib/LedgerSMB/Template/TXT.pm
 	chmod -x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/lib/LedgerSMB/Template/HTML.pm
