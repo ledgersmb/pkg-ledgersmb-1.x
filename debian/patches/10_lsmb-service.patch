@@ -2,7 +2,7 @@ Author: Robert James Clay <jame@rocasa.us>
 Description: Set working directory in both the required starman-ledgersmb.service
  file as well as the optional plack-fcgi-ledgersmb.service file.
 Origin: vendor
-Last-Update: 2017-06-06
+Last-Update: 2017-07-02
 --- a/conf/systemd/plack-fcgi-ledgersmb.service
 +++ b/conf/systemd/plack-fcgi-ledgersmb.service
 @@ -7,7 +7,7 @@
@@ -14,6 +14,17 @@ Last-Update: 2017-06-06
  
  # In case you installed dependencies into a 'local::lib'
  # make sure you set the PERL5LIB environment variable
+@@ -18,8 +18,8 @@
+ # Be sure to set a user and group below
+ # which don't have write access to the directories
+ # holding the LedgerSMB sources
+-User=ledgersmb
+-Group=ledgersmb
++User=ledgersmb-1_5
++Group=ledgersmb-1_5
+ ExecStart=/usr/bin/plackup                     \
+     -s FCGI                                    \
+     --listen localhost:3244                    \
 --- a/conf/systemd/starman-ledgersmb.service
 +++ b/conf/systemd/starman-ledgersmb.service
 @@ -7,7 +7,7 @@
@@ -25,3 +36,14 @@ Last-Update: 2017-06-06
  
  # In case you installed dependencies into a 'local::lib'
  # make sure you set the PERL5LIB environment variable
+@@ -17,8 +17,8 @@
+ # Be sure to set a user and group below
+ # which don't have write access to the directories
+ # holding the LedgerSMB sources
+-User=ledgersmb
+-Group=ledgersmb
++User=ledgersmb-1_5
++Group=ledgersmb-1_5
+ ExecStart=/usr/bin/starman                     \
+     --listen localhost:5762                    \
+     -I lib                                     \
