@@ -27,8 +27,8 @@ APP=$APP_HOME/tools/starman.psgi
 APP_NAME=$(basename $(readlink -f $0))
 STARMAN=/usr/bin/starman
 PORT=5762
-USER=ledgersmb15
-GROUP=ledgersmb15
+USER=ledgersmb-1_5
+GROUP=ledgersmb-1_5
 
 PID_FILE=/var/run/$APP_NAME.pid
 STATUS_FILE=/var/run/$APP_NAME.status
