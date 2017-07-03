@@ -32,6 +32,7 @@ GROUP=ledgersmb-1_5
 
 PID_FILE=/var/run/$APP_NAME.pid
 STATUS_FILE=/var/run/$APP_NAME.status
+LOCK_FILE=/var/run/$APP_NAME.lock
 LOGDIR=/var/log/$APP_NAME
 
 # configure app perl
