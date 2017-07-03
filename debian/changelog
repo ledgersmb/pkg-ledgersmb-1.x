@@ -4,4 +4,4 @@ ledgersmb-1.5 (1.5.8-0~2) UNRELEASED; urgency=low
     - Continue updating pkg as necessary for changes needed by new pkg.
   * Create initial version of 'LedgerSMB-1.5' package.
 
- -- Robert James Clay <jame@rocasa.us>  Mon,  2 Jul 2017 19:57:16 -0400
+ -- Robert James Clay <jame@rocasa.us>  Sun,  2 Jul 2017 20:43:16 -0400
