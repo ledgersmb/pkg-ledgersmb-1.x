@@ -25,6 +25,7 @@ DESC="Run LedgerSMB via Starman"
 APP_HOME=/usr/share/legdersmb-1.5
 APP=$APP_HOME/tools/starman.psgi
 APP_NAME=$(basename $(readlink -f $0))
+START_SERVER=/usr/bin/start_server
 STARMAN=/usr/bin/starman
 PORT=5762
 USER=ledgersmb-1_5
