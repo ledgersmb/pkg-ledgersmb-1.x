@@ -4,26 +4,26 @@ debian/TODO for LedgerSMB ledgersmb-1.5 package
 ====================================================================================================
   - See also https://github.com/ledgersmb/pkg-ledgersmb-1.5/issues
 -----------------------------------------------------------------------------------
-	- Project has totally moved was from SourceForge.net, so debian/watch needs to
-	be updated for the new locations of the distribution archive and its detached
-	pgp file for verifiction.
-	
+`- Project has totally moved was from SourceForge.net, so debian/watch needs to
+`be updated for the new locations of the distribution archive and its detached
+`pgp file for verifiction.
+
 - An update for the archive itself appears to have been successful but the *.asc
 associated with it useed for the pgp verification does not seem to get refereneced
 properly has that step fails.
-	
+
 - debian/watch: expand the uversionmangle regular expression to exclude the v1.2,
 v1.3, and v1.4 versions.
 
 ----------------------------------------------------------------------------------------------------
 
 
-	- Discussed in IRC some of the permission fix issues.  Erik took care of
-	fixing many of them in both master & 1.5 so when the next release comes out
-	will need to run a build of both ledgresmb & ledgersmb-1.5 without the 
-	fixes enabled in order to check how the fix permissions stanza in d/rules
-	can be updated for that.
-	- Referance also https://github.com/ledgersmb/LedgerSMB/issues/2899 which 
+  - Discussed in IRC some of the permission fix issues.  Erik took care of
+  fixing many of them in both master & 1.5 so when the next release comes out
+  will need to run a build of both ledgresmb & ledgersmb-1.5 without the 
+  fixes enabled in order to check how the fix permissions stanza in d/rules
+  can be updated for that.
+  - Referance also https://github.com/ledgersmb/LedgerSMB/issues/2899 which 
   for the creation of a test in upstream that checks for such permission issues.
 
 - As of the packageing for 1.5.8, this is what is in the override_dh_fixperms
@@ -53,9 +53,10 @@ Although Debian (and others) do now use systemd by default, it does still suppor
 init.d scripts as well, so providing at least an example init.d sysvinit startup script
  for starman-ledgersmb would be quite useful.
 
-	- In the mean time, added an initial version of a possible script:
+- In the mean time, added an initial version of a possible script:
 In order to test how that works, would have to use something that has been
-changed to use sysv instead of systemd.
+changed to use sysv instead of systemd;  have been able to do some testing of it but it's
+still not working properly so it needs more work.
 
 ---------------------------------------------------------------------------------------------------
 - lintian results from pkg build for 0~1 test build on 1 Jul 2017
@@ -64,7 +65,7 @@ I: ledgersmb-1.5 source: no-complete-debconf-translation
 - Ref - https://lintian.debian.org/tags/no-complete-debconf-translation.html
 
 ---------------------------------------------------------------------------------------------------
-	- found during June test build
+  - found during June test build
 I: ledgersmb-1.5: systemd-service-file-missing-documentation-key lib/systemd/system/ledgersmb-1.5.service
 
 -------------------------------------------------------------------------------
@@ -111,18 +112,6 @@ Update debian/Readme.sources as necessary.
   - Update d/copyright regarding UI/js as necessary.
 
 -----------------------------------------------------------------------------------
-
-- App::LedgerSMB::DBAdmin was still needed for it's library functions, even though
- it's an app not just a module.
--->> but Erik is importing what's needed from it into LSMB proper so will be able
-to remove the depends for it then.
-
-	- 6 Jun 2016
-- Emailed the ITP for packaging App::LedgerSMB::Admin that upstream has removed
-the requriement for the module, citing the upstream commit that did it, and
-advising that the ITP would be closed when the change appeared in a release.
-
------------------------------------------------------------------------------------
   - Use a separate source tarball for the UI/js directories?  Devs have discussed
 it some but nothing has come of it as yet. If it's provided, then a way to bypass
 all (330) source-is-missing lintian errors could be to use the multiple upstream
@@ -152,4 +141,4 @@ then register it with doc-base?
 
 -----------------------------------------------------------------------------------
 
- -- Robert James Clay <jame@rocasa.us>  Sat,  1 Jul 2017 23:23 -0400
+ -- Robert James Clay <jame@rocasa.us>  Sun,  2 Jul 2017 23:20 -0400
