@@ -45,7 +45,7 @@ start(){
 
     mkdir -p $LOGDIR
 
-    daemon --pidfile $PID_FILE \
+    start-stop-daemon --pidfile $PID_FILE \
       $START_SERVER \
         --interval=5 \
         --port=$PORT \
