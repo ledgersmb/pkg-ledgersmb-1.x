@@ -35,7 +35,7 @@ STATUS_FILE=/var/run/$APP_NAME.status
 LOGDIR=/var/log/$APP_NAME
 
 # configure app perl
-export $APP_PATH=/usr/share/ledgersmb-1.5:/sbin:/bin:/usr/bin:/usr/sbin
+export APP_PATH=/usr/share/ledgersmb-1.5:/sbin:/bin:/usr/bin:/usr/sbin
 
 RETVAL=0
 
