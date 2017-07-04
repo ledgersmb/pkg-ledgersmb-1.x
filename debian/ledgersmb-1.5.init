@@ -46,7 +46,7 @@ start(){
 
     mkdir -p $LOGDIR
 
-    start-stop-daemon --pidfile $PID_FILE \
+    start-stop-daemon --user $USER --group $GROUP --pidfile $PID_FILE \
       $START_SERVER \
         --interval=5 \
         --port=$PORT \
@@ -59,8 +59,6 @@ start(){
         $STARMAN \
           --preload-app \
           --workers $WORKERS \
-          --user $USER \
-          --group $GROUP \
           --error-log $LOGDIR/error.log \
           --access-log $LOGDIR/access.log \
           $APP \
