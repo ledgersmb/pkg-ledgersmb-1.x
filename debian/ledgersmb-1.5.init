@@ -38,6 +38,7 @@ LOGDIR=/var/log/$APP_NAME
 
 # configure app perl
 export APP_PATH=/usr/share/ledgersmb-1.5:/sbin:/bin:/usr/bin:/usr/sbin
+export LSMB_CONFIG_FILE=/etc/ledgersmb-1.5/ledgersmb.conf 
 
 RETVAL=0
 
