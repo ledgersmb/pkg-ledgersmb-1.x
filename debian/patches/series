@@ -1,2 +1,2 @@
-10_lsmb-service.patch
-15_http-proxies.patch
+15_lsmb-service.patch
+20_http-proxies.patch
