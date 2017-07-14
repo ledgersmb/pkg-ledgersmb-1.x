@@ -2,10 +2,10 @@ Author: Robert James Clay <jame@rocasa.us>
 Description: Set working directory in both the required starman-ledgersmb.service
  file as well as the optional plack-fcgi-ledgersmb.service file.
 Origin: vendor
-Last-Update: 2017-07-02
+Last-Update: 2017-07-13
 --- a/conf/systemd/plack-fcgi-ledgersmb.service
 +++ b/conf/systemd/plack-fcgi-ledgersmb.service
-@@ -7,7 +7,7 @@
+@@ -7,19 +7,20 @@
  After=network.target
  
  [Service]
@@ -14,7 +14,11 @@ Last-Update: 2017-07-02
  
  # In case you installed dependencies into a 'local::lib'
  # make sure you set the PERL5LIB environment variable
-@@ -18,8 +18,8 @@
+ # to the correct location by uncommenting the line below
+ #Environment=PERL5LIB=/path/to/local-lib/lib/perl5
+ Environment=PLACK_ENV=deployment
++Environment=LSMB_CONFIG_FILE=/etc/ledgersmb-1.5/ledgersmb.conf
+ 
  # Be sure to set a user and group below
  # which don't have write access to the directories
  # holding the LedgerSMB sources
@@ -27,7 +31,7 @@ Last-Update: 2017-07-02
      --listen localhost:3244                    \
 --- a/conf/systemd/starman-ledgersmb.service
 +++ b/conf/systemd/starman-ledgersmb.service
-@@ -7,7 +7,7 @@
+@@ -7,18 +7,19 @@
  After=network.target
  
  [Service]
@@ -36,7 +40,10 @@ Last-Update: 2017-07-02
  
  # In case you installed dependencies into a 'local::lib'
  # make sure you set the PERL5LIB environment variable
-@@ -17,8 +17,8 @@
+ # to the correct location by uncommenting the line below
+ #Environment=PERL5LIB=/path/to/local-lib/lib/perl5
++Environment=LSMB_CONFIG_FILE=/etc/ledgersmb-1.5/ledgersmb.conf
+ 
  # Be sure to set a user and group below
  # which don't have write access to the directories
  # holding the LedgerSMB sources
@@ -47,3 +54,10 @@ Last-Update: 2017-07-02
  ExecStart=/usr/bin/starman                     \
      --listen localhost:5762                    \
      -I lib                                     \
+@@ -26,4 +27,4 @@
+ Restart=always
+ 
+ [Install]
+-WantedBy=multi-user.target
+\ No newline at end of file
++WantedBy=multi-user.target
