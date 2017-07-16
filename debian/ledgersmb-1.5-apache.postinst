@@ -25,7 +25,7 @@ case "$1" in
         # Do Apache related processing if it is present.
         if [ -d "/etc/apache2" ]; then
             if [ -e /usr/share/apache2/apache2-maintscript-helper ] ; then
-                [ -d /etc/apache2/conf-available/ ] && [ ! -e /etc/apache2/conf-available/ledgersmb-1.5-proxy.conf ] && ucf --debconf-ok /usr/share/ledgersmb-1.5/conf/apache-proxy.conf /etc/apache2/conf-available/ledgersmb-1.5-proxy.conf
+                [ -d /etc/apache2/sites-available/ ] && [ ! -e /etc/apache2/sites-available/ledgersmb-1.5-proxy.conf ] && ucf --debconf-ok /usr/share/ledgersmb-1.5/conf/apache-proxy.conf /etc/apache2/sites-available/ledgersmb-1.5-proxy.conf
                 . /usr/share/apache2/apache2-maintscript-helper
                 if ! a2query -qm cgi ; then
                     apache2_invoke enmod cgi || exit $?
@@ -34,7 +34,7 @@ case "$1" in
                     apache2_invoke enmod rewrite || exit $?
                 fi
                 apache2_invoke enconf ledgersmb-1.5-proxy.conf
-                [ ! -h /etc/ledgersmb-1.5/apache-proxy.conf ] && ln -s /etc/apache2/conf-available/ledgersmb-1.5-proxy.conf /etc/ledgersmb-1.5/apache-proxy.conf
+                [ ! -h /etc/ledgersmb-1.5/apache-proxy.conf ] && ln -s /etc/apache2/sites-available/ledgersmb-1.5-proxy.conf /etc/ledgersmb-1.5/apache-proxy.conf
             fi
         fi
     ;;
