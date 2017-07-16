@@ -27,7 +27,6 @@ fi
 
 case "$1" in
     configure)
-        # Do Apache related processing if it is present.
         # If enabled, do the debconf supported configuration
         db_get ledgersmb-1.5/debconf_install
         if [ "$RET" = true ]; then 
