@@ -50,7 +50,6 @@ start(){
     start-stop-daemon --chuid $USER:$GROUP --pidfile $PID_FILE \
       $START_SERVER \
         --interval=5 \
-        --port=$PORT \
         --signal-on-hup=QUIT \
         --signal-on-term=QUIT \
         --pid-file=$PID_FILE \
@@ -59,6 +58,7 @@ start(){
         -- \
         $STARMAN \
           --preload-app \
+          --listen "localhost:$PORT" \
           --workers $WORKERS \
           --error-log $LOGDIR/error.log \
           --access-log $LOGDIR/access.log \
