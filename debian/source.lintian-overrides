@@ -1,2 +1,3 @@
-# Override Errors like this, related to minified JS:  E: ledgersmb-1.5 source:
-ledgersmb-1.5 source: source-is-missing
+# Override Errors like this, The sources for the UI/js/lsmb/* files are in the
+# UI/js-src/lsmb/ directory.
+ledgersmb-1.5 source: source-is-missing UI/js/lsmb
