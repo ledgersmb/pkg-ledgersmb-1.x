@@ -1,6 +1,6 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: LedgerSMB
-Upstream-Contact: Development discussion for LedgerSMB <ledger-smb-devel@lists.sourceforge.net>
+Upstream-Contact: LedgerSMB Development <devel@lists.ledgersmb.org>
 Source: http://sourceforge.net/projects/ledger-smb
 Comment: LedgerSMB is a drop-in replacement for SQL-Ledger, from which it was
  derived in 2006. The fork was from SQL-Ledger 2.6.17. Note also that the
