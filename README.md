@@ -40,6 +40,36 @@ a wide range of mobile browsers.
 
 # Quick start
 
+The quickest way to get set up is to use the Docker containers the project
+makes available through Docker Hub.
+
+After setting up Docker on the, run these commands to produce a testing
+setup:
+
+```sh
+ $ docker pull ledgersmb/ledgersmb
+ $ docker pull postgres
+ $ mkdir -p /var/lib/pg-container/data
+ $ docker run -d --name lsmb-postgres \
+      -v /var/lib/pg-container/data:/var/lib/postgresql/data \
+      -e POSTGRES_PASSWORD=<your secure password> \
+      -e PGDATA=/var/lib/postgresql/data/pgdata  postgres
+ $ docker run -d --name lsmb --link lsmb-postgres:postgres ledgersmb/ledgersmb
+```
+
+The commands above automatically start the containers.
+
+More environment variables are available to be able to
+
+ * run the PostgreSQL database on a different server than the one
+   running the LedgerSMB container
+ * set up outgoing e-mail to send invoices, reports and other outputs
+   from the container
+
+See the [documentation on Docker Hub](https://hub.docker.com/r/ledgersmb/ledgersmb/).
+
+# Quick start (from source)
+
 The instructions below are for getting started quickly; the [project's
 site](http://ledgersmb.org) provides [in-depth installation instructions](http://ledgersmb.org/topic/installing-ledgersmb-15)
 for production installs.
@@ -73,11 +103,14 @@ The following non-Perl (system) dependencies need to be in place for the
 on the [How to install CPAN modules](http://www.cpan.org/modules/INSTALL.html)
 page on CPAN.
 
+ * cpanminus  This can be manually installed, or installed as a system package.
+   It may not be necessary to install cpanminus if you are only going to install from debian packages.
  * PostgreSQL client libraries
  * PostgreSQL server
  * DBD::Pg 3.4.2+ (so cpanm recognises that it won't need to compile it)  
    This package is called `libdbd-pg-perl` in Debian and `perl-DBD-Pg`
    in RedHat/Fedora
+ * make       This is used by cpan dependencies during thier build process
 
 Then, some of the features listed below have system requirements as well:
 
@@ -95,27 +128,35 @@ Then, some of the features listed below have system requirements as well:
 This section depends on [a working local::lib installation](https://metacpan.org/pod/local::lib#The-bootstrapping-technique)
 as well as an installed `cpanm` executable. Both should be available from
 your distribution's package repository (Debian calls them `liblocal-lib-perl`
-and `cpanminus` respectively). In case `local::lib` is installed from the
-the distro repository, step (4) in the [installation instructions](https://metacpan.org/pod/local::lib#The-bootstrapping-technique)
+and `cpanminus` respectively). `cpanm` depends on the `make` and `gcc` commands being available.
+In case `local::lib` is installed from the the distro repository,
+step (4) in the [installation instructions](https://metacpan.org/pod/local::lib#The-bootstrapping-technique)
 is still to be executed:
 
+NOTE: gcc can be removed after all cpan dependencies are installed.
+      However, it may be necessary to reinstall it if additional modules are required during an upgrade
 ```bash
  $ echo 'eval "$(perl -I$HOME/foo/lib/perl5 -Mlocal::lib=$HOME/foo)"' >>~/.bashrc
 ```
 
 In order for the command above to take effect, please log out and log in again.
 
-
-`cpanm` depends on the `make` command being available; depending on which dependencies
-are being installed, `gcc` may be required as well.
-
 To install the Perl module dependencies, run:
 
 ```sh
-
  $ cpanm --quiet --notest --with-feature=starman [other features] --installdeps .
 
 ```
+NOTE: Don't miss the "." at the end of the cpanm command!
+Don't forget to make sure the environment variable `PERL5LIB=/home/ledgersmb/perl5/lib/perl5` points at the running user's perl5 dir
+Also, NEVER run cpanm as root, it's best to run it as the user you intend to run ledgersmb as when possible.
+This installs the cpan modules in `~/perl5`
+If you can't run it as the final user, don't worry, just run it as any user (eg: johnny),
+and make sure the environment variable `PERL5LIB=/home/johhny/perl5/lib/perl5` points at jonny's perl5 dir
+
+Setting the `PERL5` environment variable is normally done by editing the initscript, or systemd service file.
+If you are running manually, then you will need to set and export `PERL5` before running starman/plack
+
 The following features may be selected by
 specifying ```--with-feature=<feature>```:
 
