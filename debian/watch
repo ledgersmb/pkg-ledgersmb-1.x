@@ -3,10 +3,11 @@
 # Compulsory line, this is a version 4 file
 version=4
 
-# Check against upstream release key. Exclude development snapshots.
+# Check against upstream release key. Exclude development snapshots. And only
+# include versions from the 1.5.x series.
 opts="pgpsigurlmangle=s/$/.asc/, \
 filenamemangle=s/.+\/v?(\d\S+)\.tar\.gz/ledgersmb-$1\.tar\.gz/, \
 dversionmangle=s/\-1.5[\d]?//, \
 uversionmangle=s/^1\.5\.99\d*/0/" \
-https://github.com/ledgersmb/LedgerSMB/releases .*/v?(\d\S+)\.tar\.gz
+https://github.com/ledgersmb/LedgerSMB/releases .*/v?(1.5.+)\.tar\.gz
 
