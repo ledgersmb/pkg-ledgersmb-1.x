@@ -2,6 +2,32 @@
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.9
+* Fix goods/services search with AR/AP invoices (Chris T, #2938)
+* Fix inventory activity report drill down over-inclusive (Chris T, #2926)
+* Fix Ship/Receive column alignments (Chris T)
+* Fix mailing recurring invoices shows invoice in-screen (Erik H, #3004)
+* Fix missing column SQL error when posting recurring invoices (Erik H)
+* Show an error when page assets (Dojo) are missing (Erik H)
+* Fix new welcome page being referred to by absolute path (Erik H, #2994)
+* Fix 'Not an ARRAY reference' error in recurring AP processing (Erik H, #2973)
+* Fix recurring AP invoices posted but 'next date' unchanged (Erik H, #3019)
+* Fix the fix for '.' missing in @INC (Erik H)
+* Add lighttpd example config (Yves L)
+* Fix regression in setup.pl with LedgerSMB 1.2 or SQL Ledger db (Yves L)
+* Fix error when adding customer-specific price to customer (Erik H, #2643)
+* Fix can't edit sales & purchase quotation through web UI (Erik H, #2617)
+* Fix string match operator typo in company searches (Erik H)
+* Fix LedgerSMB 1.2->1.5 migration script syntax errors (Erik H)
+* Add migration non-standard (gl) 'account links' for 1.2->1.5 (Erik H)
+* When including code with 'do', don't silently skip errors (David G, #3020)
+
+Chris T is Chris Travers
+Erik H is Erik Huelsmann
+Yves L is Yves Lavoie
+David G is David Godfrey
+
+
 Changelog for 1.5.8
 * Fix printing of AR/AP transactions results in JavaScript error (Erik H)
 * Fix ODS output appearing on 'Title page' instead of 'Search results' (Erik H)
@@ -129,7 +155,7 @@ John L is John Locke
 
 Changelog for 1.5.0
 
-UI changes:
+UI changes
 * LedgerSMB now frameless (ChrisT)
 * Full use of Dojo widgets (ErikH)
 * Compressed/compiled Dojo for better performance (JohnL)
@@ -140,13 +166,13 @@ Price Matrix Enhancements
 * Quantity discounts can be set in the pricematrix (Chris T)
 * Price matrix now filters on currency (Chris T)
 
-Template changes:
+Template changes
 * All document templates (including INCLUDEs) now in-database (Erik H, #854)
 * 1.4's <?lsmb LETTERHEAD ?> now <?lsmb INCLUDE letterhead ?>
 * 1.3's INCLUDE extensions dropped;
     <?lsmb INCLUDE letterhead.tex ?> -> <?lsmb INCLUDE letterhead ?>
 
-Code Cleanup:
+Code Cleanup
 * Relying on Plack for webserver integration; stub scripts removed (ChrisT)
 * Removed LedgerSMB's custom dojo page loader (ErikH)
 * Removed dead code (coveralls.io used for identification) (ErikH)
@@ -156,11 +182,11 @@ Code Cleanup:
 * Removed unused saved trial balance components (ChrisT, GH 775)
 * Source tree restructuring: libraries in lib/, docroot in UI/ (ErikH)
 
-API Enhancements:
+API Enhancements
 * Moved a great deal of code into PGObject framework on CPAN (ChrisT)
 * Session handling committed before main action (Chris T, GH 943)
 
-Quality assurance:
+Quality assurance
 * Verification of pre-defined Chart of Accounts files (ChrisT)
 * Assurance of completeness of 'use'-tested source files (ErikH)
 * Extended 'use'-tests to cover full set of source files (ErikH)
@@ -182,6 +208,10 @@ JohnL is John Locke
 
 Changelog for 1.4 Series
 Released 2014-09-15
+
+Changelog for 1.4.42
+* Fix goods/services search with AR/AP invoices (Chris T, #2938)
+* Fix ar/ap not searchable by part number (Chris T, #2926)
 
 
 Changelog for 1.4.41
@@ -262,7 +292,7 @@ Changelog for 1.4.34
 * Fixed PNL comparison periods selection resulting in error (Erik H, #2148)
 * Fixed PNL hierarchies both selected (Erik H, #2147)
 * Fixed error at bottom of invoice, under Starman (Erik H)
-* Add test and hard fail on incorrect tempdir permissions  (David G)
+* Add test and hard fail with error if tempdir permissions aren't sane. (David G)
 
 Erik H is Erik Huelsmann
 David G is David Godfrey
@@ -271,6 +301,12 @@ David G is David Godfrey
 Changelog for 1.4.33
 * Fixed issue with COA overview and tax accounts (Chris T, #2030)
 * Fixed issue with outstanding reversing amount and total (Chris T, #2031)
+* Fixed "save draft" buttons not showing (Chris T, #994)
+* Fixed error reopening books across multiple closings (Chris T #2025)
+* Fixed moose error in timecard with qty mising (Chris T, #2048)
+
+Chris T is Chris Travers
+
 
 Changelog for 1.4.32
 * Moved to findbin from use lib '.' (Chris T, #1911)
@@ -295,9 +331,11 @@ Changelog for 1.4.31
 * Fixed can't log into companies with & in their names (Chris T, #1004)
 * Added NZ chart of accounts (Kiwi)
 * Fixed can't create checkpoints before transactions (Chris T, #1704)
-# Fixed contact_all insufficient to create contacts (Chris T, #1219)
+* Fixed contact_all insufficient to create contacts (Chris T, #1219)
+* Fixed internal server errors on debian following upgrade (Chris T and Erik H)
 
 Chris T is Chris Travers
+Erik H is Erik Huelsmann
 
 
 Changelog for 1.4.30
@@ -603,6 +641,8 @@ Changelog for 1.4.12
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
+
+
 Changelog for 1.4.11
 * Fixed account dropdowns on default screen (Nick P)
 * Fixed broken comparison with oldvendor (Nick P)
@@ -625,6 +665,8 @@ Chris T is Chris Travers
 Nick P is Nick Prater
 Erik H is Erik Huelsmann
 Pongracz I is Istvan Pongracz
+
+
 Changelog for 1.4.10
 * Note:  Corrected version numbers in 1.4.10.1, 1.4.10 had 1.4.9 as version
 * Malay translation added (Kaiser F, and others)
@@ -649,9 +691,11 @@ Erik H is Erik Huelsmann
 John L is John Locke
 
 Changelog for 1.4.9
+* Fixed issue with contacts not loading in 1.4,8 (regression, Chris T)
 * Removed optional dependency on LaTeX from starman preload (Chris T)
 
 Chris T is Chris Travers
+
 
 Changelog for 1.4.8
 * Fixed end-date not a date widget on employee div (Chris T)
@@ -777,7 +821,8 @@ Changelog for 1.4.1
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
-Pongracz I is Pongracz IstvÃan
+Pongracz I is Pongracz Istvan
+
 
 Changelog for 1.4.0
 General Enhancements:
@@ -900,9 +945,12 @@ Changelog for 1.3.46
 * Some log quieting fixes. (Chris T)
 * Fixed bug 1262, cannot post overpayment with formatted numbers (Chris T)
 * Fixed bug 1260, Multiple vendor skus breaks display of invoice (Chris T)
+* Fixed bug 1273, some invoices cannot be opened (John L)
 
 Chris T is Chris Travers
+John L is John Locke
 Pongracz I is Pongracz Istvan
+
 
 Changelog for 1.3.45
 * Cleaned up sql files so App::LedgerSMB::Admin works (Chris T)
@@ -957,12 +1005,14 @@ Changelog for 1.3.42
 * Fix for invoice with shipto linking to wrong one on report (Chris T, 1104)
 * Fix for shipto's not being automatically checked (Chris T, 1100)
 * Fixed forex rounding issue with single payments not posting (Chris T)
+* Fixed typo in search payment form: aligh -> align (Pongracz I)
 
 Chris T is Chris Travers
 Pongracz I is Pongracz Istvan
 
 Changelog for 1.3.41
 * Fix for invalid ref when entering payment  (John Locke)
+
 
 Changelog for 1.3.40
 * Updated nginx configuration (Pongracz I)
@@ -971,9 +1021,8 @@ Changelog for 1.3.40
 * Fixed internal server error using cash/payment (Chris T)
 * Fixed #1133 (FX rate changed after selecting part/service) (Pongracz I)
 * Fixed #1078 (Don't populate all empty projects automatically) (Pongracz I)
-* Fixed #1139 (Vendor can show up as default customer in sales order,
-confusing...) (Pongracz I)
-* fixes cogs qty/allocated type mismatch (Chris T)
+* Fixed #1139 (Vendor can show up as default customer in sales order, confusing...) (Pongracz I)
+* Fixed type mismatch between invoice.qty and invoice.allocated (Chris T)
 * Fixed manual tax invoices not reversing properly (Chris T, 1134)
 
 Chris T is Chris Travers
@@ -2101,7 +2150,7 @@ Changelog for 1.2.10
 * Fixed 1814437, Multiple paths set causing errors (Seneca)
 * Add the ampersand to the HTML escape list for parse_template (Seneca)
 * fixed 1815329, $ not escaped properly for LaTeX (Seneca)
-* updated Hungarian translation from PongrÃ¡cz IstvÃ¡n (patch 1814156, Seneca)
+* updated Hungarian translation from Pongrácz István (patch 1814156, Seneca)
 * Properly handle invoice-type quantities from customer search (Seneca)
 * Correcting improper redirect when reposting POS invoices.(Chris T)
 * Fixing issues relating to database queries and POS-module redirects (Seneca)

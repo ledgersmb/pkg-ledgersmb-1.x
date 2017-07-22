@@ -985,7 +985,16 @@ sub create_form {
     $form->{rowcount}-- if $form->{rowcount};
     $form->{rowcount} = 0 if !$form->{"$form->{vc}_id"};
 
-    do "bin/$form->{script}";
+    {
+        local ($!, $@);
+        my $do_ = "bin/$form->{script}";
+        unless ( do $do_ ) {
+            if ($! or $@) {
+                print "Status: 500 Internal server error (io.pl)\n\n";
+                warn "Failed to execute $do_ ($!): $@\n";
+            }
+        }
+    };
 
     for ( "$form->{vc}", "currency" ) { $form->{"select$_"} = "" }
 
@@ -1489,9 +1498,6 @@ sub print_form {
 
             $old_form->{message} = $form->{message};
             $old_form->{emailed} = $form->{emailed};
-
-            $old_form->{format} = "postscript" if $myconfig{printer};
-            $old_form->{media} = $myconfig{printer};
 
             $old_form->save_intnotes( \%myconfig, ($order) ? 'oe' : lc $ARAP );
         }
