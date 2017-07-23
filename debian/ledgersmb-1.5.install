@@ -8,6 +8,7 @@ sql/* usr/share/ledgersmb-1.5/sql
 templates/* usr/share/ledgersmb-1.5/templates
 tools/* usr/share/ledgersmb-1.5/tools
 UI/* usr/share/ledgersmb-1.5/UI
+UI/js/dijit/themes/claro/images/loadingAnimation.gif UI/js/dijit/icons/images
 utils/notify_short/* usr/share/ledgersmb-1.5/utils/notify_short
 utils/process_queue/* usr/share/ledgersmb-1.5/utils/process_queue
 utils/replication/* usr/share/ledgersmb-1.5/utils/replication
