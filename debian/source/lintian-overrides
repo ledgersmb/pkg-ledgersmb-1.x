@@ -2,5 +2,10 @@
 # UI/js-src/lsmb/ directory.
 ledgersmb-1.5 source: source-is-missing UI/js/lsmb/*
 
+# Override Errors like this, The sources for the UI/js/dojo/* files were in the
+# UI/js-sprc/dojo/ directory. The sources for the UI/js/dijit/* files were in the
+# UI/js-src/dijit/ directory. Athough they are available in the upstream git
+# repository, the are not currently being put into the distribution archive
+# when that is being created. 
 ledgersmb-1.5 source: source-is-missing UI/js/dojo/*
 ledgersmb-1.5 source: source-is-missing UI/js/dijit/*
