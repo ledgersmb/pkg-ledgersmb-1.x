@@ -3,3 +3,4 @@
 ledgersmb-1.5 source: source-is-missing UI/js/lsmb/*
 
 ledgersmb-1.5 source: source-is-missing UI/js/dojo/*
+ledgersmb-1.5 source: source-is-missing UI/js/dijit/*
