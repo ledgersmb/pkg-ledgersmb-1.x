@@ -1,7 +1,7 @@
 Author: Robert James Clay <jame@rocasa.us>
 Description: Make needed updates for ledgesmb.config.default for use by package.
 Origin: vendor
-Last-Update: 2017-07-13
+Last-Update: 2017-07-26
 --- a/conf/ledgersmb.conf.default
 +++ b/conf/ledgersmb.conf.default
 @@ -4,7 +4,7 @@
@@ -22,6 +22,15 @@ Last-Update: 2017-07-13
  
  # This is the logical CSS directory.  I.e. it is what comes before the 
  # ledgersmb.css in the url.  Example might be /my_css_dir/ or 
+@@ -47,7 +47,7 @@
+ # Spelling of cookie name for this instance of LedgerSMB.
+ # Used to keep multiple instances and/or different versions
+ # logged in at the same time
+-cookie_name = LedgerSMB-1.5
++cookie_name = LedgerSMB-1.5-lsmb
+ 
+ # This is the string we look for in the failed connection error to determine
+ # if the database was not found.  For English-language locales, this can be
 @@ -75,7 +75,7 @@
  images  = UI/images
  
