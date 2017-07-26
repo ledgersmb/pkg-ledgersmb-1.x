@@ -1,16 +1,13 @@
 debian/TODO for LedgerSMB ledgersmb-1.5 package
 
-
--> Having problems with both the init and the service file;  OTOH, it doesn't
-even run manually, and without logging I can't see why for sure. Just get a
-"500 Internal Server Error".  If nothing else, review the required modules.
-
-====================================================================================================
   - See also https://github.com/ledgersmb/pkg-ledgersmb-1.5/issues
+  
+====================================================================================================
+  - Issue for initial packaging work.
 https://github.com/ledgersmb/pkg-ledgersmb-1.5/issues/1
 
 -----------------------------------------------------------------------------------
-	- When 1.5.9 comes out & I have it available, check it again without the 
+  - When 1.5.9 comes out & I have it available, check it again without the 
 lintian overrides (including the source overrides?) so can compare which types
 are coming up.  Also because there is a legit reason for the UI/js/lsmb override,
 since the actual sources for those are in UI/js-src/lsmb and the write up for 
@@ -29,18 +26,20 @@ Update debian/Readme.sources as necessary.
   all, rather than try to list them all?  Or is included already in the main stanza?
   
 -----------------------------------------------------------------------------------
-- Line 29 in the -apache  post install script still needs to be corrected.?
------------------------------------------------------------------------------------
 - To fix an issue with 1.5.9, added the following line to d/ledgersmb-1.5.install:
 +UI/js/dijit/themes/claro/images/loadingAnimation.gif UI/js/dijit/icons/images
 
-	- The fix for the issue is already in upstream and should be in 1.5.10:
+  - The fix for the issue is already in upstream and should be in 1.5.10:
 Fix image location for 'loading' animation -  22 July 2017
  https://github.com/ledgersmb/LedgerSMB/commit/552498906ea3acd16e8dbfd46b84ef602981a2df
+ 
+  - Note that this fix will not work for the ledgersmb pkg, though perhaps a
+  symlink will work instead? 
+
 -----------------------------------------------------------------------------------
 
 - debian/ledgersmb.init
-	There is a '--workers $WORKERS' parameter being used in the STARMAN cmd
+  There is a '--workers $WORKERS' parameter being used in the STARMAN cmd
 line but that variable does not actually get set earlier in the script.  Be
 interesting to see what David comes up with, as he was critiquing the init
 in the ledgersmb (I think?), which has the same issue, but didn't comment on
@@ -48,29 +47,17 @@ it.  Refer back to the original script I adapted mine from?  Or wait for the
 one to be made by David?
 
 -------------------------------------------------------------------------------
-	- Interesting enough; this is available for Config::Model
+  - Interesting enough; this is available for Config::Model
 https://metacpan.org/release/Config-Model-Systemd
-	-> It's been in Debian since Stretch
-	https://packages.debian.org/source/sid/libconfig-model-systemd-perl
+  -> It's been in Debian since Stretch
+  https://packages.debian.org/source/sid/libconfig-model-systemd-perl
 
-	- So if there will be a need to do a debconf update for the service file, will
-	be able to do so.
------------------------------------------------------------------------------------
-	- Update the patch for the config file to change the value for the
-'cookie_name'. Upstream already has it as "LedgerSMB-1.5", presumably after the
-major.minor version, while I have changed other such variables to being after the
-package name.  Since they've already done that; do something like add an "LSMB" or
-"lsmb" to the end?
-	- Also; add to the existing comment for that value, something to the effect of
-what was similarly added for the main ledgersmb package:
-"This is initially set to differeniate from upstream by adding "-ds" to the end."
-but in this case, use "lsmb" or which ever I decide.
-	- Also add something to the README.Debian about it?
+  - So if there is a need to do a debconf update for the service file, will
+  be able to do so.
 
 -----------------------------------------------------------------------------------
 - An unneeded /etc/ledgersmb/conf directory appears to be getting created, perhaps
-during the pkg install? Although it's dated 26 May 2017 and is not in the deb pkg
-and the current pkg was installed yesterday on 16 .
+during the pkg install? It's not in the deb pkg.
 Next time I purge the pkg, verify at least that all of the pkg directories are 
 removed.
 
@@ -83,11 +70,11 @@ https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=868724
 - An update for getting the distribution archive itself appears to have been
 successful but the *.asc associated with it used for the gpg verification does
 not seem to get refereneced properly so that step fails. (So creating the orig
-archive needs to be done manually.)
+archive needs to be done manually.) 
 
-----------------------------------------------------------------------------------------------------
-	- There is an issue with the debconf usage (besides the issue with the templates) during the 
-	pkg install.
+-------------------------------------------------------------------------------
+  - There is an issue with the debconf usage (besides the issue with the
+  templates) during the pkg install.
 
 - Note that there is an extranous "DO" showing up.  Possibly that's 
 from debconf script that is not running properly, which it should because it's
@@ -95,24 +82,25 @@ defaulted to do so.  Maybe there's a problem with where it's supposed to be
 running in the maintainer script, as running dpkg-reconfigure on it runs
 it with no apparant issue.  (Athought it also ended up displaying the extraneous
 "DO" at the bottom left hand corner of the last debconf diaplay.)
- So perhaps there is an issue with the *.config file after all? Or is it indeed some to do with
- it the usage in the maintainer script.
+ So perhaps there is an issue with the *.config file after all? Or is it indeed
+ some to do with it the usage in the maintainer script.
  
-----------------------------------------------------------------------------------------------------
-	- Looks like an Lighttpd configuration example is going to be added.  If/when
-	it's also added to the 1.5, add another binary stanza for it to go along with
-	the ones for nginx and apache.
+------------------------------------------------------------------------------
+  - Looks like an Lighttpd configuration example is going to be added.  If/when
+  it's also added to the 1.5, add another binary stanza for it to go along with
+  the ones for nginx and apache.
 Add Lighttpd configuration example #2993
 https://github.com/ledgersmb/LedgerSMB/pull/2993
 
 https://github.com/ledgersmb/LedgerSMB/issues/3007
 https://github.com/ledgersmb/LedgerSMB/issues/3008
 
-----------------------------------------------------------------------------------------------------
-- A varnish example config, default.vcl, is already available.  Create another binary stanza in the
-d/control file in order to add it.  ledgersmb-1.5-varnish.  The config goes to /etc/varnish? 
-The existing config does have port setting incorrect, so add it after port is set properly to 5762.
-----------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+- A varnish example config, default.vcl, is already available.  Create another 
+binary stanza in the d/control file in order to add it.  ledgersmb-1.5-varnish.  
+The config goes to /etc/varnish? The existing config does have port setting 
+incorrect, so add it after port is set properly to 5762.
+-------------------------------------------------------------------------------
 
   - Discussed in IRC some of the permission fix issues.  Erik took care of
   fixing many of them in both master & 1.5 so when the next release comes out
@@ -145,9 +133,9 @@ The existing config does have port setting incorrect, so add it after port is se
 ---------------------------------------------------------------------------------------------------
 
 https://github.com/ledgersmb/LedgerSMB/issues/2900
-Although Debian (and others) do now use systemd by default, it does still support sysvinit
-init.d scripts as well, so providing at least an example init.d sysvinit startup script
- for starman-ledgersmb would be quite useful.
+Although Debian (and others) do now use systemd by default, it does still 
+support sysvinit init.d scripts as well, so providing at least an example 
+init.d sysvinit startup script for starman-ledgersmb would be quite useful.
 
 - In the mean time, added an initial version of a possible script:
 In order to test how that works, would have to use something that has been
@@ -167,19 +155,15 @@ I: ledgersmb-1.5: unused-override package-contains-empty-directory usr/share/led
 
 N: 345 tags overridden (341 errors, 2 warnings, 2 info)
 
----------------------------------------------------------------------------------------------------
-  - found during June test build
-I: ledgersmb-1.5: systemd-service-file-missing-documentation-key lib/systemd/system/ledgersmb-1.5.service
-
 -------------------------------------------------------------------------------
   - debian/adm/config-lsmb-db-user.sh
 - Use 'pg_roles' and 'rolname' rather than 'pg_users' and 'usename', as I 
 found that one can actually create two roles with the same name, one with the
 login attribute and one without.
 
-	- Use 'git cherrypick' to pull in the changes already released in 
-	v1.4.41-1+ds.
-	
+  - Use 'git cherrypick' to pull in the changes already released in 
+  v1.4.41-1+ds.
+
 - Use only the postgresql tools, like createuser, to set the user name and 
 password for the LSMB DB Admin user.  David G pointed out that using SQL
 can allow the unencrypted password to perhaps show up in logs, etc, which
@@ -192,7 +176,6 @@ if doing the configure was enabled.  Add option to reset the password if the
 user ID already exists, but not by default; would have to explicitly agree
 to it, each time, and that agreement isn't saved so the question gets asked
 each time and by default is not to do the reset.
-
 
 -----------------------------------------------------------------------------------
   - Use a separate source tarball for the UI/js/dojo and UI/js/dijit directories?
@@ -241,4 +224,4 @@ then register it with doc-base?
 
 -----------------------------------------------------------------------------------
 
- -- Robert James Clay <jame@rocasa.us>  Mon, 24 Jul 2017 09:16 -0400
+ -- Robert James Clay <jame@rocasa.us>  Wed, 26 Jul 2017 07:22 -0400
