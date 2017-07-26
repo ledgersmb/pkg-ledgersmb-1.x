@@ -1,9 +1,10 @@
 CONTRIBUTORS
 debian/README.source
+doc/API
 doc/LedgerSMB-manual.pdf
 doc/coding-standard.pdf
-doc/API
 doc/database
+doc/db-changes
 doc/notes
 doc/samples
 doc/templating
