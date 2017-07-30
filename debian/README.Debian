@@ -25,11 +25,14 @@ LedgerSMB Configuration
     installation, that can be done and its password changed by running the
     following command: 'dpkg-reconfigure ledgersmb-1.5'.
 
-	A web server like Apache is no longer used to run LedgerSMB directly. With 
-	LedgerSMB 1.5.x, it is instead run locally by Starman up on port 5762. The
+    A web server like Apache is no longer used to run LedgerSMB directly. With
+    LedgerSMB 1.5.x, it is instead run by default locally by Starman up on port
+    5762. (See the file /etc/defaults/ledgesmb-1.5 for where that is set.) The
     configuration files for using Apache or Nginx as a web proxy are installed
-    as necessary if that is selected during the install and are available as
-    examples if you intend to set up the proxy remotely.
+    by installing the ledgersmb-apache or ledgersmb-ngnix package as necessary
+    for a local proxy and example proxy configuration files are avaiable if you
+    intend to set up the proxy remotely, and in either case will likly still need
+    further editing to configure them for your use.
 
     Language specific HTML, LaTeX, and Text templates can be edited online but
     the language specific directory (like /var/ledgersmb/templates/demo/en_US)
