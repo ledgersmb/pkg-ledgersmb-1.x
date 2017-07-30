@@ -68,7 +68,6 @@ start(){
         $STARMAN \
           --preload-app \
           --listen "$LISTEN_ADDRESS:$LISTEN_PORT" \
-          --workers $WORKERS \
           --error-log $LOGDIR/error.log \
           --access-log $LOGDIR/access.log \
           $APP \
