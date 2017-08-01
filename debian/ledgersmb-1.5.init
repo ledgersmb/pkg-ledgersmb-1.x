@@ -24,7 +24,7 @@ DESC="Run LedgerSMB via Starman"
 # Include defaults if available
 if [ -f "/etc/default/ledgersmb-1.5" ]
 then
-    . "/etc/default/legersmb-1.5"
+    . "/etc/default/ledgersmb-1.5"
 else
     WORKING_DIRECTORY=/usr/share/legdersmb-1.5
     LISTEN_ADDRESS=localhost
