@@ -1,8 +1,9 @@
 Author: Robert James Clay <jame@rocasa.us>
 Description: Set working directory in both the required starman-ledgersmb.service
- file as well as the optional plack-fcgi-ledgersmb.service file.
+ file as well as the optional plack-fcgi-ledgersmb.service file. Include setting
+ the LSMB_CONFIG_FILE variable in the environment.
 Origin: vendor
-Last-Update: 2017-07-30
+Last-Update: 2017-08-02
 --- a/conf/systemd/plack-fcgi-ledgersmb.service
 +++ b/conf/systemd/plack-fcgi-ledgersmb.service
 @@ -7,19 +7,20 @@
@@ -31,17 +32,19 @@ Last-Update: 2017-07-30
      --listen localhost:3244                    \
 --- a/conf/systemd/starman-ledgersmb.service
 +++ b/conf/systemd/starman-ledgersmb.service
-@@ -7,7 +7,8 @@
+@@ -7,18 +7,19 @@
  After=network.target
  
  [Service]
 -WorkingDirectory=WORKING_DIR
-+EnvironmentFile=/etc/default/ledgersmb-1.5
-+WorkingDirectory=$WORKING_DIRECTORY
++WorkingDirectory=/usr/share/ledgersmb-1.5
  
  # In case you installed dependencies into a 'local::lib'
  # make sure you set the PERL5LIB environment variable
-@@ -17,13 +18,13 @@
+ # to the correct location by uncommenting the line below
+ #Environment=PERL5LIB=/path/to/local-lib/lib/perl5
++Environment=LSMB_CONFIG_FILE=/etc/ledgersmb-1.5/ledgersmb.conf
+ 
  # Be sure to set a user and group below
  # which don't have write access to the directories
  # holding the LedgerSMB sources
@@ -50,10 +53,9 @@ Last-Update: 2017-07-30
 +User=ledgersmb-1_5
 +Group=ledgersmb-1_5
  ExecStart=/usr/bin/starman                     \
--    --listen localhost:5762                    \
-+    --listen $LISTEN_ADDRESS:$LISTEN_PORT      \
+     --listen localhost:5762                    \
      -I lib                                     \
-     tools/starman.psgi
+@@ -26,4 +27,4 @@
  Restart=always
  
  [Install]
