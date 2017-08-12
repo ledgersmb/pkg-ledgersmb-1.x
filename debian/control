@@ -79,7 +79,7 @@ Description: financial accounting and ERP program (Perl/SQL backend)
  run directly by Starman instead of by Apache. If other access is needed, a
  Reverse Proxy can be configured locally using Apache or Nginx, using the
  packages ledgersmb-1.5-apache or ledgersmb-1.5-nginx to select which. For
- nore information, please see /usr/share/doc/ledgersmb-1.5/README.Debian.
+ more information, please see /usr/share/doc/ledgersmb-1.5/README.Debian.
 
 Package: ledgersmb-1.5-apache
 Architecture: all
