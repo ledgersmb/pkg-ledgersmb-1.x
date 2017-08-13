@@ -15,9 +15,9 @@
 #
 
 # First parameter is the user name
-LSMBDBUSER=$1
+LSMBDBUSER="$1"
 # Second parameter is the password
-LSMBDBPW=$2
+LSMBDBPW="$2"
 
 su - postgres -c psql <<EOT
 DO
