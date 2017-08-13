@@ -83,7 +83,7 @@ Description: financial accounting and ERP program (Perl/SQL backend)
 
 Package: ledgersmb-1.5-nginx
 Architecture: all
-Depends: ledgersmb-1.5,
+Depends: ledgersmb-1.5 (= ${binary:Version}),
          nginx-light | nginx-full | nginx-extra,
          ucf,
          ${misc:Depends}
