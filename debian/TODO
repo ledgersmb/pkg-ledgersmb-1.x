@@ -7,24 +7,33 @@ debian/TODO for LedgerSMB ledgersmb-1.5 package
 https://github.com/ledgersmb/pkg-ledgersmb-1.5/issues/1
 
 -----------------------------------------------------------------------------------
-  - When 1.5.9 comes out & I have it available, check it again without the 
-lintian overrides (including the source overrides?) so can compare which types
-are coming up.  Also because there is a legit reason for the UI/js/lsmb override,
-since the actual sources for those are in UI/js-src/lsmb and the write up for 
-the overide should reflect that.
-
------------------------------------------------------------------------------------
 
 Update debian/Readme.Debian as necessary.
 Update debian/Readme.sources as necessary.
+------------------------------------------------------------------------------
+- The addition of an ledgersmb-apache binary deb was attempted but it does
+not seem to install cleanly, so that will need further investigation. See
+the dev/ApacheProxy development branch at the packaging repository:
+https://github.com/ledgersmb/pkg-ledgersmb-1.5
+	
+------------------------------------------------------------------------------
 
------------------------------------------------------------------------------------
-  - Update d/copyright regarding UI/js as necessary.
+  - Looks like an Lighttpd configuration example is going to be added.  If/when
+  it's also added to the 1.5, add another binary stanza for it to go along with
+  the ones for nginx and apache.
+Add Lighttpd configuration example #2993
+https://github.com/ledgersmb/LedgerSMB/pull/2993
 
-- In bin/*, there have been a number of the files that have been updated by us but 
-  at varied times over the last serveral years. Just use 2017 as the end year for 
-  all, rather than try to list them all?  Or is included already in the main stanza?
-  
+https://github.com/ledgersmb/LedgerSMB/issues/3007
+https://github.com/ledgersmb/LedgerSMB/issues/3008
+
+-------------------------------------------------------------------------------
+- A varnish example config, default.vcl, is already available.  Create another 
+binary stanza in the d/control file in order to add it:  ledgersmb-varnish.  
+The config goes to /etc/varnish? The existing config does not have the port set 
+correctly, so add it after the port is set properly to 5762.
+- But shouldn't the name for that be varnish-proxy.vcl if not varnish-proxy.conf?
+
 -----------------------------------------------------------------------------------
 - To fix an issue with 1.5.9, added the following line to d/ledgersmb-1.5.install:
 +UI/js/dijit/themes/claro/images/loadingAnimation.gif UI/js/dijit/icons/images
@@ -45,6 +54,8 @@ interesting to see what David comes up with, as he was critiquing the init
 in the ledgersmb (I think?), which has the same issue, but didn't comment on
 it.  Refer back to the original script I adapted mine from?  Or wait for the
 one to be made by David?
+- See also: Provide a sysvinit init.d script for starman-ledgesmb
+  https://github.com/ledgersmb/LedgerSMB/issues/2900
 
 -------------------------------------------------------------------------------
   - Interesting enough; this is available for Config::Model
@@ -73,7 +84,7 @@ not seem to get refereneced properly so that step fails. (So creating the orig
 archive needs to be done manually.) 
 
 -------------------------------------------------------------------------------
-  - There is an issue with the debconf usage (besides the issue with the
+  - There may be an issue with the debconf usage (besides the issue with the
   templates) during the pkg install.
 
 - Note that there is an extranous "DO" showing up.  Possibly that's 
@@ -85,21 +96,15 @@ it with no apparant issue.  (Athought it also ended up displaying the extraneous
  So perhaps there is an issue with the *.config file after all? Or is it indeed
  some to do with it the usage in the maintainer script.
  
-------------------------------------------------------------------------------
-  - Looks like an Lighttpd configuration example is going to be added.  If/when
-  it's also added to the 1.5, add another binary stanza for it to go along with
-  the ones for nginx and apache.
-Add Lighttpd configuration example #2993
-https://github.com/ledgersmb/LedgerSMB/pull/2993
+-----------------------------------------------------------------------------------
+- Review the copyright settings for the debian/ directory again back to the
+ beginning of the LedgerSMB packaging as although it may have listed 'GPL'
+ as the license involved I'm not so sure that GPL3 existed back then and
+ that is what it points to now. May have been just GPL2+, like ledgersmb
+ itself; if so, add a comment to the stanza noting that.
+- According to https://en.wikipedia.org/wiki/GNU_General_Public_License,
+"In 2007, the third version of the license (GNU GPLv3) was released"
 
-https://github.com/ledgersmb/LedgerSMB/issues/3007
-https://github.com/ledgersmb/LedgerSMB/issues/3008
-
--------------------------------------------------------------------------------
-- A varnish example config, default.vcl, is already available.  Create another 
-binary stanza in the d/control file in order to add it.  ledgersmb-1.5-varnish.  
-The config goes to /etc/varnish? The existing config does have port setting 
-incorrect, so add it after port is set properly to 5762.
 -------------------------------------------------------------------------------
 
   - Discussed in IRC some of the permission fix issues.  Erik took care of
@@ -107,10 +112,10 @@ incorrect, so add it after port is set properly to 5762.
   will need to run a build of both ledgresmb & ledgersmb-1.5 without the 
   fixes enabled in order to check how the fix permissions stanza in d/rules
   can be updated for that.
-  - Referance also https://github.com/ledgersmb/LedgerSMB/issues/2899 which 
+  - Referance also https://github.com/ledgersmb/LedgerSMB/issues/2899 which is
   for the creation of a test in upstream that checks for such permission issues.
 
-- As of the packageing for 1.5.8, this is what is in the override_dh_fixperms
+- As of the packageing for 1.5.9, this is what is in the override_dh_fixperms
   stanza
 <-->dh_fixperms
 <-->chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/sql/modules/reload_modules.sh
@@ -143,10 +148,9 @@ changed to use sysv instead of systemd;  have been able to do some testing of it
 still not working properly so it needs more work.
 
 ---------------------------------------------------------------------------------------------------
-- lintian results from pkg build for 1.5.9-0~1 test build on 24 Jul 2017
+- lintian results from pkg build for 1.5.9-0~3 test build on 26 Jul 2017
 
 I: ledgersmb-1.5 source: no-complete-debconf-translation
-- Ref - https://lintian.debian.org/tags/no-complete-debconf-translation.html
 
 I: ledgersmb-1.5: systemd-service-file-missing-documentation-key lib/systemd/system/ledgersmb-1.5.service
 
@@ -157,25 +161,22 @@ N: 345 tags overridden (341 errors, 2 warnings, 2 info)
 
 -------------------------------------------------------------------------------
   - debian/adm/config-lsmb-db-user.sh
-- Use 'pg_roles' and 'rolname' rather than 'pg_users' and 'usename', as I 
-found that one can actually create two roles with the same name, one with the
-login attribute and one without.
-
-  - Use 'git cherrypick' to pull in the changes already released in 
-  v1.4.41-1+ds.
 
 - Use only the postgresql tools, like createuser, to set the user name and 
-password for the LSMB DB Admin user.  David G pointed out that using SQL
+password for the LSMB DB Admin user?  David G pointed out that using SQL
 can allow the unencrypted password to perhaps show up in logs, etc, which
-is a security concern.
-- Take out defaulting for doing the SQL 'ALTER' instead of a 'CREATE'
-if the LSMB DBAdmin user already exits.  It was pointed out by both David
+is a security concern.  So, use the sql to be able to tell if the user
+is already pressent but use the standard tools to actually set it?  Or can
+those be used unattended like is needed here?
+
+- Take out defaulting to doing the SQL 'ALTER' instead of a 'CREATE'
+if the LSMB DBAdmin user already exits?  It was pointed out by both David
 and Erik that they really don't think it's a good idea to reset that password
-by default when, for instance, upgradeing the package;  which is what it did
-if doing the configure was enabled.  Add option to reset the password if the
-user ID already exists, but not by default; would have to explicitly agree
+by default when, for instance, upgrading the package;  which is what it does
+when doing the configure was enabled.  Add option to reset the password if the
+user ID already exists, but not by default? Would have to explicitly agree
 to it, each time, and that agreement isn't saved so the question gets asked
-each time and by default is not to do the reset.
+each time and by default is not to do the reset?
 
 -----------------------------------------------------------------------------------
   - Use a separate source tarball for the UI/js/dojo and UI/js/dijit directories?
@@ -188,7 +189,6 @@ https://wiki.debian.org/Projects/DebSrc3.0
 https://raphaelhertzog.com/2010/09/07/how-to-use-multiple-upstream-tarballs-in-debian-source-packages/  
 
 google search: debian package multiple source files
-
 
 Note that this isn't necessary for the UI/js/lsmb directory because the source
 for those are in the UI/js-src/lsmb directory. Although could perhaps investigate
@@ -205,6 +205,9 @@ to it) have/are being generated, like modules or apps to print from html to pdf.
   Once that has been implemented, move the texlive requirement from Recommends to
 Suggests and add some info about it to the README.Debian.
 
+- Note that what has been discussed for an alternate default for printing has
+been 'wkhtml2pdf'. See also:
+https://github.com/ledgersmb/LedgerSMB/issues/2719
 -----------------------------------------------------------------------------------
 
 - A debian/po debconf Japanese translation has been provided. Currently,
@@ -217,11 +220,12 @@ System|Language|Add Language.
 
 - Upstream uses pdflatex to create the distribution LedgerSMB-manual.pdf from
 the source file doc/manual/LedgerSMB-manual.tex. Use the same source file to
-create an HTML version?
+create an HTML version? And to recreate the pdf version, to insure that it
+is the from the current source file?
 
 - Create an HTML and/or PDF file of templateing/templating-guide.tex? And
 then register it with doc-base?
 
 -----------------------------------------------------------------------------------
 
- -- Robert James Clay <jame@rocasa.us>  Wed, 26 Jul 2017 07:22 -0400
+ -- Robert James Clay <jame@rocasa.us>  Sun, 13 Aug 2017 09:44 -0400
