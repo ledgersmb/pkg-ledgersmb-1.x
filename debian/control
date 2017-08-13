@@ -83,7 +83,7 @@ Description: financial accounting and ERP program (Perl/SQL backend)
 
 Package: ledgersmb-1.5-apache
 Architecture: all
-Depends: ledgersmb-1.5,
+Depends: ledgersmb-1.5 (= ${binary:Version}),
          apache2,
          ucf,
          ${misc:Depends}
@@ -104,7 +104,7 @@ Description: financial accounting and ERP program - web proxy via Apache
 
 Package: ledgersmb-1.5-nginx
 Architecture: all
-Depends: ledgersmb-1.5,
+Depends: ledgersmb-1.5 (= ${binary:Version}),
          nginx-light | nginx-full | nginx-extra,
          ucf,
          ${misc:Depends}
