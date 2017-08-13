@@ -1,9 +1,15 @@
-ledgersmb-1.5 (1.5.9-0~5) UNRELEASED; urgency=low
+ledgersmb-1.5 (1.5.9-2~1) UNRELEASED; urgency=medium
 
   TODO:
-    - Continue updating pkg as necessary for needed changes for the initial
-    version of the package.
+    - Resolve issues with ledgersmb-1.5-apache binary packaging.
+    - See also debian/TODO
+    - See also  https://github.com/ledgersmb/pkg-ledgersmb-1.5/issues
+  * Update to add ledgersmb-1.5-apache binary.
 
-  * Create initial version of 'LedgerSMB-1.5' package.
+ -- Robert James Clay <jame@rocasa.us>  Sun, 13 Aug 2017 16:13:34 -0400
 
- -- Robert James Clay <jame@rocasa.us>  Wed,  2 Aug 2017 19:18:28 -0400
+ledgersmb-1.5 (1.5.9-1) stable; urgency=low
+
+  * Create and release initial version of 'LedgerSMB-1.5' package.
+
+ -- Robert James Clay <jame@rocasa.us>  Sun, 13 Aug 2017 12:54:30 -0400
