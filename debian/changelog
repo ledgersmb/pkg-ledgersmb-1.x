@@ -1,4 +1,4 @@
-ledgersmb-1.5 (1.5.9-0~5) UNRELEASED; urgency=low
+ledgersmb-1.5 (1.5.9-0~6) UNRELEASED; urgency=low
 
   TODO:
     - Continue updating pkg as necessary for needed changes for the initial
@@ -6,4 +6,4 @@ ledgersmb-1.5 (1.5.9-0~5) UNRELEASED; urgency=low
 
   * Create initial version of 'LedgerSMB-1.5' package.
 
- -- Robert James Clay <jame@rocasa.us>  Wed,  2 Aug 2017 19:18:28 -0400
+ -- Robert James Clay <jame@rocasa.us>  Sun, 13 Aug 2017 09:58:19 -0400
