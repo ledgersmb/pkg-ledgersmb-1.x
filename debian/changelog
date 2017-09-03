@@ -1,8 +1,9 @@
-ledgersmb-1.5 (1.5.9-2~1) UNRELEASED; urgency=medium
+ledgersmb-1.5 (1.5.10-0~1) UNRELEASED; urgency=medium
 
+  * New upstream version.
   * Remove references to 'Plack' in debian/README.Debian as no longer necessary.
 
- -- Robert James Clay <jame@rocasa.us>  Tue, 29 Aug 2017 13:14:06 -0400
+ -- Robert James Clay <jame@rocasa.us>  Sun, 03 Sep 2017 18:05:13 -0400
 
 ledgersmb-1.5 (1.5.9-1) stable; urgency=low
 
