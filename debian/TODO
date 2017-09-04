@@ -3,29 +3,28 @@ debian/TODO for LedgerSMB ledgersmb-1.5 package
   - See also https://github.com/ledgersmb/pkg-ledgersmb-1.5/issues
   
 ====================================================================================================
-  - Issue for initial packaging work.
-https://github.com/ledgersmb/pkg-ledgersmb-1.5/issues/1
-
------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------
 
 Update debian/Readme.Debian as necessary.
 Update debian/Readme.sources as necessary.
 ------------------------------------------------------------------------------
 - The addition of an ledgersmb-apache binary deb was attempted but it does
 not seem to install cleanly, so that will need further investigation. See
-the dev/ApacheProxy development branch at the packaging repository:
-https://github.com/ledgersmb/pkg-ledgersmb-1.5
-	
+the dev/ApacheProxy development branch at the packaging repository as well
+as the following issue:
+https://github.com/ledgersmb/pkg-ledgersmb-1.5/issues/2
+
 ------------------------------------------------------------------------------
 
-  - Looks like an Lighttpd configuration example is going to be added.  If/when
-  it's also added to the 1.5, add another binary stanza for it to go along with
-  the ones for nginx and apache.
-Add Lighttpd configuration example #2993
-https://github.com/ledgersmb/LedgerSMB/pull/2993
+  - Looks like an Lighttpd configuration example has been added. Add another
+  binary stanza for it to go along with the ones for nginx and apache.
 
+Update conf/README.md regarding 'lighttpd.conf.template'.
 https://github.com/ledgersmb/LedgerSMB/issues/3007
-https://github.com/ledgersmb/LedgerSMB/issues/3008
+
+  - See also:
+[ledgersmb/LedgerSMB] ylavoie opened pull request
+ #3126: Rename Lighttpd sample config file [open] - https://github.com/ledgersmb/LedgerSMB/pull/3126
 
 -------------------------------------------------------------------------------
 - A varnish example config, default.vcl, is already available.  Create another 
@@ -33,17 +32,6 @@ binary stanza in the d/control file in order to add it:  ledgersmb-varnish.
 The config goes to /etc/varnish? The existing config does not have the port set 
 correctly, so add it after the port is set properly to 5762.
 - But shouldn't the name for that be varnish-proxy.vcl if not varnish-proxy.conf?
-
------------------------------------------------------------------------------------
-- To fix an issue with 1.5.9, added the following line to d/ledgersmb-1.5.install:
-+UI/js/dijit/themes/claro/images/loadingAnimation.gif UI/js/dijit/icons/images
-
-  - The fix for the issue is already in upstream and should be in 1.5.10:
-Fix image location for 'loading' animation -  22 July 2017
- https://github.com/ledgersmb/LedgerSMB/commit/552498906ea3acd16e8dbfd46b84ef602981a2df
- 
-  - Note that this fix will not work for the ledgersmb pkg, though perhaps a
-  symlink will work instead? 
 
 -----------------------------------------------------------------------------------
 
@@ -104,6 +92,8 @@ it with no apparant issue.  (Athought it also ended up displaying the extraneous
  itself; if so, add a comment to the stanza noting that.
 - According to https://en.wikipedia.org/wiki/GNU_General_Public_License,
 "In 2007, the third version of the license (GNU GPLv3) was released"
+- But LedgerSMB was originally debianized on Mon, 13 Nov 2006 15:29:53,
+ viewable in the packaging repostory with the inport of version 1.2.5-2.
 
 -------------------------------------------------------------------------------
 
@@ -115,7 +105,7 @@ it with no apparant issue.  (Athought it also ended up displaying the extraneous
   - Referance also https://github.com/ledgersmb/LedgerSMB/issues/2899 which is
   for the creation of a test in upstream that checks for such permission issues.
 
-- As of the packageing for 1.5.9, this is what is in the override_dh_fixperms
+- As of the packageing for 1.5.10, this is what is in the override_dh_fixperms
   stanza
 <-->dh_fixperms
 <-->chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/sql/modules/reload_modules.sh
@@ -228,4 +218,4 @@ then register it with doc-base?
 
 -----------------------------------------------------------------------------------
 
- -- Robert James Clay <jame@rocasa.us>  Sun, 13 Aug 2017 09:44 -0400
+ -- Robert James Clay <jame@rocasa.us>  Sun, 03 Sep 2017 19:17 -0400
