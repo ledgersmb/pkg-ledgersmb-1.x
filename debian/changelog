@@ -1,9 +1,11 @@
-ledgersmb-1.5 (1.5.10-0~1) UNRELEASED; urgency=medium
+ledgersmb-1.5 (1.5.10-1) UNRELEASED; urgency=medium
 
   * New upstream version.
   * Remove references to 'Plack' in debian/README.Debian as no longer necessary.
+  * Add patching of 'conf/lighttpd.conf.template' to 20_http-proxies.patch file.
+  * Remove reference to 'loadingAnimation.gif' in debian/ledgersmb-1.5.install.
 
- -- Robert James Clay <jame@rocasa.us>  Sun, 03 Sep 2017 18:05:13 -0400
+ -- Robert James Clay <jame@rocasa.us>  Sun, 03 Sep 2017 21:59:26 -0400
 
 ledgersmb-1.5 (1.5.9-1) stable; urgency=low
 
