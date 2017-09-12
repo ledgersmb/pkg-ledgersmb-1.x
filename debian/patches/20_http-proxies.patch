@@ -3,7 +3,7 @@ Description: Set working directory in the optional apache-vhost.conf
  and nginx-vhost.conf http proxy configuration files and in the
  conf/lighttpd.conf.template file.
 Origin: vendor
-Last-Update: 2017-09-03
+Last-Update: 2017-09-12
 --- a/conf/apache-vhost.conf
 +++ b/conf/apache-vhost.conf
 @@ -18,9 +18,9 @@
@@ -38,8 +38,8 @@ Last-Update: 2017-09-03
  
    # Configuration files don't exist
    location ^~ \.conf$ {
---- a/conf/lighttpd.conf.template
-+++ b/conf/lighttpd.conf.template
+--- a/conf/lighttpd-vhost.conf
++++ b/conf/lighttpd-vhost.conf
 @@ -16,9 +16,9 @@
   	"mod_redirect",
  )
