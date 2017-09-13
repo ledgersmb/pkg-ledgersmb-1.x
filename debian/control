@@ -144,3 +144,24 @@ Description: financial accounting and ERP program - web proxy via lighttpd
  run directly by Starman instead of by Apache. If other access is needed, a
  Reverse Proxy can be configured locally using lighttpd, and this dependency
  package provides a local proxy configuration using lighttpd.
+
+Package: ledgersmb-1.5-varnish
+Architecture: all
+Depends: ledgersmb-1.5 (= ${binary:Version}),
+         varnish,
+         ucf,
+         ${misc:Depends}
+Enhances: ledgersmb-1.5
+Description: financial accounting and ERP program - web proxy via varnish
+ LedgerSMB is a full featured double-entry financial accounting and Enterprise
+ Resource Planning system accessed via a web browser (Perl/SQL backend) which
+ offers "Accounts Receivable", "Accounts Payable" and "General Ledger" tracking
+ as well as inventory control and fixed assets handling. The LedgerSMB client
+ can be a web browser or a programmed API call. The goal of the LedgerSMB
+ project is to bring high quality ERP and accounting capabilities to Small
+ and Midsize Businesses.
+ .
+ The application now defaults to being made available on port 5762 and being
+ run directly by Starman instead of by Apache. If other access is needed, a
+ Reverse Proxy can be configured locally using varnish, and this dependency
+ package provides a local proxy configuration using varnish.
