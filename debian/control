@@ -57,7 +57,8 @@ Recommends: libcpanel-json-xs-perl,
             libtemplate-plugin-latex-perl (>=3.09-1),
             libtex-encode-perl,
             texlive-latex-recommended
-Suggests: ledgersmb-1.5-nginx | ledgersmb-1.5-apache,
+Suggests: ledgersmb-1.5-nginx | ledgersmb-1.5-lighttpd | ledgersmb-1.5-apache |
+          ledgersmb-1.5-varnish,
           default-mta | mail-transport-agent,
           latex-cjk-all,
           libimage-size-perl,
@@ -77,9 +78,9 @@ Description: financial accounting and ERP program (Perl/SQL backend)
  .
  The application now defaults to being made available on port 5762 and being
  run directly by Starman instead of by Apache. If other access is needed, a
- Reverse Proxy can be configured locally using Apache or Nginx, using the
- packages ledgersmb-1.5-nginx to select which. For more information, please
- see /usr/share/doc/ledgersmb-1.5/README.Debian.
+ Reverse Proxy can be configured locally using Apache, Lighttpd, Nginx, or
+ Varnish and using the appropriate dependancy packages to select which. For more
+ information, please see also /usr/share/doc/ledgersmb-1.5/README.Debian.
 
 Package: ledgersmb-1.5-nginx
 Architecture: all
