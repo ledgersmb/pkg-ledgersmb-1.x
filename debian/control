@@ -79,7 +79,7 @@ Description: financial accounting and ERP program (Perl/SQL backend)
  The application now defaults to being made available on port 5762 and being
  run directly by Starman instead of by Apache. If other access is needed, a
  Reverse Proxy can be configured locally using Apache, Lighttpd, Nginx, or
- Varnish and using the appropriate dependancy packages to select which. For more
+ Varnish and using the appropriate dependency packages to select which. For more
  information, please see also /usr/share/doc/ledgersmb-1.5/README.Debian.
 
 Package: ledgersmb-1.5-nginx
