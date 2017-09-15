@@ -1,8 +1,10 @@
-ledgersmb-1.5 (1.5.11-1~1) UNRELEASED; urgency=low
+ledgersmb-1.5 (1.5.11-1) stable; urgency=low
 
   * New upstream version.
+  * Update ledgersmb-1.5 stanza in debian/control for additional binary packages.
+  * Rename lighttpd proxy file to 'lighttpd-vhost.conf' in 20_http-proxies.patch.
 
- -- Robert James Clay <jame@rocasa.us>  Tue, 12 Sep 2017 17:09:47 -0400
+ -- Robert James Clay <jame@rocasa.us>  Fri, 15 Sep 2017 17:53:32 -0400
 
 ledgersmb-1.5 (1.5.10-1) stable; urgency=low
 
