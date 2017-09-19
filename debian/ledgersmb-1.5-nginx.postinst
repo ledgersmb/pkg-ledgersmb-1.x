@@ -32,7 +32,7 @@ case "$1" in
                     nginx -s reload
                 fi
             fi
-            [ ! -h /etc/ledgersmb-1.5/nginx-proxy.conf ] && ln -s /etc/nginx/sites-available/ledgersmb-1.5-proxy.conf /etc/ledgersmb-1.5/ngnix-proxy.conf
+            [ ! -h /etc/ledgersmb-1.5/nginx-proxy.conf ] && ln -s /etc/nginx/sites-available/ledgersmb-1.5-proxy.conf /etc/ledgersmb-1.5/nginx-proxy.conf
         fi
     ;;
 
