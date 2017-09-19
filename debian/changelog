@@ -1,3 +1,9 @@
+ledgersmb-1.5 (1.5.12-2~1) UNRELEASED; urgency=low
+
+  * Correct spelling of a filename in debian/ledgersmb-1.5-nginx.postinst file.
+
+ -- Robert James Clay <jame@rocasa.us>  Mon, 18 Sep 2017 21:33:40 -0400
+
 ledgersmb-1.5 (1.5.12-1) stable; urgency=low
 
   * New upstream version.
