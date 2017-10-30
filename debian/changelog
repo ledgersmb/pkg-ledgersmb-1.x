@@ -1,8 +1,11 @@
-ledgersmb-1.5 (1.5.12-2~1) UNRELEASED; urgency=low
+ledgersmb-1.5 (1.5.13-1~1) UNRELEASED; urgency=low
 
+  * New upstream version.
   * Correct spelling of a filename in debian/ledgersmb-1.5-nginx.postinst file.
+  * Remove the debian/patches/25_FixPointlessTranslation.patch file as it has
+    been superceded by upstream fixes.
 
- -- Robert James Clay <jame@rocasa.us>  Mon, 18 Sep 2017 21:33:40 -0400
+ -- Robert James Clay <jame@rocasa.us>  Sun, 29 Oct 2017 22:42:21 -0400
 
 ledgersmb-1.5 (1.5.12-1) stable; urgency=low
 
