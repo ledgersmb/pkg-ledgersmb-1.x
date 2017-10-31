@@ -19,13 +19,6 @@ https://github.com/ledgersmb/pkg-ledgersmb-1.5/issues/2
   - Looks like an Lighttpd configuration example has been added. Add another
   binary stanza for it to go along with the ones for nginx and apache.
 
-Update conf/README.md regarding 'lighttpd.conf.template'.
-https://github.com/ledgersmb/LedgerSMB/issues/3007
-
-  - See also:
-[ledgersmb/LedgerSMB] ylavoie opened pull request
- #3126: Rename Lighttpd sample config file [open] - https://github.com/ledgersmb/LedgerSMB/pull/3126
-
 -------------------------------------------------------------------------------
 - A varnish example config, default.vcl, is already available.  Create another 
 binary stanza in the d/control file in order to add it:  ledgersmb-varnish.  
@@ -53,7 +46,8 @@ https://metacpan.org/release/Config-Model-Systemd
 
   - So if there is a need to do a debconf update for the service file, will
   be able to do so.
-
+- Being able to update the service file for the LSMB Starman port from the 
+postinstall script may be quite useful. Investigate?
 -----------------------------------------------------------------------------------
 - An unneeded /etc/ledgersmb/conf directory appears to be getting created, perhaps
 during the pkg install? It's not in the deb pkg.
@@ -138,7 +132,7 @@ changed to use sysv instead of systemd;  have been able to do some testing of it
 still not working properly so it needs more work.
 
 ---------------------------------------------------------------------------------------------------
-- lintian results from pkg build for 1.5.9-0~3 test build on 26 Jul 2017
+- lintian results from pkg build for 1.5.13-1~1 test build on 29 OCt 2017
 
 I: ledgersmb-1.5 source: no-complete-debconf-translation
 
@@ -167,6 +161,9 @@ when doing the configure was enabled.  Add option to reset the password if the
 user ID already exists, but not by default? Would have to explicitly agree
 to it, each time, and that agreement isn't saved so the question gets asked
 each time and by default is not to do the reset?
+
+	- see also: admin user password change
+https://github.com/ledgersmb/LedgerSMB/issues/2717
 
 -----------------------------------------------------------------------------------
   - Use a separate source tarball for the UI/js/dojo and UI/js/dijit directories?
@@ -218,4 +215,4 @@ then register it with doc-base?
 
 -----------------------------------------------------------------------------------
 
- -- Robert James Clay <jame@rocasa.us>  Sun, 03 Sep 2017 19:17 -0400
+ -- Robert James Clay <jame@rocasa.us>  Mon, 30 Oct 2017 04:07 -0400
