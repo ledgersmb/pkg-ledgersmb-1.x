@@ -1,8 +1,9 @@
 Author: Robert James Clay <jame@rocasa.us>
 Description: Set working directory in the optional apache-vhost.conf
- and nginx-vhost.conf http proxy configuration files.
+ and nginx-vhost.conf http proxy configuration files and in the
+ conf/lighttpd.conf.template file.
 Origin: vendor
-Last-Update: 2017-06-06
+Last-Update: 2017-09-12
 --- a/conf/apache-vhost.conf
 +++ b/conf/apache-vhost.conf
 @@ -18,9 +18,9 @@
@@ -37,3 +38,17 @@ Last-Update: 2017-06-06
  
    # Configuration files don't exist
    location ^~ \.conf$ {
+--- a/conf/lighttpd-vhost.conf
++++ b/conf/lighttpd-vhost.conf
+@@ -16,9 +16,9 @@
+  	"mod_redirect",
+ )
+ 
+-server.name YOUR_SERVER_NAME;
++#server.name YOUR_SERVER_NAME;
+ 
+-server.document-root        = "WORKING_DIR/UI"
++server.document-root        = "/usr/share/ledgesmb-1.5/UI"
+ server.errorlog             = "/var/log/lighttpd/error.log"
+ server.pid-file             = "/var/run/lighttpd.pid"
+ server.username             = "www-data"
