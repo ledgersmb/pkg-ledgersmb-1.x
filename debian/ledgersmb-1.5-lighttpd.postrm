@@ -47,15 +47,15 @@ case "$1" in
                 ucfr --purge ledgersmb-1.5 /etc/lighttpd/sites-available/ledgersmb-1.5-proxy.conf
             fi
         fi
-        systemctl restart lighttpd.service
+        deb-systemd-invoke restart lighttpd.service
     ;;
 
     remove)
         # If a sym link to ledgersmb-1.5-proxy.conf is present in lighttpd
-        # sites-enabled, then remove it & reload ngnix
+        # sites-enabled, then remove it & restart
         if [ -h /etc/lighttpd/sites-enabled/ledgersmb-1.5-proxy.conf ] ; then
             rm -f /etc/lighttpd/sites-enabled/ledgersmb-1.5-proxy.conf 
-            systemctl restart lighttpd.service
+            deb-systemd-invoke restart lighttpd.service
         fi
     ;;
 
