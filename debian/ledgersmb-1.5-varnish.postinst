@@ -24,14 +24,6 @@ case "$1" in
     configure)
         # Do varnish related processing if it is present.
         if [ -d "/etc/varnish" ]; then
-            [ -d /etc/varnish/sites-available/ ] && [ ! -e /etc/varnish/sites-available/ledgersmb-1.5-proxy.conf ] && ucf /usr/share/ledgersmb-1.5/conf/varnish-vhost.conf /etc/varnish/sites-available/ledgersmb-1.5-proxy.conf
-            # Enable varnish proxy configuration 
-            if [ ! -h /etc/varnish/ledgersmb-1.5-proxy.conf ] ; then
-                ln -s /etc/varnish/ledgersmb-1.5-proxy.conf /etc/varnish/sites-enabled/ledgersmb-1.5-proxy.conf
-                if which varnish >/dev/null 2>&1; then
-                    varnish -s reload
-                fi
-            fi
             [ ! -h /etc/ledgersmb-1.5/varnish-proxy.conf ] && ln -s /etc/varnish/default.vcl /etc/ledgersmb-1.5/varnish-proxy.conf
         fi
     ;;
