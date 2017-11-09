@@ -92,8 +92,8 @@ Optional Perl modules
     is available as libimage-size-perl if it is not already installed.
 
 
-LedgerSMB Acccess via a Web Proxy
-=================================
+LedgerSMB Access via a Web Proxy
+================================
 
     Apache      ledgersmb-1.5-apache
     Nginx       ledgersmb-1.5-nginx
