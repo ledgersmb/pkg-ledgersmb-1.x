@@ -1,13 +1,14 @@
-ledgersmb-1.5 (1.5.13-2~2) UNRELEASED; urgency=medium
+ledgersmb-1.5 (1.5.13-2~3) UNRELEASED; urgency=medium
 
-  * Add a debian/README.Apache file.
-  * Add maintainer scripts for 'ledgersmb-1.5-apache'
-  * Add a stanza for 'ledgersmb-1.5-apache' in debian/control.
+  * Add maintainer scripts for 'ledgersmb-1.5-apache', 'ledgersmb-1.5-lighttpd',
+    and the 'ledgersmb-1.5-varnish' packages.
+  * Add stanzas for the 'ledgersmb-1.5-apache', 'ledgersmb-1.5-lighttpd', and
+    the 'ledgersmb-1.5-varnish' packages in debian/control.
   * Edited the README.Debian file, adding a new introduction at the beginning as
     well as a new section specifically regarding accessing the application via
     a web proxy.
 
- -- Robert James Clay <jame@rocasa.us>  Thu, 09 Nov 2017 10:52:11 -0400
+ -- Robert James Clay <jame@rocasa.us>  Thu, 09 Nov 2017 13:19:52 -0400
 
 ledgersmb-1.5 (1.5.13-1) stable; urgency=low
 
