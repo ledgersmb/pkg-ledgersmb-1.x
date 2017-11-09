@@ -25,11 +25,6 @@ case "$1" in
         # Do lighttpd related processing if it is present.
         if [ -d "/etc/lighttpd" ]; then
             [ -d /etc/lighttpd/conf-available/ ] && [ ! -e /etc/lighttpd/conf-available/ledgersmb-1.5-proxy.conf ] && ucf /usr/share/ledgersmb-1.5/conf/lighttpd-vhost.conf /etc/lighttpd/conf-available/ledgersmb-1.5-proxy.conf
-            # Enable lighttpd proxy configuration 
-            if [ ! -h /etc/lighttpd/conf-enabled/ledgersmb-1.5-proxy.conf ] ; then
-                ln -s /etc/lighttpd/conf-available/ledgersmb-1.5-proxy.conf /etc/lighttpd/conf-enabled/ledgersmb-1.5-proxy.conf
-                systemctl restart lighttpd.service
-            fi
             [ ! -h /etc/ledgersmb-1.5/lighttpd-proxy.conf ] && ln -s /etc/lighttpd/conf-available/ledgersmb-1.5-proxy.conf /etc/ledgersmb-1.5/lighttpd-proxy.conf
         fi
     ;;

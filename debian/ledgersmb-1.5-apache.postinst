@@ -33,7 +33,6 @@ case "$1" in
                 if ! a2query -qm rewrite ; then
                     apache2_invoke enmod rewrite || exit $?
                 fi
-                apache2_invoke enconf ledgersmb-1.5-proxy.conf
                 [ ! -h /etc/ledgersmb-1.5/apache-proxy.conf ] && ln -s /etc/apache2/sites-available/ledgersmb-1.5-proxy.conf /etc/ledgersmb-1.5/apache-proxy.conf
             fi
         fi
