@@ -1,6 +1,25 @@
 LedgerSMB for Debian
 --------------------
 
+ LedgerSMB is a full featured double-entry financial accounting and Enterprise
+ Resource Planning system accessed via a web browser (Perl/SQL backend) which
+ offers "Accounts Receivable", "Accounts Payable" and "General Ledger" tracking
+ as well as inventory control and fixed assets handling. The LedgerSMB client
+ can be a web browser or a programmed API call. The goal of the LedgerSMB
+ project is to bring high quality ERP and accounting capabilities to Small
+ and Midsize Businesses.
+
+ A web server like Apache is no longer used to run LedgerSMB directly. With
+ LedgerSMB 1.5.x, it is instead run locally by default using Starman up on port
+ 5762. (See the file /etc/defaults/ledgesmb-1.5 for where that is set.)
+ If other access is needed, a Reverse Proxy can be configured locally using
+ Apache, Lighttpd, Nginx, or Varnish using the appropriate dependency 
+ package to select which. For more details, see the section below regarding
+ access via a web proxy. Example proxy configuration files are also available
+ if you intend to set up the proxy on a server different from the one where
+ the LedgerSMB application itself is installed. 
+
+
 LedgerSMB Configuration
 =======================
 
@@ -25,21 +44,31 @@ LedgerSMB Configuration
     installation, that can be done and its password changed by running the
     following command: 'dpkg-reconfigure ledgersmb-1.5'.
 
-    A web server like Apache is no longer used to run LedgerSMB directly. With
-    LedgerSMB 1.5.x, it is instead run by default locally by Starman up on port
-    5762. (See the file /etc/defaults/ledgesmb-1.5 for where that is set.) The
-    configuration files for using Apache or Nginx as a web proxy are installed
-    by installing the ledgersmb-apache or ledgersmb-ngnix package as necessary
-    for a local proxy and example proxy configuration files are available if
-    you intend to set up the proxy remotely, and in either case will likely
-    still need further editing to configure them for your use.
-
     Language specific HTML, LaTeX, and Text templates can be edited online but
     the language specific directory (like /var/ledgersmb/templates/demo/en_US)
     first needs to be manually created and the template file copied there.
 
     The PDF/Postscript support for the 'xedemo' LaTex templates is available as
     the package texlive-xetex if it is not already installed.
+
+
+Manual addition of a company database
+=====================================
+
+    If you want to perform the installation of the company database completely
+    manually, you should consult the 'prepare-company-database.pl' or the
+    'dbsetup.pl' scripts as the authoritative documentation of the steps to
+    perform. They are available in the /usr/share/ledgersmb-1.5/tools/
+    directory.
+
+
+Company database removal
+========================
+
+    In the /usr/share/ledgersmb-1.5/tools/ directory, there is a script which
+    can be used to remove a company database and all the standard authorization
+    data that had been created by the 'prepare-company-database.pl' script. The
+    script is named 'delete-company-database.sh'.
 
 
 Optional Perl modules
@@ -63,23 +92,36 @@ Optional Perl modules
     is available as libimage-size-perl if it is not already installed.
 
 
-Manual addition of a company database
-=====================================
+LedgerSMB Acccess via a Web Proxy
+=================================
 
-    If you want to perform the installation of the company database completely
-    manually, you should consult the 'prepare-company-database.sh' or the
-    'dbsetup.pl' scripts which are available in the /usr/share/ledgersmb/tools/
-    directory as the authoritative documentation of the steps to perform.
+    Apache      ledgersmb-1.5-apache
+    Nginx       ledgersmb-1.5-nginx
+    Lighttpd    ledgersmb-1.5-lighttpd
+    Varnish     ledgersmb-1.5-varnish
+
+    They all depend on the ledgersmb-1.5 package so that will be installed
+    first, then the proxy package will install the appropriate application.
+    The configuration files are installed as necessary for a local proxy but
+    will still need further editing to configure them for your use, including
+    for the SSL related settings. So although they may being installed, the
+    new configuration file will still need to be enabled and the proxy 
+    application itself restarted in order to use the new set up. A symbolic
+    link pointing to the proxy configuration file is installed into the
+    /etc/ledgersmb-1.5 directory.
+
+    Note that by default the package for Nginx will install the 'nginx-light'
+    package. If you want nginx-full or nginx-extra instead, you will need to
+    install the one	you want before installing ledgersmb-1.5-nginx or you can
+    change any time afterwards.
+
+    When using Varnish locally in this way; once it has been installed it may
+    be enough to set the backend port setting to 5762 instead of the default
+    port 8080.
+
+    Note also that is intended to have only one of them installed at any one
+    time.
 
 
-Company database removal
-========================
 
-    In the /usr/share/ledgersmb/tools/ directory, there's a script which will
-    remove a company database and all the standard authorization data that had
-    been created by the 'prepare-company-database.sh' script.  The script is
-    named 'delete-company-database.sh'.
-
-
-
- -- Robert James Clay <jame@rocasa.us>  Sat,  3 Jun 2017 12:35:44 -0400
+ -- Robert James Clay <jame@rocasa.us>  Thu,  9 Oct 2017 10:55:12 -0500
