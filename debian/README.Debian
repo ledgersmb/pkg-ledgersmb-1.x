@@ -104,24 +104,23 @@ LedgerSMB Access via a Web Proxy
     first, then the proxy package will install the appropriate application.
     The configuration files are installed as necessary for a local proxy but
     will still need further editing to configure them for your use, including
-    for the SSL related settings. So although they may being installed, the
-    new configuration file will still need to be enabled and the proxy 
-    application itself restarted in order to use the new set up. A symbolic
-    link pointing to the proxy configuration file is installed into the
-    /etc/ledgersmb-1.5 directory.
+    for the SSL related settings. Once installed, the new configuration file
+    will still need to be enabled and the proxy application itself restarted
+    in order to use the new set up. A symbolic link pointing to the proxy
+    configuration file is installed into the /etc/ledgersmb-1.5 directory.
 
-    Note that by default the package for Nginx will install the 'nginx-light'
+    Note that by default the one for Nginx will install the 'nginx-light'
     package. If you want nginx-full or nginx-extra instead, you will need to
-    install the one	you want before installing ledgersmb-1.5-nginx or you can
-    change any time afterwards.
+    install the one you want before installing ledgersmb-1.5-nginx or you can
+    change it any time afterwards.
 
     When using Varnish locally in this way; once it has been installed it may
     be enough to set the backend port setting to 5762 instead of the default
-    port 8080.
+    port 8080 in the /etc/varnish/default.vcl file.
 
     Note also that is intended to have only one of them installed at any one
     time.
 
 
 
- -- Robert James Clay <jame@rocasa.us>  Thu,  9 Oct 2017 10:55:12 -0500
+ -- Robert James Clay <jame@rocasa.us>  Mon, 13 Oct 2017 10:37:55 -0500
