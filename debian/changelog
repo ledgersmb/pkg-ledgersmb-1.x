@@ -1,4 +1,4 @@
-ledgersmb-1.5 (1.5.13-2~4) UNRELEASED; urgency=medium
+ledgersmb-1.5 (1.5.13-2) stable; urgency=medium
 
   * Add maintainer scripts for 'ledgersmb-1.5-apache', 'ledgersmb-1.5-lighttpd',
     and the 'ledgersmb-1.5-varnish' packages.
@@ -8,7 +8,7 @@ ledgersmb-1.5 (1.5.13-2~4) UNRELEASED; urgency=medium
     well as a new section specifically regarding accessing the application via
     a web proxy.
 
- -- Robert James Clay <jame@rocasa.us>  Mon, 13 Nov 2017 07:08:32 -0500
+ -- Robert James Clay <jame@rocasa.us>  Wed, 15 Nov 2017 10:30:11 -0500
 
 ledgersmb-1.5 (1.5.13-1) stable; urgency=low
 
