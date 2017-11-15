@@ -3,29 +3,6 @@ debian/TODO for LedgerSMB ledgersmb-1.5 package
   - See also https://github.com/ledgersmb/pkg-ledgersmb-1.5/issues
   
 ====================================================================================================
-----------------------------------------------------------------------------------
-
-Update debian/Readme.Debian as necessary.
-Update debian/Readme.sources as necessary.
-------------------------------------------------------------------------------
-- The addition of an ledgersmb-apache binary deb was attempted but it does
-not seem to install cleanly, so that will need further investigation. See
-the dev/ApacheProxy development branch at the packaging repository as well
-as the following issue:
-https://github.com/ledgersmb/pkg-ledgersmb-1.5/issues/2
-
-------------------------------------------------------------------------------
-
-  - Looks like an Lighttpd configuration example has been added. Add another
-  binary stanza for it to go along with the ones for nginx and apache.
-
--------------------------------------------------------------------------------
-- A varnish example config, default.vcl, is already available.  Create another 
-binary stanza in the d/control file in order to add it:  ledgersmb-varnish.  
-The config goes to /etc/varnish? The existing config does not have the port set 
-correctly, so add it after the port is set properly to 5762.
-- But shouldn't the name for that be varnish-proxy.vcl if not varnish-proxy.conf?
-
 -----------------------------------------------------------------------------------
 
 - debian/ledgersmb.init
@@ -38,31 +15,33 @@ one to be made by David?
 - See also: Provide a sysvinit init.d script for starman-ledgesmb
   https://github.com/ledgersmb/LedgerSMB/issues/2900
 
--------------------------------------------------------------------------------
-  - Interesting enough; this is available for Config::Model
-https://metacpan.org/release/Config-Model-Systemd
-  -> It's been in Debian since Stretch
-  https://packages.debian.org/source/sid/libconfig-model-systemd-perl
-
-  - So if there is a need to do a debconf update for the service file, will
-  be able to do so.
-- Being able to update the service file for the LSMB Starman port from the 
-postinstall script may be quite useful. Investigate?
 -----------------------------------------------------------------------------------
 - An unneeded /etc/ledgersmb/conf directory appears to be getting created, perhaps
 during the pkg install? It's not in the deb pkg.
 Next time I purge the pkg, verify at least that all of the pkg directories are 
 removed.
+- I don't remember that being there now during the recent testing I did but check
+specifically for it's presence.
+-----------------------------------------------------------------------------------
+https://github.com/ledgersmb/LedgerSMB/issues/3272
+
+While testing an updated package for LedgerSMB 1.5.13 which includes setting up 
+Apache as a web proxy for LedgerSMB (ledgersmb-1.5-apache), i found that I could 
+not leave the SSLRequireSSL in the apache-vhost.conf (as installed by the package)
+file and try to that new configuration online without resulting in an error like
+the following (from: systemctl status apache2.service).
+
+Nov 11 00:57:05 lsmbtest apachectl[13212]: AH00526: Syntax error on line 32 of /etc/apache2/sites-enabled/ledgersmb-1.5-proxy.conf:
+Nov 11 00:57:05 lsmbtest apachectl[13212]: SSLRequireSSL not allowed here
+Nov 11 00:57:05 lsmbtest apachectl[13212]: Action 'start' failed.
 
 -----------------------------------------------------------------------------------
 https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=868724
-`- Project has totally moved from SourceForge.net, so debian/watch needs to be
-`updated for the new locations of the distribution archive and its detached
-`gpg file for verification.
-
-- An update for getting the distribution archive itself appears to have been
-successful but the *.asc associated with it used for the gpg verification does
-not seem to get refereneced properly so that step fails. (So creating the orig
+- Project has totally moved from SourceForge.net, so debian/watch needs to be
+updated for the new locations of the distribution archive and its detached gpg file 
+for verification. An update for getting the distribution archive itself appears to 
+have been successful but the *.asc associated with it used for the gpg verification 
+does not seem to get refereneced properly so that step fails. (So creating the orig 
 archive needs to be done manually.) 
 
 -------------------------------------------------------------------------------
@@ -76,8 +55,30 @@ running in the maintainer script, as running dpkg-reconfigure on it runs
 it with no apparant issue.  (Athought it also ended up displaying the extraneous
 "DO" at the bottom left hand corner of the last debconf diaplay.)
  So perhaps there is an issue with the *.config file after all? Or is it indeed
- some to do with it the usage in the maintainer script.
+ something to do with it the usage in the maintainer script.
  
+ 
+-------------------------------------------------------------------------------
+  - debian/adm/config-lsmb-db-user.sh
+
+- Use only the postgresql tools, like createuser, to set the user name and 
+password for the LSMB DB Admin user?  David G pointed out that using SQL
+can allow the unencrypted password to perhaps show up in logs, etc, which
+is a security concern.  So, use the sql to be able to tell if the user
+is already pressent but use the standard tools to actually set it?  Or can
+those be used unattended like is needed here?
+
+- Take out defaulting to doing the SQL 'ALTER' instead of a 'CREATE'
+if the LSMB DBAdmin user already exits?  It was pointed out by both David
+and Erik that they really don't think it's a good idea to reset that password
+by default when, for instance, upgrading the package;  which is what it does
+when doing the configure was enabled.  Add option to reset the password if the
+user ID already exists, but not by default? Would have to explicitly agree
+to it, each time, and that agreement isn't saved so the question gets asked
+each time and by default is not to do the reset?
+
+  - see also: admin user password change (expected for v1.6)
+https://github.com/ledgersmb/LedgerSMB/issues/2717
 -----------------------------------------------------------------------------------
 - Review the copyright settings for the debian/ directory again back to the
  beginning of the LedgerSMB packaging as although it may have listed 'GPL'
@@ -99,7 +100,7 @@ it with no apparant issue.  (Athought it also ended up displaying the extraneous
   - Referance also https://github.com/ledgersmb/LedgerSMB/issues/2899 which is
   for the creation of a test in upstream that checks for such permission issues.
 
-- As of the packageing for 1.5.10, this is what is in the override_dh_fixperms
+- As of the packageing for 1.5.13, this is what is in the override_dh_fixperms
   stanza
 <-->dh_fixperms
 <-->chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/sql/modules/reload_modules.sh
@@ -128,59 +129,8 @@ init.d sysvinit startup script for starman-ledgersmb would be quite useful.
 
 - In the mean time, added an initial version of a possible script:
 In order to test how that works, would have to use something that has been
-changed to use sysv instead of systemd;  have been able to do some testing of it but it's
-still not working properly so it needs more work.
-
----------------------------------------------------------------------------------------------------
-- lintian results from pkg build for 1.5.13-1~1 test build on 29 OCt 2017
-
-I: ledgersmb-1.5 source: no-complete-debconf-translation
-
-I: ledgersmb-1.5: systemd-service-file-missing-documentation-key lib/systemd/system/ledgersmb-1.5.service
-
-I: ledgersmb-1.5: package-contains-empty-directory usr/share/ledgersmb-1.5/lib/LedgerSMB/Scripts/custom/
-I: ledgersmb-1.5: unused-override package-contains-empty-directory usr/share/ledgersmb-1.5/lib/LedgerSMB/Scripts/custom
-
-N: 345 tags overridden (341 errors, 2 warnings, 2 info)
-
--------------------------------------------------------------------------------
-  - debian/adm/config-lsmb-db-user.sh
-
-- Use only the postgresql tools, like createuser, to set the user name and 
-password for the LSMB DB Admin user?  David G pointed out that using SQL
-can allow the unencrypted password to perhaps show up in logs, etc, which
-is a security concern.  So, use the sql to be able to tell if the user
-is already pressent but use the standard tools to actually set it?  Or can
-those be used unattended like is needed here?
-
-- Take out defaulting to doing the SQL 'ALTER' instead of a 'CREATE'
-if the LSMB DBAdmin user already exits?  It was pointed out by both David
-and Erik that they really don't think it's a good idea to reset that password
-by default when, for instance, upgrading the package;  which is what it does
-when doing the configure was enabled.  Add option to reset the password if the
-user ID already exists, but not by default? Would have to explicitly agree
-to it, each time, and that agreement isn't saved so the question gets asked
-each time and by default is not to do the reset?
-
-	- see also: admin user password change
-https://github.com/ledgersmb/LedgerSMB/issues/2717
-
------------------------------------------------------------------------------------
-  - Use a separate source tarball for the UI/js/dojo and UI/js/dijit directories?
-Devs have discussed it some but nothing has come of it as yet. If it's provided,
-then a way to bypass all source-is-missing lintian errors on those directories
-could be to use the multiple upstream tarballs functionality that's available
-in the debian pkgformat being used. 
-
-https://wiki.debian.org/Projects/DebSrc3.0
-https://raphaelhertzog.com/2010/09/07/how-to-use-multiple-upstream-tarballs-in-debian-source-packages/  
-
-google search: debian package multiple source files
-
-Note that this isn't necessary for the UI/js/lsmb directory because the source
-for those are in the UI/js-src/lsmb directory. Although could perhaps investigate
-where and how the lintian check looks for the source files to see if repacking
-them where it looks for them would resolve this.
+changed to use sysv instead of systemd;  have been able to do some testing of
+it but it's still not working properly so it needs more work.
 
 -----------------------------------------------------------------------------------
 
@@ -195,14 +145,55 @@ Suggests and add some info about it to the README.Debian.
 - Note that what has been discussed for an alternate default for printing has
 been 'wkhtml2pdf'. See also:
 https://github.com/ledgersmb/LedgerSMB/issues/2719
------------------------------------------------------------------------------------
 
-- A debian/po debconf Japanese translation has been provided. Currently,
-there is no LSMB locale/po/ja.po file. Checked System|Lanaguage|List
-Languages in LSMB 1.3.40: "ja" is not in the default list. It's also not
-listed as an available language when editing templates, and presumably
-those lists come from the same source. It can be added manually using
-System|Language|Add Language. 
+-------------------------------------------------------------------------------
+  - lintian results from pkg build for 1.5.13-2~4 test build on 13 Nov 2017:
+
+N: 345 tags overridden (341 errors, 2 warnings, 2 info)
+
+I: ledgersmb-1.5 source: no-complete-debconf-translation
+
+I: ledgersmb-1.5: systemd-service-file-missing-documentation-key lib/systemd/system/ledgersmb-1.5.service
+
+I: ledgersmb-1.5: package-contains-empty-directory usr/share/ledgersmb-1.5/lib/LedgerSMB/Scripts/custom/
+I: ledgersmb-1.5: unused-override package-contains-empty-directory usr/share/ledgersmb-1.5/lib/LedgerSMB/Scripts/custom
+
+  - https://lintian.debian.org/tags/empty-binary-package.html
+  - I have "dependency package" in their respective long descriptions but that
+    doesn't seem to have helped, at least not when building under stretch.
+W: ledgersmb-1.5-varnish: empty-binary-package
+W: ledgersmb-1.5-nginx: empty-binary-package
+W: ledgersmb-1.5-lighttpd: empty-binary-package
+
+
+-------------------------------------------------------------------------------
+  - Interesting enough; this is available for Config::Model
+https://metacpan.org/release/Config-Model-Systemd
+  -> It's been in Debian since Stretch
+  https://packages.debian.org/source/sid/libconfig-model-systemd-perl
+
+  - So if there is a need to do a debconf update for the service file, will
+  be able to do so?
+- Being able to update the service file for the LSMB Starman port from the 
+postinstall script may be quite useful. Investigate?
+
+-----------------------------------------------------------------------------------
+  - Use a separate source tarball for the UI/js/dojo and UI/js/dijit directories?
+Devs have discussed it some but nothing has come of it as yet. If it's provided,
+then a way to bypass all source-is-missing lintian errors on those directories
+could be to use the multiple upstream tarballs functionality that's available
+in the debian pkg format being used. 
+
+https://wiki.debian.org/Projects/DebSrc3.0
+https://raphaelhertzog.com/2010/09/07/how-to-use-multiple-upstream-tarballs-in-debian-source-packages/  
+
+google search: debian package multiple source files
+
+Note that this isn't necessary for the UI/js/lsmb directory because the source
+for those are in the UI/js-src/lsmb directory. Although could perhaps investigate
+where and how the lintian check looks for the source files to see if repacking
+them where it looks for them would resolve this.
+
 -----------------------------------------------------------------------------------
 
 - Upstream uses pdflatex to create the distribution LedgerSMB-manual.pdf from
@@ -212,7 +203,16 @@ is the from the current source file?
 
 - Create an HTML and/or PDF file of templateing/templating-guide.tex? And
 then register it with doc-base?
+-----------------------------------------------------------------------------------
+
+- A debian/po debconf Japanese translation has been provided. Currently,
+there is no LSMB locale/po/ja.po file. Checked System|Lanaguage|List
+Languages in LSMB 1.3.40: "ja" is not in the default list. It's also not
+listed as an available language when editing templates, and presumably
+those lists come from the same source. It can be added manually using
+System|Language|Add Language. 
+
 
 -----------------------------------------------------------------------------------
 
- -- Robert James Clay <jame@rocasa.us>  Mon, 30 Oct 2017 04:07 -0400
+ -- Robert James Clay <jame@rocasa.us>  Wed, 15 Nov 2017 10:07 -0500
