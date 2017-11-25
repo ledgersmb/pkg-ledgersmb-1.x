@@ -1,3 +1,13 @@
+ledgersmb-1.5 (1.5.13-3~1) UNRELEASED; urgency=medium
+
+  * Updated the debian/po/* files using 'debconf-updatepo'.
+  * Only do DB user questions in debian/ledgersmb-1.5.config if new install.
+  * Only do DB user questions in debian/ledgersmb-1.5.postinst if new install.
+  * In debian/templates: drop the debconf_install stanza but add a config_admin
+    stanza.
+
+ -- Robert James Clay <jame@rocasa.us>  Sat, 24 Nov 2017 17:50:31 -0500
+
 ledgersmb-1.5 (1.5.13-2) stable; urgency=medium
 
   * Add maintainer scripts for 'ledgersmb-1.5-apache', 'ledgersmb-1.5-lighttpd',
