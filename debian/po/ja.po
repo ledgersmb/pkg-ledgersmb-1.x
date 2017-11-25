@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ledgersmb\n"
 "Report-Msgid-Bugs-To: ledgersmb-1.5@packages.debian.org\n"
-"POT-Creation-Date: 2017-06-08 15:39-0400\n"
+"POT-Creation-Date: 2017-11-25 17:30-0500\n"
 "PO-Revision-Date: 2017-06-08 16:30-0400\n"
 "Last-Translator: Robert James Clay <jame@rocasa.us>\n"
 "Language-Team: \n"
@@ -16,45 +16,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#. Type: boolean
-#. Description
-#: ../templates:2001
-msgid "Configure LedgerSMB automatically?"
-msgstr "LedgerSMB を自動的に設定しますか?"
-
-#. Type: boolean
-#. Description
-#: ../templates:2001
-msgid ""
-"The configuration program for the package can automatically configure some "
-"aspects of LedgerSMB, such as the LedgerSMB database user."
-msgstr ""
-"このパッケージの設定プログラムは LedgerSMB データベースユーザ等、LedgerSMB を"
-"いくらか自動的に設定できます。"
-
-#. Type: boolean
-#. Description
-#: ../templates:2001
-#, fuzzy
-#| msgid ""
-#| "More general information about the initial configuration of the "
-#| "application can be found in /usr/share/doc/ledgersmb-1.5/README.Debian."
-msgid ""
-"More general information about the initial configuration of the application "
-"can be found in /usr/share/doc/ledgersmb-1.5/README.Debian."
-msgstr ""
-"アプリケーションの初期設定についての一般的な情報は /usr/share/doc/ledgersmb-1.5"
-"/README.Debian にあります。"
-
 #. Type: string
 #. Description
-#: ../templates:3001
+#: ../templates:2001
 msgid "Database administrative user login:"
 msgstr "データベース管理ユーザのログイン名:"
 
 #. Type: string
 #. Description
-#: ../templates:3001
+#: ../templates:2001
 #, fuzzy
 #| msgid ""
 #| "Please enter the login of the LedgerSMB database administrative user. "
@@ -66,18 +36,18 @@ msgid ""
 "http://localhost:5762/setup.pl."
 msgstr ""
 "LedgerSMB データベース管理ユーザのログイン名を入力してください。これは通常 "
-"http://localhost:5762/setup.pl にあるウェブユーザインターフェイスの管理"
-"に必要となります。"
+"http://localhost:5762/setup.pl にあるウェブユーザインターフェイスの管理に必要"
+"となります。"
 
 #. Type: password
 #. Description
-#: ../templates:4001
+#: ../templates:3001
 msgid "Database administrative user password:"
 msgstr "データベース管理ユーザのパスワード:"
 
 #. Type: password
 #. Description
-#: ../templates:4001
+#: ../templates:3001
 #, fuzzy
 #| msgid ""
 #| "Please enter the password of the LedgerSMB database administrative user. "
@@ -89,5 +59,44 @@ msgid ""
 "at http://localhost:5762/setup.pl."
 msgstr ""
 "LedgerSMB データベース管理ユーザのパスワードを入力してください。このパスワー"
-"ドは通常 http://localhost:5762/setup.pl にあるウェブユーザインターフェイ"
-"スの管理に必要となります。"
+"ドは通常 http://localhost:5762/setup.pl にあるウェブユーザインターフェイスの"
+"管理に必要となります。"
+
+#. Type: boolean
+#. Description
+#: ../templates:4001
+#, fuzzy
+#| msgid "Database administrative user login:"
+msgid "Configure LedgerSMB Database administrative user?"
+msgstr "データベース管理ユーザのログイン名:"
+
+#. Type: boolean
+#. Description
+#: ../templates:4001
+#, fuzzy
+#| msgid ""
+#| "The configuration program for the package can automatically configure "
+#| "some aspects of LedgerSMB, such as the LedgerSMB database user."
+msgid ""
+"The configuration program for the package can automatically configure the "
+"LedgerSMB database user. Enable if you want to do that, disable if not."
+msgstr ""
+"このパッケージの設定プログラムは LedgerSMB データベースユーザ等、LedgerSMB を"
+"いくらか自動的に設定できます。"
+
+#. Type: boolean
+#. Description
+#: ../templates:4001
+#, fuzzy
+#| msgid ""
+#| "More general information about the initial configuration of the "
+#| "application can be found in /usr/share/doc/ledgersmb-1.5/README.Debian."
+msgid ""
+"More information about the configuration of the database administrative user "
+"can be found in /usr/share/doc/ledgersmb-1.5/README.Debian."
+msgstr ""
+"アプリケーションの初期設定についての一般的な情報は /usr/share/doc/"
+"ledgersmb-1.5/README.Debian にあります。"
+
+#~ msgid "Configure LedgerSMB automatically?"
+#~ msgstr "LedgerSMB を自動的に設定しますか?"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ledgersmb\n"
 "Report-Msgid-Bugs-To: ledgersmb-1.5@packages.debian.org\n"
-"POT-Creation-Date: 2017-06-08 15:39-0400\n"
+"POT-Creation-Date: 2017-11-25 17:30-0500\n"
 "PO-Revision-Date: 2017-06-08 16:30-0400\n"
 "Last-Translator: Robert James Clay <jame@rocasa.us>\n"
 "Language-Team: \n"
@@ -16,45 +16,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#. Type: boolean
-#. Description
-#: ../templates:2001
-msgid "Configure LedgerSMB automatically?"
-msgstr "Konfigurer LedgerSMB automatisk?"
-
-#. Type: boolean
-#. Description
-#: ../templates:2001
-msgid ""
-"The configuration program for the package can automatically configure some "
-"aspects of LedgerSMB, such as the LedgerSMB database user."
-msgstr ""
-"Konfigurationsprogrammet for pakken kan automatisk konfigurere nogle "
-"aspekter af LedgerSMB, såsom LedgerSMB-databasebrugeren."
-
-#. Type: boolean
-#. Description
-#: ../templates:2001
-#, fuzzy
-#| msgid ""
-#| "More general information about the initial configuration of the "
-#| "application can be found in /usr/share/doc/ledgersmb-1.5/README.Debian."
-msgid ""
-"More general information about the initial configuration of the application "
-"can be found in /usr/share/doc/ledgersmb-1.5/README.Debian."
-msgstr ""
-"Mere generel information om startkonfigurationen af programmet kan ses i /"
-"usr/share/doc/ledgersmb-1.5/README.Debian."
-
 #. Type: string
 #. Description
-#: ../templates:3001
+#: ../templates:2001
 msgid "Database administrative user login:"
 msgstr "Logind for databasens administrative bruger:"
 
 #. Type: string
 #. Description
-#: ../templates:3001
+#: ../templates:2001
 #, fuzzy
 #| msgid ""
 #| "Please enter the login of the LedgerSMB database administrative user. "
@@ -71,13 +41,13 @@ msgstr ""
 
 #. Type: password
 #. Description
-#: ../templates:4001
+#: ../templates:3001
 msgid "Database administrative user password:"
 msgstr "Adgangskode for databasens administrative bruger"
 
 #. Type: password
 #. Description
-#: ../templates:4001
+#: ../templates:3001
 #, fuzzy
 #| msgid ""
 #| "Please enter the password of the LedgerSMB database administrative user. "
@@ -91,3 +61,42 @@ msgstr ""
 "Indtast venligst adgangskoden for LedgerSMB-databasens administrative "
 "bruger. Denne adgangskode er krævet for den administrative brugerflade på "
 "nettet, typisk på http://localhostL:5762/setup.pl."
+
+#. Type: boolean
+#. Description
+#: ../templates:4001
+#, fuzzy
+#| msgid "Database administrative user login:"
+msgid "Configure LedgerSMB Database administrative user?"
+msgstr "Logind for databasens administrative bruger:"
+
+#. Type: boolean
+#. Description
+#: ../templates:4001
+#, fuzzy
+#| msgid ""
+#| "The configuration program for the package can automatically configure "
+#| "some aspects of LedgerSMB, such as the LedgerSMB database user."
+msgid ""
+"The configuration program for the package can automatically configure the "
+"LedgerSMB database user. Enable if you want to do that, disable if not."
+msgstr ""
+"Konfigurationsprogrammet for pakken kan automatisk konfigurere nogle "
+"aspekter af LedgerSMB, såsom LedgerSMB-databasebrugeren."
+
+#. Type: boolean
+#. Description
+#: ../templates:4001
+#, fuzzy
+#| msgid ""
+#| "More general information about the initial configuration of the "
+#| "application can be found in /usr/share/doc/ledgersmb-1.5/README.Debian."
+msgid ""
+"More information about the configuration of the database administrative user "
+"can be found in /usr/share/doc/ledgersmb-1.5/README.Debian."
+msgstr ""
+"Mere generel information om startkonfigurationen af programmet kan ses i /"
+"usr/share/doc/ledgersmb-1.5/README.Debian."
+
+#~ msgid "Configure LedgerSMB automatically?"
+#~ msgstr "Konfigurer LedgerSMB automatisk?"

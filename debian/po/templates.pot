@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ledgersmb-1.5\n"
 "Report-Msgid-Bugs-To: ledgersmb-1.5@packages.debian.org\n"
-"POT-Creation-Date: 2017-06-08 15:39-0400\n"
+"POT-Creation-Date: 2017-11-25 17:30-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,37 +17,15 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#. Type: boolean
-#. Description
-#: ../templates:2001
-msgid "Configure LedgerSMB automatically?"
-msgstr ""
-
-#. Type: boolean
-#. Description
-#: ../templates:2001
-msgid ""
-"The configuration program for the package can automatically configure some "
-"aspects of LedgerSMB, such as the LedgerSMB database user."
-msgstr ""
-
-#. Type: boolean
-#. Description
-#: ../templates:2001
-msgid ""
-"More general information about the initial configuration of the application "
-"can be found in /usr/share/doc/ledgersmb-1.5/README.Debian."
-msgstr ""
-
 #. Type: string
 #. Description
-#: ../templates:3001
+#: ../templates:2001
 msgid "Database administrative user login:"
 msgstr ""
 
 #. Type: string
 #. Description
-#: ../templates:3001
+#: ../templates:2001
 msgid ""
 "Please enter the login of the LedgerSMB database administrative user. This "
 "login is needed for the administrative web user interface, typically at "
@@ -56,15 +34,37 @@ msgstr ""
 
 #. Type: password
 #. Description
-#: ../templates:4001
+#: ../templates:3001
 msgid "Database administrative user password:"
 msgstr ""
 
 #. Type: password
 #. Description
-#: ../templates:4001
+#: ../templates:3001
 msgid ""
 "Please enter the password of the LedgerSMB database administrative user. "
 "This password is needed for the administrative web user interface, typically "
 "at http://localhost:5762/setup.pl."
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../templates:4001
+msgid "Configure LedgerSMB Database administrative user?"
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../templates:4001
+msgid ""
+"The configuration program for the package can automatically configure the "
+"LedgerSMB database user. Enable if you want to do that, disable if not."
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../templates:4001
+msgid ""
+"More information about the configuration of the database administrative user "
+"can be found in /usr/share/doc/ledgersmb-1.5/README.Debian."
 msgstr ""
