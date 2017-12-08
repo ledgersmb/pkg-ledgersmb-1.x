@@ -1628,7 +1628,7 @@ require({cache:{"dojo/_base/Deferred":function() {
                       k(x, w[l])
                     }
                   }else {
-                    var A = g("input[name\x3d'" + x + "']");
+                    var A = g("input[name\x3d'" + x + "']", n);
                     -1 == A.indexOf() ? k(x, w) : A.val(w)
                   }
                 }
@@ -3740,11 +3740,12 @@ require({cache:{"dojo/_base/Deferred":function() {
       }
     }, fade_main_div:function() {
       s.replace(this.domNode, "parsing", "done-parsing");
-      b.set(this.domNode, "opacity", "30%")
+      b.set(this.domNode, "opacity", "0.3")
     }, hide_main_div:function() {
       b.set(this.domNode, "visibility", "hidden")
     }, show_main_div:function() {
       b.set(this.domNode, "visibility", "visible");
+      b.set(this.domNode, "opacity", "1");
       s.replace(this.domNode, "done-parsing", "parsing")
     }, set:function() {
       var a = null, b = 0, d = null, g = this;
