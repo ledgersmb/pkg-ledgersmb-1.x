@@ -1,4 +1,4 @@
-ledgersmb-1.5 (1.5.14-1~1) UNRELEASED; urgency=medium
+ledgersmb-1.5 (1.5.14-1) stable; urgency=medium
 
   * Updated the debian/po/* files using 'debconf-updatepo'.
   * Only do DB user questions in debian/ledgersmb-1.5.config if new install.
@@ -6,7 +6,7 @@ ledgersmb-1.5 (1.5.14-1~1) UNRELEASED; urgency=medium
   * In debian/templates: drop the debconf_install stanza but add a config_admin
     stanza.
 
- -- Robert James Clay <jame@rocasa.us>  Fri,  8 Dec 2017 18:06:31 -0500
+ -- Robert James Clay <jame@rocasa.us>  Wed, 13 Dec 2017 12:33:37 -0500
 
 ledgersmb-1.5 (1.5.13-2) stable; urgency=medium
 
