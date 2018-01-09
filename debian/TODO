@@ -2,8 +2,20 @@ debian/TODO for LedgerSMB ledgersmb-1.5 package
 
   - See also https://github.com/ledgersmb/pkg-ledgersmb-1.5/issues
   
-====================================================================================================
------------------------------------------------------------------------------------
+================================================================================
+--------------------------------------------------------------------------------
+- Patch the SSL settings in the app proxy to use the 'snakeoil' certs by default
+- Confirm which package installs that & add it to at least the Recommends?  I've
+thought that it is ssl-cert.
+
+--------------------------------------------------------------------------------
+  - Implemented a work-around that halved (from 60 to 30) the number of the
+source-is-missing Lintian errors in the ledgersmb pkg. Implmemt the same in
+this pkg but not until the next version, which I expect to be 1.5.16, so that
+only have to copy the UI/js/lsmb file to debian/missing-sources once (and not
+again when the new version came out).
+
+--------------------------------------------------------------------------------
 
 - debian/ledgersmb.init
   There is a '--workers $WORKERS' parameter being used in the STARMAN cmd
@@ -15,40 +27,22 @@ one to be made by David?
 - See also: Provide a sysvinit init.d script for starman-ledgesmb
   https://github.com/ledgersmb/LedgerSMB/issues/2900
 
------------------------------------------------------------------------------------
-- An unneeded /etc/ledgersmb/conf directory appears to be getting created, perhaps
-during the pkg install? It's not in the deb pkg.
-Next time I purge the pkg, verify at least that all of the pkg directories are 
-removed.
-- I don't remember that being there now during the recent testing I did but check
-specifically for it's presence.
------------------------------------------------------------------------------------
-https://github.com/ledgersmb/LedgerSMB/issues/3272
 
-While testing an updated package for LedgerSMB 1.5.13 which includes setting up 
-Apache as a web proxy for LedgerSMB (ledgersmb-1.5-apache), i found that I could 
-not leave the SSLRequireSSL in the apache-vhost.conf (as installed by the package)
-file and try to that new configuration online without resulting in an error like
-the following (from: systemctl status apache2.service).
+--------------------------------------------------------------------------------
+  - debian/watch not working properly for gpg verification file
+  - https://github.com/ledgersmb/pkg-ledgersmb-1.5/issues/3
+Project has totally moved from SourceForge.net, so debian/watch needs to be
+updated for the new locations of the distribution archive and its detached gpg
+file for verification. An update for getting the distribution archive itself
+appears to have been successful but the *.asc associated with it used for the
+gpg verification does not seem to get refereneced properly so that step fails.
+(So creating the orig archive needs to be done manually.) 
 
-Nov 11 00:57:05 lsmbtest apachectl[13212]: AH00526: Syntax error on line 32 of /etc/apache2/sites-enabled/ledgersmb-1.5-proxy.conf:
-Nov 11 00:57:05 lsmbtest apachectl[13212]: SSLRequireSSL not allowed here
-Nov 11 00:57:05 lsmbtest apachectl[13212]: Action 'start' failed.
-
------------------------------------------------------------------------------------
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=868724
-- Project has totally moved from SourceForge.net, so debian/watch needs to be
-updated for the new locations of the distribution archive and its detached gpg file 
-for verification. An update for getting the distribution archive itself appears to 
-have been successful but the *.asc associated with it used for the gpg verification 
-does not seem to get refereneced properly so that step fails. (So creating the orig 
-archive needs to be done manually.) 
-
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
   - There may be an issue with the debconf usage (besides the issue with the
   templates) during the pkg install.
 
-- Note that there is an extranous "DO" showing up.  Possibly that's 
+- Note that there was an extranous "DO" showing up.  Possibly that was 
 from debconf script that is not running properly, which it should because it's
 defaulted to do so.  Maybe there's a problem with where it's supposed to be 
 running in the maintainer script, as running dpkg-reconfigure on it runs
@@ -57,6 +51,22 @@ it with no apparant issue.  (Athought it also ended up displaying the extraneous
  So perhaps there is an issue with the *.config file after all? Or is it indeed
  something to do with it the usage in the maintainer script.
  
+-both the config script as well as where the debconf is used in the postintall
+needs to be rewriten.
+1) like the postinst;  when 'config' is called, $2 is the previous version if
+there was one.
+2) The $1 parameter is called with 'configure', or 'reconfigure' if called by
+dpkg-reconfigure
+
+-the debconf_install question is not needed any longer
+-The dbadmin related questions only need to be asked if this is a new install
+ and perhaps if it is a reconfigure?  Althought in that case, perhaps there
+ should be question about if the password should be changed which defaults
+ to "No"? (Altough then, would it need to be defaulted to 'Yes' and set to
+ "No after it's been set or reset?)  But for by default the dbadmin user &
+ its password should only be set in a new install, so that upgrades will not
+ do it again. Perhaps only the reconfigure would have quiestion about resetting
+ the password, with a default of no?   
  
 -------------------------------------------------------------------------------
   - debian/adm/config-lsmb-db-user.sh
@@ -65,30 +75,18 @@ it with no apparant issue.  (Athought it also ended up displaying the extraneous
 password for the LSMB DB Admin user?  David G pointed out that using SQL
 can allow the unencrypted password to perhaps show up in logs, etc, which
 is a security concern.  So, use the sql to be able to tell if the user
-is already pressent but use the standard tools to actually set it?  Or can
+is already present but use the standard tools to actually set it?  Or can
 those be used unattended like is needed here?
 
 - Take out defaulting to doing the SQL 'ALTER' instead of a 'CREATE'
-if the LSMB DBAdmin user already exits?  It was pointed out by both David
-and Erik that they really don't think it's a good idea to reset that password
-by default when, for instance, upgrading the package;  which is what it does
-when doing the configure was enabled.  Add option to reset the password if the
+if the LSMB DBAdmin user already exits? 
+ Add option to reset the password if the
 user ID already exists, but not by default? Would have to explicitly agree
 to it, each time, and that agreement isn't saved so the question gets asked
 each time and by default is not to do the reset?
 
   - see also: admin user password change (expected for v1.6)
 https://github.com/ledgersmb/LedgerSMB/issues/2717
------------------------------------------------------------------------------------
-- Review the copyright settings for the debian/ directory again back to the
- beginning of the LedgerSMB packaging as although it may have listed 'GPL'
- as the license involved I'm not so sure that GPL3 existed back then and
- that is what it points to now. May have been just GPL2+, like ledgersmb
- itself; if so, add a comment to the stanza noting that.
-- According to https://en.wikipedia.org/wiki/GNU_General_Public_License,
-"In 2007, the third version of the license (GNU GPLv3) was released"
-- But LedgerSMB was originally debianized on Mon, 13 Nov 2006 15:29:53,
- viewable in the packaging repostory with the inport of version 1.2.5-2.
 
 -------------------------------------------------------------------------------
 
@@ -123,9 +121,9 @@ https://github.com/ledgersmb/LedgerSMB/issues/2717
 ---------------------------------------------------------------------------------------------------
 
 https://github.com/ledgersmb/LedgerSMB/issues/2900
-Although Debian (and others) do now use systemd by default, it does still 
-support sysvinit init.d scripts as well, so providing at least an example 
-init.d sysvinit startup script for starman-ledgersmb would be quite useful.
+Although Debian (and others) do now use systemd by default, it does still
+support sysvinit init.d scripts as well, so providing at least an example
+init.d sysvinit startup script for starman-ledgersmb would be quite useful
 
 - In the mean time, added an initial version of a possible script:
 In order to test how that works, would have to use something that has been
@@ -136,7 +134,7 @@ it but it's still not working properly so it needs more work.
 
 - Currently have texlive-latex-recommended as a Recommends but that pulls a lot of
 of other pkgs in and takes alot of space, and is only there regarding being able
-to print to PDF.  Options for how replace that at least for default printing
+to print to PDF.  Options for how to replace that at least for default printing
 (some people will continue to use LaTex because they have dedicated resources
 to it) have/are being generated, like modules or apps to print from html to pdf.
   Once that has been implemented, move the texlive requirement from Recommends to
@@ -147,7 +145,7 @@ been 'wkhtml2pdf'. See also:
 https://github.com/ledgersmb/LedgerSMB/issues/2719
 
 -------------------------------------------------------------------------------
-  - lintian results from pkg build for 1.5.13-2~4 test build on 13 Nov 2017:
+  - lintian results from pkg build for 1.5.15-1~1 test build on 7 Jan 2018:
 
 N: 345 tags overridden (341 errors, 2 warnings, 2 info)
 
@@ -165,6 +163,14 @@ W: ledgersmb-1.5-varnish: empty-binary-package
 W: ledgersmb-1.5-nginx: empty-binary-package
 W: ledgersmb-1.5-lighttpd: empty-binary-package
 
+W: ledgersmb-1.5 changes: orig-tarball-missing-upstream-signature ledgersmb-1.5_1.5.15.orig.tar.gz
+
+W: ledgersmb-1.5 source: out-of-date-standards-version 3.9.8 (current is 4.1.3)
+
+I: ledgersmb-1.5 source: testsuite-autopkgtest-missing
+
+  - Keeping this, as I do plan to use it later.
+I: ledgersmb-1.5: unused-debconf-template ledgersmb-1.5/config_admin
 
 -------------------------------------------------------------------------------
   - Interesting enough; this is available for Config::Model
@@ -175,7 +181,9 @@ https://metacpan.org/release/Config-Model-Systemd
   - So if there is a need to do a debconf update for the service file, will
   be able to do so?
 - Being able to update the service file for the LSMB Starman port from the 
-postinstall script may be quite useful. Investigate?
+postinstall script may be quite useful. One could default to the standard port
+but still be able to set it to run on a different port, which would allow multiple
+lsmb installs of 1.5 or later. Investigate?
 
 -----------------------------------------------------------------------------------
   - Use a separate source tarball for the UI/js/dojo and UI/js/dijit directories?
@@ -215,4 +223,4 @@ System|Language|Add Language.
 
 -----------------------------------------------------------------------------------
 
- -- Robert James Clay <jame@rocasa.us>  Wed, 15 Nov 2017 10:07 -0500
+ -- Robert James Clay <jame@rocasa.us>  Tue,  9 Jan 2018 13:19 -0500
