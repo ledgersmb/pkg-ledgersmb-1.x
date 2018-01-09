@@ -1,11 +1,14 @@
-ledgersmb-1.5 (1.5.15-1~1) UNRELEASED; urgency=medium
+ledgersmb-1.5 (1.5.15-1) stable; urgency=medium
 
-  * New Upstream.
+  * New upstream version.
+  * Correct '1.5.14-1' stanza in debian/changelog for missing entry.
+  * Drop 'dh-systemd', update debhelper version for Build-Depends in d/control.
 
- -- Robert James Clay <jame@rocasa.us>  Sun, 07 Jan 2018 23:35:31 -0500
+ -- Robert James Clay <jame@rocasa.us>  Tue, 09 Jan 2018 13:26:34 -0500
 
 ledgersmb-1.5 (1.5.14-1) stable; urgency=medium
 
+  * New upstream version.
   * Updated the debian/po/* files using 'debconf-updatepo'.
   * Only do DB user questions in debian/ledgersmb-1.5.config if new install.
   * Only do DB user questions in debian/ledgersmb-1.5.postinst if new install.
