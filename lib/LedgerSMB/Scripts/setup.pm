@@ -663,7 +663,7 @@ sub upgrade {
     $request->{dbh}->{AutoCommit} = 0;
     my $locale = $request->{_locale};
 
-    for my $check (_applicatble_upgrade_tests($dbinfo)) {
+    for my $check (_applicable_upgrade_tests($dbinfo)) {
         if ( $check->selectable_values ) {
             my $sth = $request->{dbh}->prepare($check->selectable_values);
             $sth->execute()
@@ -989,7 +989,7 @@ Saves the administrative user, and then directs to the login page.
 
 sub save_user {
     my ($request) = @_;
-    $request->requires(qw(first_name last_name ssn employeenumber));
+    $request->requires(qw(first_name last_name employeenumber));
     $request->{entity_class} = 3;
     $request->{name} = "$request->{last_name}, $request->{first_name}";
     use LedgerSMB::Entity::Person::Employee;
