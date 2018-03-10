@@ -1,3 +1,9 @@
+ledgersmb-1.5 (1.5.17-1~1) UNRELEASED; urgency=medium
+
+  * New upstream version.
+
+ -- Robert James Clay <jame@rocasa.us>  Sat, 10 Mar 2018 13:18:41 -0500
+
 ledgersmb-1.5 (1.5.16-1) stable; urgency=medium
 
   * New upstream version.
