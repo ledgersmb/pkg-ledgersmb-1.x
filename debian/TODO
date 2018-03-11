@@ -4,16 +4,54 @@ debian/TODO for LedgerSMB ledgersmb-1.5 package
   
 ================================================================================
 --------------------------------------------------------------------------------
+- Is the 'xedemo' coming up as the default template when creating a new company
+  DB? I'd thought it was not but a user (sbay) thought it was and in any case
+  ended up that way and had troubles because the texlive-xetex pkg was not
+  installed yet.
+- Investigate again which template is the default and in any case, look into
+  what can be done within the app to verify/ensure that needed pkg is installed
+  if needed.
+
+- Also, as per Erik (at 15:24 in IRC on 10 Mar 2018); 
+
+be sure to install the liberation font though
+the templates use those.
+I'm not sure if they came with xelatex
+(xetex)
+
+sbay
+Which ones
+15:27
+fonts-liberation - Fonts with the same metrics as Times, Arial and Courier
+fonts-liberation2 Fonts with the same metrics as Times, Arial and Courier (v2)
+E
+ehuelsmann
+the second ones are ok.
+
+sysop@svrdb:~$ aptitude search fonts-liberation
+i   fonts-liberation                                         - Fonts with the same metrics as Times, Arial and Courier
+p   fonts-liberation2                                        - Fonts with the same metrics as Times, Arial and Courier (v2)
+
+- Note that Erik also noted that the v2 of that was basically what he choose to
+install in a recent new install.  he's not sure that it actually makes a big
+differnce.  And I'm not sure how it got installed on my install;  it was not
+automatially installed (according to 'apt show').  So, if it's needed like that
+need to insure that it gets installed, even if indirectly, so invesitgate how
+it gets done.
+
+--------------------------------------------------------------------------------
 - Patch the SSL settings in the app proxy to use the 'snakeoil' certs by default
 - Confirm which package installs that & add it to at least the Recommends?  I've
 thought that it is ssl-cert.
 
 --------------------------------------------------------------------------------
   - Implemented a work-around that halved (from 60 to 30) the number of the
-source-is-missing Lintian errors in the ledgersmb pkg. Implmemt the same in
-this pkg but not until the next version, which I expect to be 1.5.16, so that
+source-is-missing Lintian errors in the ledgersmb pkg. Implememt the same in
+this pkg but not until the next version, which I expect to be 1.5.18, so that
 only have to copy the UI/js/lsmb file to debian/missing-sources once (and not
 again when the new version came out).
+--------------------------------------------------------------------------------
+  - Add a doc-base file for UI/welcome.html 
 
 --------------------------------------------------------------------------------
 
@@ -51,23 +89,22 @@ it with no apparant issue.  (Athought it also ended up displaying the extraneous
  So perhaps there is an issue with the *.config file after all? Or is it indeed
  something to do with it the usage in the maintainer script.
  
--both the config script as well as where the debconf is used in the postintall
+- Both the config script as well as where the debconf is used in the postintall
 needs to be rewriten.
 1) like the postinst;  when 'config' is called, $2 is the previous version if
 there was one.
 2) The $1 parameter is called with 'configure', or 'reconfigure' if called by
 dpkg-reconfigure
 
--the debconf_install question is not needed any longer
--The dbadmin related questions only need to be asked if this is a new install
- and perhaps if it is a reconfigure?  Althought in that case, perhaps there
- should be question about if the password should be changed which defaults
- to "No"? (Altough then, would it need to be defaulted to 'Yes' and set to
- "No after it's been set or reset?)  But for by default the dbadmin user &
- its password should only be set in a new install, so that upgrades will not
- do it again. Perhaps only the reconfigure would have quiestion about resetting
- the password, with a default of no?   
- 
+- The dbadmin related questions only need to be asked if this is a new install
+  and if it is a reconfigure?  Althought in that case, perhaps there should be
+  question about if the password should be changed which defaults to "No"?
+  (Although then, would it need to be defaulted to 'Yes' and set to "No after
+  it's been set or reset?)  But for by default the dbadmin user & its password
+  should only be set in a new install, so that upgrades will not do it again.
+  Perhaps only the reconfigure would have question about resetting the password,
+  with a default of no?   
+- 
 -------------------------------------------------------------------------------
   - debian/adm/config-lsmb-db-user.sh
 
@@ -98,7 +135,7 @@ https://github.com/ledgersmb/LedgerSMB/issues/2717
   - Referance also https://github.com/ledgersmb/LedgerSMB/issues/2899 which is
   for the creation of a test in upstream that checks for such permission issues.
 
-- As of the packageing for 1.5.13, this is what is in the override_dh_fixperms
+- As of the packageing for 1.5.18, this is what is in the override_dh_fixperms
   stanza
 <-->dh_fixperms
 <-->chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/sql/modules/reload_modules.sh
@@ -145,7 +182,7 @@ been 'wkhtml2pdf'. See also:
 https://github.com/ledgersmb/LedgerSMB/issues/2719
 
 -------------------------------------------------------------------------------
-  - lintian results from pkg build for 1.5.15-1~1 test build on 7 Jan 2018:
+  - lintian results from pkg build for 1.5.18-1~2 test build on 11 Mar 2018:
 
 N: 345 tags overridden (341 errors, 2 warnings, 2 info)
 
@@ -158,19 +195,18 @@ I: ledgersmb-1.5: unused-override package-contains-empty-directory usr/share/led
 
   - https://lintian.debian.org/tags/empty-binary-package.html
   - I have "dependency package" in their respective long descriptions but that
-    doesn't seem to have helped, at least not when building under stretch.
+    doesn't seem to have helped, at least not when building under stretch or
+    buster.
 W: ledgersmb-1.5-varnish: empty-binary-package
 W: ledgersmb-1.5-nginx: empty-binary-package
 W: ledgersmb-1.5-lighttpd: empty-binary-package
 
-W: ledgersmb-1.5 changes: orig-tarball-missing-upstream-signature ledgersmb-1.5_1.5.15.orig.tar.gz
+  - It's not clear to me how this is supposed to work...
+W: ledgersmb-1.5 changes: orig-tarball-missing-upstream-signature ledgersmb-1.5_1.5.18.orig.tar.gz
 
 W: ledgersmb-1.5 source: out-of-date-standards-version 3.9.8 (current is 4.1.3)
 
 I: ledgersmb-1.5 source: testsuite-autopkgtest-missing
-
-  - Keeping this, as I do plan to use it later.
-I: ledgersmb-1.5: unused-debconf-template ledgersmb-1.5/config_admin
 
 -------------------------------------------------------------------------------
   - Interesting enough; this is available for Config::Model
@@ -223,4 +259,4 @@ System|Language|Add Language.
 
 -----------------------------------------------------------------------------------
 
- -- Robert James Clay <jame@rocasa.us>  Tue,  9 Jan 2018 13:19 -0500
+ -- Robert James Clay <jame@rocasa.us>  Sat, 10 Mar 2018 17:39 -0400
