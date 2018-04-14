@@ -1,3 +1,10 @@
+ledgersmb-1.5 (1.5.20-1~1) UNRELEASED; urgency=medium
+
+  * Add 'David Godfrey' & 'Nick Prater' to the Core Team list in the d/copyright
+    source stanza.
+
+ -- Robert James Clay <jame@rocasa.us>  Sat, 14 Apr 2018 16:39:22 -0400
+
 ledgersmb-1.5 (1.5.18-1) stable; urgency=medium
 
   * New upstream version.
