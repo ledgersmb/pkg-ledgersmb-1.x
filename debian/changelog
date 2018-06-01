@@ -1,3 +1,14 @@
+ledgersmb-1.5 (1.5.21-1~1) UNRELEASED; urgency=medium
+
+  * New upstream version.
+  * Reset JSON Perl modules dependencies in debian/control to be 'libjson-perl'
+    as a Depends and 'libjson-xs-perl' as a Recommends because that is actually
+    what LedgersSMB 1.5.x (instead of v1.6.x) requires.
+  * Explicitly add 'db_stop' command to debian/ledgersmb-1.5.config script.
+  * Remove 'delgroup' line in 'purge' stanza of debian/ledgersmb-1.5.postrm.
+
+ -- Robert James Clay <jame@rocasa.us>  Fri,  1 Jun 2018 19:55:14 -0400
+
 ledgersmb-1.5 (1.5.20-1) stable; urgency=medium
 
   * New upstream version.
