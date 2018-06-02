@@ -1,4 +1,4 @@
-ledgersmb-1.5 (1.5.21-1~2) UNRELEASED; urgency=medium
+ledgersmb-1.5 (1.5.21-1) stable; urgency=medium
 
   * New upstream version.
   * Remove 'delgroup' line in 'purge' stanza of debian/ledgersmb-1.5.postrm.
@@ -8,7 +8,7 @@ ledgersmb-1.5 (1.5.21-1~2) UNRELEASED; urgency=medium
   * Explicitly add 'db_stop' command to debian/ledgersmb-1.5.config script.
   * Remove 'delgroup' line in 'purge' stanza of debian/ledgersmb-1.5.postrm.
 
- -- Robert James Clay <jame@rocasa.us>  Fri,  1 Jun 2018 20:34:55 -0400
+ -- Robert James Clay <jame@rocasa.us>  Fri, 01 Jun 2018 20:56:03 -0400
 
 ledgersmb-1.5 (1.5.20-1) stable; urgency=medium
 
