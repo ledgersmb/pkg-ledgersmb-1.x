@@ -3,7 +3,7 @@ debian/TODO for LedgerSMB ledgersmb-1.5 package
   - See also https://github.com/ledgersmb/pkg-ledgersmb-1.5/issues
   
 ================================================================================
---------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
 - Is the 'xedemo' coming up as the default template when creating a new company
   DB? I'd thought it was not but a user (sbay) thought it was and in any case
   ended up that way and had troubles because the texlive-xetex pkg was not
@@ -36,7 +36,7 @@ p   fonts-liberation2                                        - Fonts with the sa
 install in a recent new install.  he's not sure that it actually makes a big
 differnce.  And I'm not sure how it got installed on my install;  it was not
 automatially installed (according to 'apt show').  So, if it's needed like that
-need to insure that it gets installed, even if indirectly, so invesitgate how
+need to insure that it gets installed, even if indirectly, so investigate how
 it gets done.
 
 --------------------------------------------------------------------------------
@@ -51,7 +51,7 @@ this pkg but not until the next version, which I expect to be 1.5.18, so that
 only have to copy the UI/js/lsmb file to debian/missing-sources once (and not
 again when the new version came out).
 --------------------------------------------------------------------------------
-  - Add a doc-base file for UI/welcome.html 
+  - Add a doc-base file for UI/welcome.html ?
 
 --------------------------------------------------------------------------------
 
@@ -77,34 +77,16 @@ gpg verification does not seem to get refereneced properly so that step fails.
 (So creating the orig archive needs to be done manually.) 
 
 --------------------------------------------------------------------------------
-  - There may be an issue with the debconf usage (besides the issue with the
-  templates) during the pkg install.
-
-- Note that there was an extranous "DO" showing up.  Possibly that was 
-from debconf script that is not running properly, which it should because it's
-defaulted to do so.  Maybe there's a problem with where it's supposed to be 
-running in the maintainer script, as running dpkg-reconfigure on it runs
-it with no apparant issue.  (Athought it also ended up displaying the extraneous
-"DO" at the bottom left hand corner of the last debconf diaplay.)
- So perhaps there is an issue with the *.config file after all? Or is it indeed
- something to do with it the usage in the maintainer script.
- 
-- Both the config script as well as where the debconf is used in the postintall
-needs to be rewriten.
-1) like the postinst;  when 'config' is called, $2 is the previous version if
-there was one.
-2) The $1 parameter is called with 'configure', or 'reconfigure' if called by
-dpkg-reconfigure
 
 - The dbadmin related questions only need to be asked if this is a new install
-  and if it is a reconfigure?  Althought in that case, perhaps there should be
+  and if it is a reconfigure.  Although in that case, perhaps there should be
   question about if the password should be changed which defaults to "No"?
   (Although then, would it need to be defaulted to 'Yes' and set to "No after
   it's been set or reset?)  But for by default the dbadmin user & its password
   should only be set in a new install, so that upgrades will not do it again.
   Perhaps only the reconfigure would have question about resetting the password,
   with a default of no?   
-- 
+ 
 -------------------------------------------------------------------------------
   - debian/adm/config-lsmb-db-user.sh
 
@@ -122,7 +104,7 @@ user ID already exists, but not by default? Would have to explicitly agree
 to it, each time, and that agreement isn't saved so the question gets asked
 each time and by default is not to do the reset?
 
-  - see also: admin user password change (expected for v1.6)
+  - see also: admin user password change (expected for v1.6/v1.7?)
 https://github.com/ledgersmb/LedgerSMB/issues/2717
 
 -------------------------------------------------------------------------------
@@ -259,4 +241,4 @@ System|Language|Add Language.
 
 -----------------------------------------------------------------------------------
 
- -- Robert James Clay <jame@rocasa.us>  Sat, 10 Mar 2018 17:39 -0400
+ -- Robert James Clay <jame@rocasa.us>  Tue, 29 May 2018 14:46 -0400
