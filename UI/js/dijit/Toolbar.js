@@ -1,0 +1,2 @@
+//>>built
+define("dijit/Toolbar",["require","dojo/_base/declare","dojo/has","dojo/keys","dojo/ready","./_Widget","./_KeyNavContainer","./_TemplatedMixin"],function(e,a,t,r,i,d,o,l){return t("dijit-legacy-requires")&&i(0,function(){var a=["dijit/ToolbarSeparator"];e(a)}),a("dijit.Toolbar",[d,l,o],{templateString:'<div class="dijit" role="toolbar" tabIndex="${tabIndex}" data-dojo-attach-point="containerNode"></div>',baseClass:"dijitToolbar",_onLeftArrow:function(){this.focusPrev()},_onRightArrow:function(){this.focusNext()}})});//# sourceMappingURL=Toolbar.js.map

@@ -1,0 +1,2 @@
+//>>built
+define("dojo/promise/first",["../_base/array","../Deferred","../when"],function(e,a,t){"use strict";var r=e.forEach;return function(e){var i;if(e instanceof Array)i=e;else if(e&&"object"==typeof e){i=[];for(var d in e)Object.hasOwnProperty.call(e,d)&&i.push(e[d])}if(!i||!i.length)return(new a).resolve();var l=new a;return r(i,function(e){t(e,l.resolve,l.reject)}),l.promise}});//# sourceMappingURL=first.js.map

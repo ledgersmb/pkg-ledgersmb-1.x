@@ -1,0 +1,2 @@
+//>>built
+define("dojo/request/notify",["../Evented","../_base/lang","./util"],function(e,a,t){function r(e,a){return l.on(e,a)}var i=0,d=[].slice,l=a.mixin(new e,{onsend:function(){i||this.emit("start"),i++},_onload:function(e){this.emit("done",e)},_onerror:function(e){this.emit("done",e)},_ondone:function(){--i<=0&&(i=0,this.emit("stop"))},emit:function(a){var t=e.prototype.emit.apply(this,arguments);return this["_on"+a]&&this["_on"+a].apply(this,d.call(arguments,1)),t}});return r.emit=function(e,a,t){return l.emit(e,a,t)},t.notify=r});//# sourceMappingURL=notify.js.map

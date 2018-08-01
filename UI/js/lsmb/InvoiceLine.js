@@ -1,0 +1,2 @@
+//>>built
+require(["dojo/_base/declare","dijit/_WidgetBase","dijit/_TemplatedMixin","dijit/_WidgetsInTemplateMixin","dijit/_Container"],function(e,t,a,i,r){return e("lsmb/InvoiceLine",[t,r],{})});//# sourceMappingURL=InvoiceLine.js.map

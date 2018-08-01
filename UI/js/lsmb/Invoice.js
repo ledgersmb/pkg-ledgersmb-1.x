@@ -1,0 +1,2 @@
+//>>built
+require(["dojo/_base/declare","dijit/registry","dojo/on","lsmb/Form","dijit/_Container"],function(e,t,a,i,r){return e("lsmb/Invoice",[i,r],{_update:function(){this.clickedAction="update",this.submit()},startup:function(){var e=this;this.inherited(arguments),this.own(a(t.byId("invoice-lines"),"changed",function(){e._update()}))}})});//# sourceMappingURL=Invoice.js.map

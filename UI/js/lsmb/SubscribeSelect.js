@@ -1,0 +1,2 @@
+//>>built
+define("lsmb/SubscribeSelect",["dojo/_base/declare","dojo/on","dojo/topic","dijit/form/Select"],function(e,t,a,i){return e("lsmb/SubscribeSelect",[i],{topic:"",topicMap:{},update:function(e){var t=this.topicMap[e];t&&this.set("value",t)},postCreate:function(){var e=this;this.inherited(arguments),this.own(a.subscribe(e.topic,function(t){e.update(t)}))}})});//# sourceMappingURL=SubscribeSelect.js.map

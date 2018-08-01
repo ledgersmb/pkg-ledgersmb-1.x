@@ -1,0 +1,2 @@
+//>>built
+define("lsmb/PublishSelect",["dojo/_base/declare","dojo/on","dojo/topic","dijit/form/Select"],function(e,t,a,i){return e("lsmb/PublishSelect",[i],{topic:"",publish:function(e){a.publish(this.topic,e)},postCreate:function(){var e=this;this.inherited(arguments),this.own(t(this,"change",function(t){e.publish(t)}))}})});//# sourceMappingURL=PublishSelect.js.map

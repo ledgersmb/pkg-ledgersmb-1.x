@@ -1,0 +1,2 @@
+//>>built
+define("dijit/layout/AccordionPane",["dojo/_base/declare","dojo/_base/kernel","./ContentPane"],function(e,t,a){return e("dijit.layout.AccordionPane",a,{constructor:function(){t.deprecated("dijit.layout.AccordionPane deprecated, use ContentPane instead","","2.0")},onSelected:function(){}})});//# sourceMappingURL=AccordionPane.js.map

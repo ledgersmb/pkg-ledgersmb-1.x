@@ -1,0 +1,2 @@
+//>>built
+define("dojo/data/util/filter",["../../_base/lang"],function(e){var a={};return e.setObject("dojo.data.util.filter",a),a.patternToRegExp=function(e,a){for(var t="^",r=null,d=0;d<e.length;d++)switch(r=e.charAt(d)){case"\\":t+=r,d++,t+=e.charAt(d);break;case"*":t+=".*";break;case"?":t+=".";break;case"$":case"^":case"/":case"+":case".":case"|":case"(":case")":case"{":case"}":case"[":case"]":t+="\\";default:t+=r}return t+="$",a?new RegExp(t,"mi"):new RegExp(t,"m")},a});//# sourceMappingURL=filter.js.map

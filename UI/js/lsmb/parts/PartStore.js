@@ -1,0 +1,2 @@
+//>>built
+define("lsmb/parts/PartStore",["dojo/store/Memory","dojo/store/Observable","dojo/request","dojo/_base/array","dojo/Evented"],function(e,t,a,i,r){var o=new t(new e({idProperty:"text",emitter:new r}));return a.get("parts.pl?action=partslist_json&",{handleAs:"json"}).then(function(e){i.forEach(e,function(e){e.text=e.partnumber,e.label=e.partnumber+"--"+e.description,o.put(e)}),o.emitter.emit("accountstore_loadcomplete",{bubbles:!0,cancelable:!1})},function(){}),o});//# sourceMappingURL=PartStore.js.map

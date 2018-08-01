@@ -1,0 +1,2 @@
+//>>built
+define("lsmb/accounts/AccountSelector",["lsmb/FilteringSelect","dojo/_base/declare","lsmb/accounts/AccountRestStore"],function(e,t,a){var i=new t("lsmb/accounts/AccountSelector",[e],{store:a,queryExpr:"*${0}*",style:"width: 300px",highlightMatch:"all",searchAttr:"label",labelAttr:"label",autoComplete:!1,initialValue:null,constructor:function(){this.inherited(arguments),this.initialValue=arguments[0].value}});return i});//# sourceMappingURL=AccountSelector.js.map

@@ -1,0 +1,2 @@
+//>>built
+define("dijit/_base/manager",["dojo/_base/array","dojo/_base/config","dojo/_base/lang","../registry","../main"],function(e,t,a,r,i){var d={};return e.forEach(["byId","getUniqueId","findWidgets","_destroyAll","byNode","getEnclosingWidget"],function(e){d[e]=r[e]}),a.mixin(d,{defaultDuration:t.defaultDuration||200}),a.mixin(i,d),i});//# sourceMappingURL=manager.js.map
