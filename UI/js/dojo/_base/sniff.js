@@ -1,3 +1,2 @@
 //>>built
-define("dojo/_base/sniff",["./kernel","./lang","../sniff"],function(b,c,a){b._name="browser";c.mixin(b,{isBrowser:!0,isFF:a("ff"),isIE:a("ie"),isKhtml:a("khtml"),isWebKit:a("webkit"),isMozilla:a("mozilla"),isMoz:a("mozilla"),isOpera:a("opera"),isSafari:a("safari"),isChrome:a("chrome"),isMac:a("mac"),isIos:a("ios"),isAndroid:a("android"),isWii:a("wii"),isQuirks:a("quirks"),isAir:a("air")});return a});
-//# sourceMappingURL=sniff.js.map
+define("dojo/_base/sniff",["./kernel","./lang","../sniff"],function(e,t,n){return e._name="browser",t.mixin(e,{isBrowser:!0,isFF:n("ff"),isIE:n("ie"),isKhtml:n("khtml"),isWebKit:n("webkit"),isMozilla:n("mozilla"),isMoz:n("mozilla"),isOpera:n("opera"),isSafari:n("safari"),isChrome:n("chrome"),isMac:n("mac"),isIos:n("ios"),isAndroid:n("android"),isWii:n("wii"),isQuirks:n("quirks"),isAir:n("air")}),n});//# sourceMappingURL=sniff.js.map

@@ -1,3 +1,2 @@
 //>>built
-define("dojo/errors/RequestTimeoutError",["./create","./RequestError"],function(a,b){return a("RequestTimeoutError",null,b,{dojoType:"timeout"})});
-//# sourceMappingURL=RequestTimeoutError.js.map
+define("dojo/errors/RequestTimeoutError",["./create","./RequestError"],function(e,a){return e("RequestTimeoutError",null,a,{dojoType:"timeout"})});//# sourceMappingURL=RequestTimeoutError.js.map

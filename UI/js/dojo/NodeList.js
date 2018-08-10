@@ -1,3 +1,2 @@
 //>>built
-define("dojo/NodeList",["./query"],function(a){return a.NodeList});
-//# sourceMappingURL=NodeList.js.map
+define("dojo/NodeList",["./query"],function(e){return e.NodeList});//# sourceMappingURL=NodeList.js.map

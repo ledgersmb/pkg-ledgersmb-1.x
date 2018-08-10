@@ -1,3 +1,2 @@
 //>>built
-define("dojo/promise/first",["../_base/array","../Deferred","../when"],function(f,d,g){var h=f.forEach;return function(a){var b;if(a instanceof Array)b=a;else if(a&&"object"===typeof a){b=[];for(var e in a)Object.hasOwnProperty.call(a,e)&&b.push(a[e])}if(!b||!b.length)return(new d).resolve();var c=new d;h(b,function(a){g(a,c.resolve,c.reject)});return c.promise}});
-//# sourceMappingURL=first.js.map
+define("dojo/promise/first",["../_base/array","../Deferred","../when"],function(e,a,t){"use strict";var r=e.forEach;return function(e){var i;if(e instanceof Array)i=e;else if(e&&"object"==typeof e){i=[];for(var d in e)Object.hasOwnProperty.call(e,d)&&i.push(e[d])}if(!i||!i.length)return(new a).resolve();var l=new a;return r(i,function(e){t(e,l.resolve,l.reject)}),l.promise}});//# sourceMappingURL=first.js.map

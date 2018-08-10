@@ -1,3 +1,2 @@
 //>>built
-define("dijit/_base/scroll",["dojo/window","../main"],function(b,a){a.scrollIntoView=function(a,c){b.scrollIntoView(a,c)}});
-//# sourceMappingURL=scroll.js.map
+define("dijit/_base/scroll",["dojo/window","../main"],function(e,t){t.scrollIntoView=function(t,a){e.scrollIntoView(t,a)}});//# sourceMappingURL=scroll.js.map

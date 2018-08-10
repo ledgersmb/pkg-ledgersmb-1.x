@@ -1,3 +1,2 @@
 //>>built
-define("dojo/Evented",["./aspect","./on"],function(e,c){function a(){}var f=e.after;a.prototype={on:function(a,d){return c.parse(this,a,d,function(b,a){return f(b,"on"+a,d,!0)})},emit:function(a,d){var b=[this];b.push.apply(b,arguments);return c.emit.apply(c,b)}};return a});
-//# sourceMappingURL=Evented.js.map
+define("dojo/Evented",["./aspect","./on"],function(e,r){"use strict";function n(){}var t=e.after;return n.prototype={on:function(e,n){return r.parse(this,e,n,function(e,r){return t(e,"on"+r,n,!0)})},emit:function(){var e=[this];return e.push.apply(e,arguments),r.emit.apply(r,e)}},n});//# sourceMappingURL=Evented.js.map

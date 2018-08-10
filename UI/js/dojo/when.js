@@ -1,3 +1,2 @@
 //>>built
-define("dojo/when",["./Deferred","./promise/Promise"],function(d,g){return function(a,c,e,f){var b=a&&"function"===typeof a.then,h=b&&a instanceof g;if(b)h||(b=new d(a.cancel),a.then(b.resolve,b.reject,b.progress),a=b.promise);else return 1<arguments.length?c?c(a):a:(new d).resolve(a);return c||e||f?a.then(c,e,f):a}});
-//# sourceMappingURL=when.js.map
+define("dojo/when",["./Deferred","./promise/Promise"],function(e,t){"use strict";return function(n,r,o,i){var a=n&&"function"==typeof n.then,s=a&&n instanceof t;if(!a)return arguments.length>1?r?r(n):n:(new e).resolve(n);if(!s){var u=new e(n.cancel);n.then(u.resolve,u.reject,u.progress),n=u.promise}return r||o||i?n.then(r,o,i):n}});//# sourceMappingURL=when.js.map

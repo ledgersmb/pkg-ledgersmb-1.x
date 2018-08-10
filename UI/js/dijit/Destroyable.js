@@ -1,4 +1,2 @@
 //>>built
-define("dijit/Destroyable",["dojo/_base/array","dojo/aspect","dojo/_base/declare"],function(c,g,e){return e("dijit.Destroyable",null,{destroy:function(c){this._destroyed=!0},own:function(){var e=["destroyRecursive","destroy","remove"];c.forEach(arguments,function(b){function f(){k.remove();c.forEach(h,function(a){a.remove()})}var d,k=g.before(this,"destroy",function(a){b[d](a)}),h=[];b.then?(d="cancel",b.then(f,f)):c.forEach(e,function(a){"function"===typeof b[a]&&(d||(d=a),h.push(g.after(b,a,f,!0)))})},
-this);return arguments}})});
-//# sourceMappingURL=Destroyable.js.map
+define("dijit/Destroyable",["dojo/_base/array","dojo/aspect","dojo/_base/declare"],function(e,a,t){return t("dijit.Destroyable",null,{destroy:function(){this._destroyed=!0},own:function(){var t=["destroyRecursive","destroy","remove"];return e.forEach(arguments,function(r){function i(){o.remove(),e.forEach(l,function(e){e.remove()})}var d,o=a.before(this,"destroy",function(e){r[d](e)}),l=[];r.then?(d="cancel",r.then(i,i)):e.forEach(t,function(e){"function"==typeof r[e]&&(d||(d=e),l.push(a.after(r,e,i,!0)))})},this),arguments}})});//# sourceMappingURL=Destroyable.js.map

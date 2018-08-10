@@ -1,3 +1,2 @@
 //>>built
-define("dojo/errors/create",["../_base/lang"],function(g){return function(h,e,a,k){a=a||Error;var b=function(f){if(a===Error){Error.captureStackTrace&&Error.captureStackTrace(this,b);var c=Error.call(this,f),d;for(d in c)c.hasOwnProperty(d)&&(this[d]=c[d]);this.message=f;this.stack=c.stack}else a.apply(this,arguments);e&&e.apply(this,arguments)};b.prototype=g.delegate(a.prototype,k);b.prototype.name=h;return b.prototype.constructor=b}});
-//# sourceMappingURL=create.js.map
+define("dojo/errors/create",["../_base/lang"],function(e){return function(a,t,r,d){r=r||Error;var i=function(e){if(r===Error){Error.captureStackTrace&&Error.captureStackTrace(this,i);var a,d=Error.call(this,e);for(a in d)d.hasOwnProperty(a)&&(this[a]=d[a]);this.message=e,this.stack=d.stack}else r.apply(this,arguments);t&&t.apply(this,arguments)};return i.prototype=e.delegate(r.prototype,d),i.prototype.name=a,i.prototype.constructor=i,i}});//# sourceMappingURL=create.js.map

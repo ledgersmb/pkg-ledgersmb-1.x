@@ -1,3 +1,2 @@
 //>>built
-define("dojo/_base/unload",["./kernel","./lang","../on"],function(b,e,c){var d=window,a={addOnWindowUnload:function(a,f){b.windowUnloaded||c(d,"unload",b.windowUnloaded=function(){});c(d,"unload",e.hitch(a,f))},addOnUnload:function(a,b){c(d,"beforeunload",e.hitch(a,b))}};b.addOnWindowUnload=a.addOnWindowUnload;b.addOnUnload=a.addOnUnload;return a});
-//# sourceMappingURL=unload.js.map
+define("dojo/_base/unload",["./kernel","./lang","../on"],function(e,t,n){var r=window,o={addOnWindowUnload:function(o,i){e.windowUnloaded||n(r,"unload",e.windowUnloaded=function(){}),n(r,"unload",t.hitch(o,i))},addOnUnload:function(e,o){n(r,"beforeunload",t.hitch(e,o))}};return e.addOnWindowUnload=o.addOnWindowUnload,e.addOnUnload=o.addOnUnload,o});//# sourceMappingURL=unload.js.map

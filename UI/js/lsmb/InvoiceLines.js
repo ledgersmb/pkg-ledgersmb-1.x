@@ -1,3 +1,2 @@
 //>>built
-require(["dojo/_base/declare","dijit/registry","dijit/_WidgetBase","dijit/_Container"],function(a,b,c,d){return a("lsmb/InvoiceLines",[c,d],{removeLine:function(a){this.removeChild(b.byId(a));this.emit("changed",{action:"removed"})}})});
-//# sourceMappingURL=InvoiceLines.js.map
+require(["dojo/_base/declare","dijit/registry","dijit/_WidgetBase","dijit/_Container"],function(e,t,a,i){return e("lsmb/InvoiceLines",[a,i],{removeLine:function(e){this.removeChild(t.byId(e)),this.emit("changed",{action:"removed"})}})});//# sourceMappingURL=InvoiceLines.js.map

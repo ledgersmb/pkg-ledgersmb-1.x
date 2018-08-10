@@ -1,3 +1,2 @@
 //>>built
-define("dojo/cache",["./_base/kernel","./text"],function(a){return a.cache});
-//# sourceMappingURL=cache.js.map
+define("dojo/cache",["./_base/kernel","./text"],function(e){return e.cache});//# sourceMappingURL=cache.js.map

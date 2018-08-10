@@ -1,3 +1,2 @@
 //>>built
-define("lsmb/PublishRadioButton",["dojo/_base/declare","dojo/on","dojo/topic","dijit/form/RadioButton"],function(a,b,c,d){return a("lsmb/PublishRadioButton",[d],{topic:"",publish:function(){c.publish(this.topic,this.value)},postCreate:function(){var a=this;this.inherited(arguments);this.own(b(this.domNode,"change",function(){a.publish()}))}})});
-//# sourceMappingURL=PublishRadioButton.js.map
+define("lsmb/PublishRadioButton",["dojo/_base/declare","dojo/on","dojo/topic","dijit/form/RadioButton"],function(e,t,a,i){return e("lsmb/PublishRadioButton",[i],{topic:"",publish:function(){a.publish(this.topic,this.value)},postCreate:function(){var e=this;this.inherited(arguments),this.own(t(this.domNode,"change",function(){e.publish()}))}})});//# sourceMappingURL=PublishRadioButton.js.map

@@ -1,3 +1,2 @@
 //>>built
-define("dijit/PopupMenuBarItem",["dojo/_base/declare","./PopupMenuItem","./MenuBarItem"],function(a,b,c){return a("dijit.PopupMenuBarItem",[b,c._MenuBarItemMixin],{})});
-//# sourceMappingURL=PopupMenuBarItem.js.map
+define("dijit/PopupMenuBarItem",["dojo/_base/declare","./PopupMenuItem","./MenuBarItem"],function(e,a,t){var r=t._MenuBarItemMixin;return e("dijit.PopupMenuBarItem",[a,r],{})});//# sourceMappingURL=PopupMenuBarItem.js.map

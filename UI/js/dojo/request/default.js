@@ -1,3 +1,2 @@
 //>>built
-define("dojo/request/default",["exports","require","../has"],function(a,d,c){var b=c("config-requestProvider");b||(b="./xhr");a.getPlatformDefaultId=function(){return"./xhr"};a.load=function(a,c,e,f){d(["platform"==a?"./xhr":b],function(a){e(a)})}});
-//# sourceMappingURL=default.js.map
+define("dojo/request/default",["exports","require","../has"],function(e,a,t){var r,i=t("config-requestProvider");r="./xhr",i||(i=r),e.getPlatformDefaultId=function(){return r},e.load=function(e,t,d){a(["platform"==e?r:i],function(e){d(e)})}});//# sourceMappingURL=default.js.map

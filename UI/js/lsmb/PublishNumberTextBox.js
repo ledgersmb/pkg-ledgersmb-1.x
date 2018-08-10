@@ -1,3 +1,2 @@
 //>>built
-define("lsmb/PublishNumberTextBox",["dojo/_base/declare","dojo/on","dojo/topic","dijit/form/NumberTextBox"],function(a,c,d,e){return a("lsmb/PublishNumberTextBox",e,{topic:"",publish:function(b){d.publish(this.topic,b)},postCreate:function(){var b=this;this.own(c(this,"change",function(a){b.publish(a)}))}})});
-//# sourceMappingURL=PublishNumberTextBox.js.map
+define("lsmb/PublishNumberTextBox",["dojo/_base/declare","dojo/on","dojo/topic","dijit/form/NumberTextBox"],function(e,t,a,i){return e("lsmb/PublishNumberTextBox",i,{topic:"",publish:function(e){a.publish(this.topic,e)},postCreate:function(){var e=this;this.own(t(this,"change",function(t){e.publish(t)}))}})});//# sourceMappingURL=PublishNumberTextBox.js.map
