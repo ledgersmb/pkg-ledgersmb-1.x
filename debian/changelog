@@ -1,3 +1,9 @@
+ledgersmb-1.5 (1.5.21-2~1) UNRELEASED; urgency=medium
+
+  * Correct the 'Vcs-Git' & 'Vcs-Browser' URLs to point to the new repository.
+
+ -- Robert James Clay <jame@rocasa.us>  Fri, 10 Aug 2018 04:21:12 -0400
+
 ledgersmb-1.5 (1.5.21-1) stable; urgency=medium
 
   * New upstream version.
