@@ -5,7 +5,7 @@
 
 override_dh_auto_configure:
 	cp conf/ledgersmb.conf.default ledgersmb.conf
-	cp conf/systemd/starman-ledgersmb.service debian/ledgersmb-1.5.service
+	cp conf/systemd/starman-ledgersmb.service debian/ledgersmb-1.6.service
 
 override_dh_auto_build:
 
@@ -17,26 +17,26 @@ override_dh_install:
 	dh_install -XMIT-LICENSE -XGPL.txt -XLICENSE
 
 override_dh_installdocs:
-	dh_installdocs --link-doc=ledgersmb-1.5
+	dh_installdocs --link-doc=ledgersmb-1.6
 
 override_dh_fixperms:
 	dh_fixperms
-	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/sql/modules/reload_modules.sh
-	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/tools/dbsetup.pl
-	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/tools/drop-roles.pl
-	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/tools/install_interactive.pl
-	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/tools/pre-release-tests.sh
-	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/tools/starman.psgi
-	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/utils/notify_short/config.pl
-	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/utils/notify_short/listener.pl
-	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/utils/process_queue/config.pl.default
-	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/utils/process_queue/process_queue.pl
-	chmod +x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/utils/replication/configure-replication.sh
-	chmod -x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/locale/html/splash.html
-	chmod -x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/lib/LedgerSMB/Template/TXT.pm
-	chmod -x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/lib/LedgerSMB/Template/HTML.pm
-	chmod -x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/lib/LedgerSMB/Template/CSV.pm
-	chmod -x debian/ledgersmb-1.5/usr/share/ledgersmb-1.5/lib/LedgerSMB/Template/LaTeX.pm
+	chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/sql/modules/reload_modules.sh
+	chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/tools/dbsetup.pl
+	chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/tools/drop-roles.pl
+	chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/tools/install_interactive.pl
+	chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/tools/pre-release-tests.sh
+	chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/tools/starman.psgi
+	chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/utils/notify_short/config.pl
+	chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/utils/notify_short/listener.pl
+	chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/utils/process_queue/config.pl.default
+	chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/utils/process_queue/process_queue.pl
+	chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/utils/replication/configure-replication.sh
+	chmod -x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/locale/html/splash.html
+	chmod -x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/lib/LedgerSMB/Template/TXT.pm
+	chmod -x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/lib/LedgerSMB/Template/HTML.pm
+	chmod -x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/lib/LedgerSMB/Template/CSV.pm
+	chmod -x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/lib/LedgerSMB/Template/LaTeX.pm
 
 get-orig-source:
 	uscan --force-download --rename --destdir .
