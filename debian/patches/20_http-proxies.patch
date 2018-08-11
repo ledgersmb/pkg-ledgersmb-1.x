@@ -4,7 +4,7 @@ Description: Set working directory in the apache-vhost.conf, nginx-vhost.conf,
  for use on Debian systems. Correct the default backend port in the example 
  default.vcl file for Varnish.
 Origin: vendor
-Last-Update: 2017-11-12
+Last-Update: 2018-08-10
 --- a/conf/apache-vhost.conf
 +++ b/conf/apache-vhost.conf
 @@ -20,7 +20,7 @@
@@ -12,7 +12,7 @@ Last-Update: 2017-11-12
    ServerName YOUR_SERVER_NAME
  
 -  DocumentRoot WORKING_DIR/UI
-+  DocumentRoot /usr/share/ledgersmb-1.5/UI
++  DocumentRoot /usr/share/ledgersmb-1.6/UI
  
    # If you own a publicly exposed server, consider submitting it
    # to the SSL security tests available at
@@ -23,7 +23,7 @@ Last-Update: 2017-11-12
    #ssl_certificate_key SSL_KEY_FILE;
  
 -  root WORKING_DIR/UI;
-+  root /usr/share/ledgersmb-1.5/UI;
++  root /usr/share/ledgersmb-1.6/UI;
  
    # Configuration files don't exist
    location ^~ \.conf$ {
@@ -46,7 +46,7 @@ Last-Update: 2017-11-12
 -server.pid-file             = "/var/run/lighttpd.pid"
 -server.username             = "www-data"
 -server.groupname            = "www-data"
-+server.document-root        = "/usr/share/ledgersmb-1.5/UI"
++server.document-root        = "/usr/share/ledgersmb-1.6/UI"
  
    # If you own a publicly exposed server, consider submitting it
    # to the SSL security tests available at
