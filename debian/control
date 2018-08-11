@@ -1,4 +1,4 @@
-Source: ledgersmb-1.5
+Source: ledgersmb-1.6
 Section: web
 Priority: optional
 Maintainer: LedgerSMB Core Team <devel@lists.ledgersmb.org>
@@ -6,10 +6,10 @@ Uploaders: Robert James Clay <jame@rocasa.us>
 Build-Depends: debhelper (>= 9.20160709), po-debconf
 Standards-Version: 3.9.8
 Homepage: http://www.ledgersmb.org/
-Vcs-Git: https://github.com/ledgersmb/pkg-ledgersmb-1.5.git
-Vcs-Browser: https://github.com/ledgersmb/pkg-ledgersmb-1.5
+Vcs-Git: https://github.com/ledgersmb/pkg-ledgersmb-1.6.git
+Vcs-Browser: https://github.com/ledgersmb/pkg-ledgersmb-1.6
 
-Package: ledgersmb-1.5
+Package: ledgersmb-1.6
 Architecture: all
 Depends: adduser,
          libcarp-always-perl,
@@ -58,8 +58,8 @@ Recommends: libjson-xs-perl,
             libtemplate-plugin-latex-perl (>=3.09-1),
             libtex-encode-perl,
             texlive-latex-recommended
-Suggests: ledgersmb-1.5-nginx | ledgersmb-1.5-lighttpd | ledgersmb-1.5-apache |
-          ledgersmb-1.5-varnish,
+Suggests: ledgersmb-1.6-nginx | ledgersmb-1.6-lighttpd | ledgersmb-1.6-apache |
+          ledgersmb-1.6-varnish,
           default-mta | mail-transport-agent,
           latex-cjk-all,
           libimage-size-perl,
@@ -81,15 +81,15 @@ Description: financial accounting and ERP program (Perl/SQL backend)
  run directly by Starman instead of by Apache. If other access is needed, a
  Reverse Proxy can be configured locally using Apache, Lighttpd, Nginx, or
  Varnish and using the appropriate dependency packages to select which. For more
- information, please see also /usr/share/doc/ledgersmb-1.5/README.Debian.
+ information, please see also /usr/share/doc/ledgersmb-1.6/README.Debian.
 
-Package: ledgersmb-1.5-apache
+Package: ledgersmb-1.6-apache
 Architecture: all
-Depends: ledgersmb-1.5,
+Depends: ledgersmb-1.6,
          apache2,
          ucf,
          ${misc:Depends}
-Enhances: ledgersmb-1.5
+Enhances: ledgersmb-1.6
 Description: financial accounting and ERP program - web proxy via Apache
  LedgerSMB is a full featured double-entry financial accounting and Enterprise
  Resource Planning system accessed via a web browser (Perl/SQL backend) which
@@ -104,13 +104,13 @@ Description: financial accounting and ERP program - web proxy via Apache
  Reverse Proxy can still be configured locally, and this dependency package
  provides a local proxy configuration using Apache.
 
-Package: ledgersmb-1.5-nginx
+Package: ledgersmb-1.6-nginx
 Architecture: all
-Depends: ledgersmb-1.5 (= ${binary:Version}),
+Depends: ledgersmb-1.6 (= ${binary:Version}),
          nginx-light | nginx-full | nginx-extra,
          ucf,
          ${misc:Depends}
-Enhances: ledgersmb-1.5
+Enhances: ledgersmb-1.6
 Description: financial accounting and ERP program - web proxy via Nginx
  LedgerSMB is a full featured double-entry financial accounting and Enterprise
  Resource Planning system accessed via a web browser (Perl/SQL backend) which
@@ -125,13 +125,13 @@ Description: financial accounting and ERP program - web proxy via Nginx
  Reverse Proxy can be configured locally using Nginx, and this dependency
  package provides a local proxy configuration using Nginx.
 
-Package: ledgersmb-1.5-lighttpd
+Package: ledgersmb-1.6-lighttpd
 Architecture: all
-Depends: ledgersmb-1.5 (= ${binary:Version}),
+Depends: ledgersmb-1.6 (= ${binary:Version}),
          lighttpd,
          ucf,
          ${misc:Depends}
-Enhances: ledgersmb-1.5
+Enhances: ledgersmb-1.6
 Description: financial accounting and ERP program - web proxy via lighttpd
  LedgerSMB is a full featured double-entry financial accounting and Enterprise
  Resource Planning system accessed via a web browser (Perl/SQL backend) which
@@ -146,13 +146,13 @@ Description: financial accounting and ERP program - web proxy via lighttpd
  Reverse Proxy can be configured locally using lighttpd, and this dependency
  package provides a local proxy configuration using lighttpd.
 
-Package: ledgersmb-1.5-varnish
+Package: ledgersmb-1.6-varnish
 Architecture: all
-Depends: ledgersmb-1.5 (= ${binary:Version}),
+Depends: ledgersmb-1.6 (= ${binary:Version}),
          varnish,
          ucf,
          ${misc:Depends}
-Enhances: ledgersmb-1.5
+Enhances: ledgersmb-1.6
 Description: financial accounting and ERP program - web proxy via varnish
  LedgerSMB is a full featured double-entry financial accounting and Enterprise
  Resource Planning system accessed via a web browser (Perl/SQL backend) which
