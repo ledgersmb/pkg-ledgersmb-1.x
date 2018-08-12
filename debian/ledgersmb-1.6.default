@@ -1,12 +1,12 @@
-# CONFIGURATION FILE FOR LEDGERSMB-1.5
-# /etc/default/ledgersmb-1.5
-# Consult the LedgerSMB manual page and documentation in /usr/share/doc/ledgersmb-1.5/.
+# CONFIGURATION FILE FOR LEDGERSMB-1.6
+# /etc/default/ledgersmb-1.6
+# Consult the LedgerSMB manual page and documentation in /usr/share/doc/ledgersmb-1.6/.
 
 # The directory where LedgerSMB is installed
-WORKING_DIRECTORY=/usr/share/ledgersmb-1.5
+WORKING_DIRECTORY=/usr/share/ledgersmb-1.6
 
 # The location of the LedgerSMB Config file
-LSMB_CONFIG_FILE=/etc/ledgersmb-1.5/ledgersmb.conf
+LSMB_CONFIG_FILE=/etc/ledgersmb-1.6/ledgersmb.conf
 
 # The interface address and port to bind to (listen on). Note that these are for
 # the backend settings; other access is recommended to be done using an http
