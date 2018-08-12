@@ -1,5 +1,5 @@
 #!/bin/sh
-# preinst script for ledgersmb-1.5
+# preinst script for ledgersmb-1.6
 #
 # see: dh_installdeb(1)
 
@@ -19,7 +19,7 @@ old_version=$2
 case "$1" in
     install)
         # Configure the 'ledgersmb' user.
-        getent passwd ledgersmb-1_5 >/dev/null 2>&1 || adduser --system --group --quiet --disabled-password --home /var/run/ledgersmb-1.5 --gecos "LedgerSMB-1.5" ledgersmb-1_5
+        getent passwd ledgersmb-1_6 >/dev/null 2>&1 || adduser --system --group --quiet --disabled-password --home /var/run/ledgersmb-1.6 --gecos "LedgerSMB-1.6" ledgersmb-1_6
     ;;
 
     upgrade|abort-upgrade)
