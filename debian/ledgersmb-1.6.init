@@ -4,12 +4,12 @@ if [ true != "$INIT_D_SCRIPT_SOURCED" ] ; then
     set "$0" "$@"; INIT_D_SCRIPT_SOURCED=true . /lib/init/init-d-script
 fi
 ### BEGIN INIT INFO
-# Provides:          ledgersmb-1.5
+# Provides:          ledgersmb-1.6
 # Required-Start:    $remote_fs $network $syslog
 # Required-Stop:     $remote_fs $network $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: LedgerSMB 1.5 running under Starman
+# Short-Description: LedgerSMB 1.6 running under Starman
 # Description:       LedgerSMB now is now run by Starman instead of directly
 #                    by Apache like with previous versions. This is used to
 #                    stop or start that process if the system is using
@@ -22,14 +22,14 @@ fi
 DESC="Run LedgerSMB via Starman"
 
 # Include defaults if available
-if [ -f "/etc/default/ledgersmb-1.5" ]
+if [ -f "/etc/default/ledgersmb-1.6" ]
 then
-    . "/etc/default/ledgersmb-1.5"
+    . "/etc/default/ledgersmb-1.6"
 else
-    WORKING_DIRECTORY=/usr/share/legdersmb-1.5
+    WORKING_DIRECTORY=/usr/share/legdersmb-1.6
     LISTEN_ADDRESS=localhost
     LISTEN_PORT=5762
-    export LSMB_CONFIG_FILE=/etc/ledgersmb-1.5/ledgersmb.conf 
+    export LSMB_CONFIG_FILE=/etc/ledgersmb-1.6/ledgersmb.conf 
 fi
 
 # app settings
@@ -38,8 +38,8 @@ APP=$APP_HOME/tools/starman.psgi
 APP_NAME=$(basename $(readlink -f $0))
 START_SERVER=/usr/bin/start_server
 STARMAN=/usr/bin/starman
-USER=ledgersmb-1_5
-GROUP=ledgersmb-1_5
+USER=ledgersmb-1_6
+GROUP=ledgersmb-1_6
 
 PID_FILE=/var/run/$APP_NAME.pid
 STATUS_FILE=/var/run/$APP_NAME.status
