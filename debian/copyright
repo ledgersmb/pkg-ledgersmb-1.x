@@ -78,7 +78,7 @@ Copyright: 2009-2018, Robert James Clay <jame@rocasa.us>
              2008,    Roberto C. Sanchez <robert@debian.org>
 License: GPL-2+
 
-Files: debian/ledgersmb-1.5.default
+Files: debian/ledgersmb-1.6.default
 Copyright: 2017, David Godfrey <info@sbts.com.au>
            2017, Robert James Clay <jame@rocasa.us>
 License: GPL-2+
