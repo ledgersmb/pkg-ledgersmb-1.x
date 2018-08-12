@@ -1,4 +1,4 @@
-usr/share/ledgersmb-1.5/bin/custom
-usr/share/ledgersmb-1.5/lib/LedgerSMB/Scripts/custom
-usr/share/ledgersmb-1.5/lib/LedgerSMB/Reconciliation/CSV/Formats
+usr/share/ledgersmb-1.6/bin/custom
+usr/share/ledgersmb-1.6/lib/LedgerSMB/Scripts/custom
+usr/share/ledgersmb-1.6/lib/LedgerSMB/Reconciliation/CSV/Formats
 
