@@ -1,5 +1,5 @@
 #!/bin/sh
-# postinst script for ledgersmb-1.5
+# postinst script for ledgersmb-1.6
 #
 # see: dh_installdeb(1)
 
@@ -24,7 +24,7 @@ case "$1" in
     configure)
         # Do varnish related processing if it is present.
         if [ -d "/etc/varnish" ]; then
-            [ ! -h /etc/ledgersmb-1.5/varnish-proxy.conf ] && ln -s /etc/varnish/default.vcl /etc/ledgersmb-1.5/varnish-proxy.conf
+            [ ! -h /etc/ledgersmb-1.6/varnish-proxy.conf ] && ln -s /etc/varnish/default.vcl /etc/ledgersmb-1.6/varnish-proxy.conf
         fi
     ;;
 

@@ -1,5 +1,5 @@
 #!/bin/sh
-# postrm script for ledgersmb-1.5
+# postrm script for ledgersmb-1.6
 #
 # see: dh_installdeb(1)
 
@@ -20,43 +20,43 @@ set -e
 
 case "$1" in
     purge)
-        # If Apache 2.4 in use, disable use of ledgersmb-1.5-proxy.conf.
+        # If Apache 2.4 in use, disable use of ledgersmb-1.6-proxy.conf.
         if [ -e /usr/share/apache2/apache2-maintscript-helper ] ; then
             . /usr/share/apache2/apache2-maintscript-helper
-            apache2_invoke disconf ledgersmb-1.5-proxy.conf || exit $?
+            apache2_invoke disconf ledgersmb-1.6-proxy.conf || exit $?
         fi
-        # When being purged; if sym link /etc/ledgersmb-1.5/apache.conf exists, remove it.
-        if [ -h "/etc/ledgersmb-1.5/apache-proxy.conf" ]; then
-            rm -f /etc/ledgersmb-1.5/apache-proxy.conf
+        # When being purged; if sym link /etc/ledgersmb-1.6/apache.conf exists, remove it.
+        if [ -h "/etc/ledgersmb-1.6/apache-proxy.conf" ]; then
+            rm -f /etc/ledgersmb-1.6/apache-proxy.conf
         fi
-        # When being purged; if /etc/apache2/sites-available/ledgersmb-1.5-proxy.conf exists, remove it.
-        if [ -f "/etc/apache2/sites-available/ledgersmb-1.5-proxy.conf" ]; then
-            rm -f /etc/apache2/sites-available/ledgersmb-1.5-proxy.conf
+        # When being purged; if /etc/apache2/sites-available/ledgersmb-1.6-proxy.conf exists, remove it.
+        if [ -f "/etc/apache2/sites-available/ledgersmb-1.6-proxy.conf" ]; then
+            rm -f /etc/apache2/sites-available/ledgersmb-1.6-proxy.conf
         fi
-        # When being purged; if /etc/apache2/sites-available/ledgersmb-1.5-proxy.conf exists, remove
+        # When being purged; if /etc/apache2/sites-available/ledgersmb-1.6-proxy.conf exists, remove
         # it and deregister it with ucf.
-        if [ -f "/etc/apache2/sites-available/ledgersmb-1.5-proxy.conf" ]; then
+        if [ -f "/etc/apache2/sites-available/ledgersmb-1.6-proxy.conf" ]; then
             # Remove the possible backup extensions of the configuration file.
             for ext in '~' '%' .bak .ucf-new .ucf-old .ucf-dist;  do
-                rm -f /etc/apache2/sites-available/ledgersmb-1.5-proxy.conf$ext
+                rm -f /etc/apache2/sites-available/ledgersmb-1.6-proxy.conf$ext
             done
             # Remove the configuration file itself
-            rm -f /etc/apache2/sites-available/ledgersmb-1.5-proxy.conf
+            rm -f /etc/apache2/sites-available/ledgersmb-1.6-proxy.conf
             # Clear it out from the ucf database.
             if which ucf >/dev/null 2>&1; then
-                ucf --purge /etc/apache2/sites-available/ledgersmb-1.5-proxy.conf
+                ucf --purge /etc/apache2/sites-available/ledgersmb-1.6-proxy.conf
             fi
             if which ucfr >/dev/null 2>&1; then
-                ucfr --purge ledgersmb /etc/apache2/sites-available/ledgersmb-1.5-proxy.conf
+                ucfr --purge ledgersmb /etc/apache2/sites-available/ledgersmb-1.6-proxy.conf
             fi
         fi
     ;;
 
     remove)
-        # If Apache 2.4 in use, disable use of ledgersmb-1.5-proxy.conf.
+        # If Apache 2.4 in use, disable use of ledgersmb-1.6-proxy.conf.
         if [ -e /usr/share/apache2/apache2-maintscript-helper ] ; then
             . /usr/share/apache2/apache2-maintscript-helper
-            apache2_invoke disconf ledgersmb-1.5-proxy.conf || exit $?
+            apache2_invoke disconf ledgersmb-1.6-proxy.conf || exit $?
         fi
     ;;
 
