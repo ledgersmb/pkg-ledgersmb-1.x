@@ -34,7 +34,7 @@ Copyright:  2006-2014, The LedgerSMB Core Team
             1999-2005, DWS Systems Inc. and Dieter Simader <dsimader@sql-ledger.org>
 License: GPL-2+
 
-Files: tools/prepare-company-database.*
+Files: bin/prepare-company-database
 Copyright: 2012, The LedgerSMB Core Team
 License: BSD-2-clause
  All rights reserved.
