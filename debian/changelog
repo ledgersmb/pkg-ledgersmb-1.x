@@ -1,5 +1,5 @@
-ledgersmb-1.6 (1.6.3-1~1) UNRELEASED; urgency=low
+ledgersmb-1.6 (1.6.4-1~1) UNRELEASED; urgency=low
 
   * Create and release initial version of 'LedgerSMB-1.6' package.
 
- -- Robert James Clay <jame@rocasa.us>  Fri, 10 Aug 2018 23:57:12 -0400
+ -- Robert James Clay <jame@rocasa.us>  Tue, 11 Sep 2018 00:13:57 -0400
