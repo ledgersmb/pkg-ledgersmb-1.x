@@ -6,8 +6,8 @@ Uploaders: Robert James Clay <jame@rocasa.us>
 Build-Depends: debhelper (>= 9.20160709), po-debconf
 Standards-Version: 3.9.8
 Homepage: http://www.ledgersmb.org/
-Vcs-Git: https://github.com/ledgersmb/pkg-ledgersmb-1.6.git
-Vcs-Browser: https://github.com/ledgersmb/pkg-ledgersmb-1.6
+Vcs-Git: https://github.com/ledgersmb/pkg-ledgersmb-1.x.git
+Vcs-Browser: https://github.com/ledgersmb/pkg-ledgersmb-1.x
 
 Package: ledgersmb-1.6
 Architecture: all
