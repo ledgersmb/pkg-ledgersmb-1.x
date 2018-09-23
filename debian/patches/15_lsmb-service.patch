@@ -3,7 +3,7 @@ Description: Set working directory in both the required ledgersmb_starman.servic
  file as well as the three other optional conf/systemd service files. Include
  setting the LSMB_CONFIG_FILE variable in the environment.
 Origin: vendor
-Last-Update: 2018-08-10
+Last-Update: 2018-09-23
 --- a/conf/systemd/ledgersmb-development_plackup.service
 +++ b/conf/systemd/ledgersmb-development_plackup.service
 @@ -7,10 +7,10 @@
@@ -15,7 +15,7 @@ Last-Update: 2018-08-10
  
  #If you do not want a log file, comment this and remove the access_log option below
 -Environment=LOG=/var/log/ledgersmb/ledgersmb-development_plackup.log
-+Environment=LOG=/var/log/ledgersmb/ledgersmb-1-6-development_plackup.log
++Environment=LOG=/var/log/ledgersmb-1.6/development_plackup.log
  
  # In case you installed dependencies into a 'local::lib'
  # make sure you set the PERL5LIB environment variable
