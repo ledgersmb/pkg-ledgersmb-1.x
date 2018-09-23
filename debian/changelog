@@ -1,6 +1,6 @@
-ledgersmb-1.6 (1.6.5-1~1) UNRELEASED; urgency=low
+ledgersmb-1.6 (1.6.5-1~2) UNRELEASED; urgency=low
 
-  TODO: Resolve issue with being unable to log in to setup.pl.
+  TODO: Resolve issue with being unable to log into setup.pl.
   * Create and release initial version of 'LedgerSMB-1.6' package.
 
- -- Robert James Clay <jame@rocasa.us>  Fri, 21 Sep 2018 18:01:56 -0400
+ -- Robert James Clay <jame@rocasa.us>  Sun, 23 Sep 2018 18:37:01 -0400
