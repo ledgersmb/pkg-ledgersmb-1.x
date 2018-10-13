@@ -37,7 +37,7 @@ case "$1" in
             LSMBDBPW=$RET
             db_stop
             # Configure database administrative user
-            /usr/share/ledgersmb-1.6/tools/config-lsmb-db-user.sh $LSMBDBUSER $LSMBDBPW
+            /usr/share/ledgersmb-1.6/utils/config-lsmb-db-user.sh $LSMBDBUSER $LSMBDBPW
         fi
     ;;
 
