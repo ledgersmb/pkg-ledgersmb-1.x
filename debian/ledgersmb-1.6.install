@@ -4,6 +4,7 @@ conf/* usr/share/ledgersmb-1.6/conf
 lib/* usr/share/ledgersmb-1.6/lib
 debian/adm/config-lsmb-db-user.sh usr/share/ledgersmb-1.6/utils
 locale/* usr/share/ledgersmb-1.6/locale
+old/lib/* usr/share/ledgersmb-1.6/old/lib
 sql/* usr/share/ledgersmb-1.6/sql
 templates/* usr/share/ledgersmb-1.6/templates
 UI/* usr/share/ledgersmb-1.6/UI
