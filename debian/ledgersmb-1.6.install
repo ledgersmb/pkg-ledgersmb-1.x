@@ -8,5 +8,4 @@ old/lib/* usr/share/ledgersmb-1.6/old/lib
 sql/* usr/share/ledgersmb-1.6/sql
 templates/* usr/share/ledgersmb-1.6/templates
 UI/* usr/share/ledgersmb-1.6/UI
-utils/notify_short/* usr/share/ledgersmb-1.6/utils/notify_short
-utils/process_queue/* usr/share/ledgersmb-1.6/utils/process_queue
+utils/* usr/share/ledgersmb-1.6/utils
