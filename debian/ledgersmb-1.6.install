@@ -1,8 +1,8 @@
-ledgersmb.conf etc/ledgersmb-1.6
 bin/* usr/share/ledgersmb-1.6/bin
 conf/* usr/share/ledgersmb-1.6/conf
 lib/* usr/share/ledgersmb-1.6/lib
 debian/adm/config-lsmb-db-user.sh usr/share/ledgersmb-1.6/utils
+ledgersmb.conf etc/ledgersmb-1.6
 locale/* usr/share/ledgersmb-1.6/locale
 old/lib/* usr/share/ledgersmb-1.6/old/lib
 sql/* usr/share/ledgersmb-1.6/sql
