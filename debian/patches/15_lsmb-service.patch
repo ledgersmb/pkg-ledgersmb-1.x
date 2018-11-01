@@ -1,12 +1,18 @@
 Author: Robert James Clay <jame@rocasa.us>
 Description: Set working directory in both the required ledgersmb_starman.service
  file as well as the three other optional conf/systemd service files. Include
- setting the LSMB_CONFIG_FILE variable in the environment.
+ setting the LSMB_CONFIG_FILE variable in the environment. Also update the service
+ file Descriptions to include the "1.6" version number.
 Origin: vendor
-Last-Update: 2018-09-23
+Last-Update: 2018-11-01
 --- a/conf/systemd/ledgersmb-development_plackup.service
 +++ b/conf/systemd/ledgersmb-development_plackup.service
-@@ -7,10 +7,10 @@
+@@ -3,14 +3,14 @@
+ # service start ledgersmb-development_plackup
+ 
+ [Unit]
+-Description=LedgerSMB Plack Development
++Description=LedgerSMB 1.6 Plack Development
  After=network.target
  
  [Service]
@@ -32,7 +38,12 @@ Last-Update: 2018-09-23
  # The list below is exhaustive, change it to suit your needs
 --- a/conf/systemd/ledgersmb_plack-fcgi.service
 +++ b/conf/systemd/ledgersmb_plack-fcgi.service
-@@ -7,7 +7,7 @@
+@@ -3,11 +3,11 @@
+ # service start ledgersmb_plack-fcgi
+ 
+ [Unit]
+-Description=LedgerSMB Plack/FCGI
++Description=LedgerSMB 1.6 Plack/FCGI
  After=network.target
  
  [Service]
@@ -54,7 +65,12 @@ Last-Update: 2018-09-23
      --listen localhost:3244                    \
 --- a/conf/systemd/ledgersmb_plackup.service
 +++ b/conf/systemd/ledgersmb_plackup.service
-@@ -7,10 +7,10 @@
+@@ -3,14 +3,14 @@
+ # service start ledgersmb_plackup
+ 
+ [Unit]
+-Description=LedgerSMB Plack
++Description=LedgerSMB 1.6 Plack
  After=network.target
  
  [Service]
@@ -80,7 +96,12 @@ Last-Update: 2018-09-23
  ExecStart=/usr/bin/plackup   \
 --- a/conf/systemd/ledgersmb_starman.service
 +++ b/conf/systemd/ledgersmb_starman.service
-@@ -7,18 +7,19 @@
+@@ -3,22 +3,23 @@
+ # service start ledgersmb_starman
+ 
+ [Unit]
+-Description=LedgerSMB Starman
++Description=LedgerSMB 1.6 Starman
  After=network.target
  
  [Service]
