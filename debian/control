@@ -166,5 +166,5 @@ Description: financial accounting and ERP program - web proxy via varnish
  .
  The application now defaults to being made available on port 5762 and being
  run directly by Starman instead of by Apache. If other access is needed, a
- Reverse Proxy can be configured locally using varnish, and this dependency
- package provides a local proxy configuration using varnish.
+ Reverse Proxy can be configured locally using varnish and its package, and
+ this dependency package provides a local proxy configuration using varnish.
