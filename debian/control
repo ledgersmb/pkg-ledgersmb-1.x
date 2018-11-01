@@ -145,8 +145,8 @@ Description: financial accounting and ERP program - web proxy via lighttpd
  .
  The application now defaults to being made available on port 5762 and being
  run directly by Starman instead of by Apache. If other access is needed, a
- Reverse Proxy can be configured locally using lighttpd, and this dependency
- package provides a local proxy configuration using lighttpd.
+ Reverse Proxy can be configured locally using lighttpd and its package, and
+ this dependency package provides a local proxy configuration using lighttpd.
 
 Package: ledgersmb-1.6-varnish
 Architecture: all
