@@ -104,10 +104,11 @@ LedgerSMB Access via a Web Proxy
     first, then the proxy package will install the appropriate application.
     The configuration files are installed as necessary for a local proxy but
     will still need further editing to configure them for your use, including
-    for the SSL related settings. Once installed, the new configuration file
-    will still need to be enabled and the proxy application itself restarted
-    in order to use the new set up. A symbolic link pointing to the proxy
-    configuration file is installed into the /etc/ledgersmb-1.5 directory.
+    for the SSL related settings although they are defaulted to using an SSL
+    setting that can be used initially. Once installed, the new configuration
+    file will still need to be enabled and the proxy application itself
+    restarted in order to use the new set up. A symbolic link pointing to the
+    proxy configuration file is installed into the /etc/ledgersmb-1.5 directory.
 
     Note that by default the one for Nginx will install the 'nginx-light'
     package. If you want nginx-full or nginx-extra instead, you will need to
