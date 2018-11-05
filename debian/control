@@ -121,8 +121,8 @@ Description: financial accounting and ERP program - web proxy via Nginx
  .
  The application now defaults to being made available on port 5762 and being
  run directly by Starman instead of by Apache. If other access is needed, a
- Reverse Proxy can be configured locally using Nginx, and this dependency
- package provides a local proxy configuration using Nginx.
+ Reverse Proxy can be configured locally using one of the Nginx packages, and
+ this dependency package provides a local proxy configuration using Nginx.
 
 Package: ledgersmb-1.5-lighttpd
 Architecture: all
@@ -142,8 +142,8 @@ Description: financial accounting and ERP program - web proxy via lighttpd
  .
  The application now defaults to being made available on port 5762 and being
  run directly by Starman instead of by Apache. If other access is needed, a
- Reverse Proxy can be configured locally using lighttpd, and this dependency
- package provides a local proxy configuration using lighttpd.
+ Reverse Proxy can be configured locally using the lighttpd package, and this
+ dependency package provides a local proxy configuration using lighttpd.
 
 Package: ledgersmb-1.5-varnish
 Architecture: all
@@ -163,5 +163,5 @@ Description: financial accounting and ERP program - web proxy via varnish
  .
  The application now defaults to being made available on port 5762 and being
  run directly by Starman instead of by Apache. If other access is needed, a
- Reverse Proxy can be configured locally using varnish, and this dependency
- package provides a local proxy configuration using varnish.
+ Reverse Proxy can be configured locally using the varnish package, and this
+ dependency package provides a local proxy configuration using varnish.
