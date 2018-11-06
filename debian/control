@@ -86,6 +86,7 @@ Package: ledgersmb-1.5-apache
 Architecture: all
 Depends: ledgersmb-1.5,
          apache2,
+         ssl-cert,
          ucf,
          ${misc:Depends}
 Enhances: ledgersmb-1.5
@@ -107,6 +108,7 @@ Package: ledgersmb-1.5-nginx
 Architecture: all
 Depends: ledgersmb-1.5 (= ${binary:Version}),
          nginx-light | nginx-full | nginx-extra,
+         ssl-cert,
          ucf,
          ${misc:Depends}
 Enhances: ledgersmb-1.5
@@ -128,6 +130,7 @@ Package: ledgersmb-1.5-lighttpd
 Architecture: all
 Depends: ledgersmb-1.5 (= ${binary:Version}),
          lighttpd,
+         ssl-cert,
          ucf,
          ${misc:Depends}
 Enhances: ledgersmb-1.5
