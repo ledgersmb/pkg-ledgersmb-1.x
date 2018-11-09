@@ -1,3 +1,4 @@
+05_Makefile.patch
 10_lsmb-config.patch
 15_lsmb-service.patch
 20_http-proxies.patch

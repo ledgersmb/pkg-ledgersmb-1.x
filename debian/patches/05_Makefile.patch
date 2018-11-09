@@ -1,0 +1,18 @@
+Description: This is a patch to facilitate running basic upstream tests during
+ a package build by adding "-Iold/lib" to the 'prove' command line in the test
+ target of the Makefile.
+Author: Robert James Clay <jame@rocasa.us>
+Origin: vendor
+Last-Update: 2018-11-09
+
+--- ledgersmb-1.6-1.6.6.orig/Makefile
++++ ledgersmb-1.6-1.6.6/Makefile
+@@ -462,7 +462,7 @@ postgres_user:
+ 	sudo createuser -S -d -r -l -P lsmb_dbadmin
+ 
+ test:
+-	prove -Ilib t/*.t
++	prove -Ilib -Iold/lib t/*.t
+ 
+ devtest:
+ 	prove -Ilib t/*.t
