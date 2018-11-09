@@ -1,3 +1,16 @@
+ledgersmb-1.6 (1.6.6-2~1) UNRELEASED; urgency=medium
+
+  * Add '05_Makefile.patch' to facilitate running the upstream basic tests
+    during a package build.
+  * Add 'texlive-latex-recommended' to the Build-Depends in debian/control.
+  * Remove the 'override_dh_auto_test' target from debian/rules to facilitate
+    the running of basic upstream tests during a package build.
+  * Explicitly add 'libdata-uuid-perl', 'libplack-middleware-reverseproxy-perl',
+    and 'libtext-markdown-perl' to the Depends stanza in debian/control.
+  * Derive Build-Depends-Indep from the Depends and Recommends in debian/control.
+
+ -- Robert James Clay <jame@rocasa.us>  Fri, 09 Nov 2018 16:40:26 -0500
+
 ledgersmb-1.6 (1.6.6-1) stable; urgency=low
 
   * Create and release initial version of the 'ledgersmb-1.6' package.
