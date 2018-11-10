@@ -6,15 +6,18 @@ ledgersmb-1.6 (1.6.6-2~2) UNRELEASED; urgency=medium
     + Derive Build-Depends-Indep from the Depends and Recommends stanzas.
     + Explicitly add 'libio-stringy-perl' to Depends and Build-Depends-Indep.
     + Explicitly add 'liblocale-codes-perl' to Depends and Build-Depends-Indep.
-    + Add 'texlive-latex-recommended' & 'xelatex' to the Build-Depends stanza.
+    + Add 'texlive-latex-recommended' & 'texlive-xetex' to the Build-Depends
+      stanza.
     + Explicitly add 'libtest-trap-per' & 'libtest-exception-perl' to the
       Build-Depends-Indep stanza.
+    + Replace 'libdbd-pg-perl' with 'libdbd-mock-perl' in Build-Depends-Indep
+      stanza.
     + Explicitly add 'libdata-uuid-perl', 'libtext-markdown-perl',
       and 'libplack-middleware-reverseproxy-perl'  to the Depends stanza.
   * Remove the 'override_dh_auto_test' target from debian/rules to facilitate
     the running of basic upstream tests during a package build.
 
- -- Robert James Clay <jame@rocasa.us>  Fri, 09 Nov 2018 20:56:02 -0500
+ -- Robert James Clay <jame@rocasa.us>  Fri, 09 Nov 2018 23:11:49 -0500
 
 ledgersmb-1.6 (1.6.6-1) stable; urgency=low
 
