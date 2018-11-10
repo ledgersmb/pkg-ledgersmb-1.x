@@ -120,7 +120,7 @@ it but it's still not working properly so it needs more work.
 -----------------------------------------------------------------------------------
 
 - Currently have texlive-latex-recommended as a Recommends but that pulls a lot of
-of other pkgs in and takes alot of space, and is only there regarding being able
+of other pkgs in and takes a lot of space, and is only there regarding being able
 to print to PDF.  Options for how to replace that at least for default printing
 (some people will continue to use LaTex because they have dedicated resources
 to it) have/are being generated, like modules or apps to print from html to pdf.
@@ -156,9 +156,6 @@ I: ledgersmb-1.6: systemd-service-file-missing-documentation-key lib/systemd/sys
 I: ledgersmb-1.6: package-contains-empty-directory usr/share/ledgersmb-1.6/lib/LedgerSMB/Scripts/custom/
 I: ledgersmb-1.6: unused-override package-contains-empty-directory usr/share/ledgersmb-1.6/lib/LedgerSMB/Scripts/custom
 
-  - It's not clear to me how this is supposed to work...
-W: ledgersmb-1.6 changes: orig-tarball-missing-upstream-signature ledgersmb-1.6_1.6.3.orig.tar.gz
-
 I: ledgersmb-1.6 source: testsuite-autopkgtest-missing
 
 -------------------------------------------------------------------------------
@@ -173,23 +170,6 @@ be able to do so?
 postinstall script may be quite useful. One could default to the standard port
 but still be able to set it to run on a different port, which would allow multiple
 lsmb installs of 1.5 or later. Investigate?
-
------------------------------------------------------------------------------------
-- Use a separate source tarball for the UI/js/dojo and UI/js/dijit directories?
-Devs have discussed it some but nothing has come of it as yet. If it's provided,
-then a way to bypass all source-is-missing lintian errors on those directories
-could be to use the multiple upstream tarballs functionality that's available
-in the debian pkg format being used. 
-
-https://wiki.debian.org/Projects/DebSrc3.0
-https://raphaelhertzog.com/2010/09/07/how-to-use-multiple-upstream-tarballs-in-debian-source-packages/  
-
-google search: debian package multiple source files
-
-Note that this isn't necessary for the UI/js/lsmb directory because the source
-for those are in the UI/js-src/lsmb directory. Although could perhaps investigate
-where and how the lintian check looks for the source files to see if repacking
-them where it looks for them would resolve this.
 
 -----------------------------------------------------------------------------------
 
@@ -210,42 +190,25 @@ those lists come from the same source. It can be added manually using
 System|Language|Add Language. 
 
 -----------------------------------------------------------------------------------
-- Enable testing during a package build.  This is separate from enabling the
-  autopkgtest which is planned for after the normal testing is operational during
-  a pkg build.
 
-- The testing during a pkg build can be enabled by removing the 'override_dh_auto_test'
-  from debian/rules. When dh_auto_test is being run, it will find the 'test'
-  target that is present in the upsteam Makefile & attempt to run it. 
-  Initially, that resulted multiple failures related to not being able to find
-  LedgerSMB/Settings.pm. That's in old/lib now and should be getting picked up the
-  '-Iold/lib' that is listed in t/.proverc.  Patched the makefile (Makefile.patch)
-  to include that explicitly on the 'prove' cmd line and it than ran much better
-  but still failed out with errors related to LaTex:
+- The testing during a pkg build was enabled by removing the 'override_dh_auto_test'
+from debian/rules. When dh_auto_test is being run, it will find the 'test'
+target that is present in the upsteam Makefile & attempt to run it. 
+Initially, that resulted in multiple failures related to not being able to find
+LedgerSMB/Settings.pm. That's in old/lib now and should be getting picked up by the
+'-Iold/lib' that is listed in t/.proverc.  Patched the makefile (05_Makefile.patch)
+to include that explicitly on the 'prove' command line.
 
+- I'd already successfully done a local make test, but this came up during an
+ attempted test build:
+dpkg-checkbuilddeps: error: Unmet build dependencies: libcarp-always-perl
+ libmath-bigint-gmp-perl libx12-parser-perl
 
-prove -Ilib -Iold/lib t/*.t
-
-#   Failed test 'use LedgerSMB::Template::LaTeX;'
-#   at t/01-load.t line 214.
-#     Tried to use 'LedgerSMB::Template::LaTeX'.
-#     Error:  Attempt to reload LedgerSMB/Template/LaTeX.pm aborted.
-# Compilation failed in require at t/01-load.t line 214.
-# BEGIN failed--compilation aborted at t/01-load.t line 214.
-# Looks like you failed 1 test of 209.
-t/01-load.t .....................
-Dubious, test returned 1 (wstat 256, 0x100)
-Failed 1/209 subtests
-        (less 5 skipped subtests: 203 okay)
- ....
-Attempt to reload LedgerSMB/Template/LaTeX.pm aborted.
-Compilation failed in require at /usr/share/perl5/Module/Runtime.pm line 314.
-# Looks like your test exited with 255 just after 14.
-t/04-template-handling.t ........
-Dubious, test returned 255 (wstat 65280, 0xff00)
-All 14 subtests passed
+- Which meant that I didn't have them installed locally, which was where I was
+running that test where the simple 'make test' had been successful. But doesn't
+that imply that those aren't needed for the basic build tests? Removed them for now.
 
 
 -----------------------------------------------------------------------------------
 
- -- Robert James Clay <jame@rocasa.us>  Fri, 02 Nov 2018 17:04 -0400
+ -- Robert James Clay <jame@rocasa.us>  Sat, 10 Nov 2018 09:35 -0500
