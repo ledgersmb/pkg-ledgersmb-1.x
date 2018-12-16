@@ -181,8 +181,8 @@ sub new {
     #menubar will be deprecated, replaced with below
     $self->{lynx} = 1 if ( ( defined $self->{path} ) && ( $self->{path} =~ /lynx/i ) );
 
-    $self->{version}   = "1.5.22";
-    $self->{dbversion} = "1.5.22";
+    $self->{version}   = "1.5.23";
+    $self->{dbversion} = "1.5.23";
 
     bless $self, $type;
 
@@ -1275,9 +1275,13 @@ sub generate_selects {
     # sales staff
     if ( $form->{all_employee} && @{ $form->{all_employee} } ) {
         $form->{selectemployee} = "";
-        for ( @{ $form->{all_employee} } ) {
+        for (@{ $form->{all_employee} }) {
+            my $value = "$_->{name}--$_->{id}";
+            my $selected = ($form->{employee} eq $value
+                || $form->{employee} eq $_->{name}) ?
+                ' selected="selected"' : "";
             $form->{selectemployee} .=
-              qq|<option value="$_->{name}--$_->{id}">$_->{name}</option>\n|;
+                qq|<option value="$value"$selected>$_->{name}</option>\n|;
         }
     }
 
