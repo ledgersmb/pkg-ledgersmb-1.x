@@ -1,3 +1,10 @@
+ledgersmb-1.5 (1.5.22-1~1) UNRELEASED; urgency=medium
+
+  * New upstream version.
+  * Update debian/watch for the 1.5.x series upstream site being used.
+
+ -- Robert James Clay <jame@rocasa.us>  Sun, 16 Dec 2018 09:19:57 -0500
+
 ledgersmb-1.5 (1.5.21-2) stable; urgency=medium
 
   * Remove unneeded 'libjs-dojo-dojox' as a Depends from debian/control.
