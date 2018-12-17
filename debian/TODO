@@ -1,7 +1,6 @@
 debian/TODO for LedgerSMB ledgersmb-1.6 package
 
   - See also https://github.com/ledgersmb/pkg-ledgersmb-1.x/issues
-  
 ================================================================================
 --------------------------------------------------------------------------------
 
@@ -97,13 +96,14 @@ for the creation of a test in upstream that checks for such permission issues.
 
 - As of the packaging for 1.6.6, this is what is in the override_dh_fixperms
   stanza:
-<-->dh_fixperms
-	chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/bin/drop-roles
-	chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/sql/modules/reload_modules.sh
-	chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/utils/notify_short/config.pl
-	chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/utils/notify_short/listener.pl
-	chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/utils/process_queue/config.pl.default
-	chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/utils/process_queue/process_queue.pl
+    dh_fixperms
+    chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/bin/drop-roles
+    chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/sql/modules/reload_modules.sh
+    chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/utils/notify_short/config.pl
+    chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/utils/notify_short/listener.pl
+    chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/utils/process_queue/config.pl.default
+    chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/utils/process_queue/process_queue.pl
+    chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/utils/devel/ledgersmb-server-development.psgi
 
 ---------------------------------------------------------------------------------------------------
 
@@ -133,9 +133,9 @@ https://github.com/ledgersmb/LedgerSMB/issues/2719
 
 -------------------------------------------------------------------------------
   - Test build from git;
-Now running lintian ledgersmb-1.6_1.6.6-1~3_amd64.changes ...
+Now running lintian ledgersmb-1.6_1.6.8-1~1_amd64.changes ...
 
-W: ledgersmb-1.6 source: newer-debconf-templates
+W: ledgersmb-1.6 changes: orig-tarball-missing-upstream-signature ledgersmb-1.6_1.6.8.orig.tar.gz
 I: ledgersmb-1.6 source: no-complete-debconf-translation
 I: ledgersmb-1.6 source: out-of-date-standards-version 3.9.8 (released 2016-04-06) (current is 4.2.1)
 I: ledgersmb-1.6 source: testsuite-autopkgtest-missing
@@ -209,6 +209,12 @@ running that test where the simple 'make test' had been successful. But doesn't
 that imply that those aren't needed for the basic build tests? Removed them for now.
 
 
+  - These two items are a workaround to the symlink to the t/.proverc file 
+being missing from the release archive, which can be removed once the issue
+is resolved. See also - https://github.com/ledgersmb/LedgerSMB/issues/3900
+- Added "cp t/.proverc ./"  to the 'override_dh_auto_configure' target in debian/rules
+- Added ".proverc"  to the debian/clean file
+  
 -----------------------------------------------------------------------------------
 
- -- Robert James Clay <jame@rocasa.us>  Sat, 10 Nov 2018 09:35 -0500
+ -- Robert James Clay <jame@rocasa.us>  Mon, 17 Dec 2018 09:29 -0500
