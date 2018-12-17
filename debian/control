@@ -50,7 +50,7 @@ Build-Depends-Indep: libcgi-emulate-psgi-perl,
                      libtry-tiny-perl,
                      libversion-compare-perl,
                      libxml-simple-perl,
-                     perl (>= 5.10.1)
+                     perl (>= 5.14.0)
 Standards-Version: 3.9.8
 Homepage: http://www.ledgersmb.org/
 Vcs-Git: https://github.com/ledgersmb/pkg-ledgersmb-1.x.git
