@@ -4,7 +4,7 @@ gpg signature file ledgersmb-n.n.nn.tar.gz.asc. The file is verified against the
 signature and it is then renamed as the file ledgersmb-1.5_1.5.nn.orig.tar.gz.
 Note that this can be done automatically by running the 'uscan' command in the
 directory that contains the package 'debian/' subdirectory, or by running the
-command 'debian/rules get-orig-source'.
+command 'debian/rules get-original-source'.
 
 Please read /usr/share/doc/quilt/README.source for how to apply and manage
 Debian specific patches on this package.
