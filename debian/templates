@@ -7,7 +7,7 @@
 # Even minor modifications require translation updates and such
 # changes should be coordinated with translators and reviewers.
 
-Template: ledgersmb-1.6/admin_login
+Template: ledgersmb-1.7/admin_login
 Type: string
 Default: lsmb_dbadmin
 _Description: Database administrative user login:
@@ -15,7 +15,7 @@ _Description: Database administrative user login:
  login is needed for the administrative web user interface, typically at
  http://localhost:5762/setup.pl.
 
-Template: ledgersmb-1.6/admin_password
+Template: ledgersmb-1.7/admin_password
 Type: password
 Default: LEDGERSMBINITIAL
 _Description: Database administrative user password:
