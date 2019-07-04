@@ -1,0 +1,11 @@
+bin/* usr/share/ledgersmb-1.7/bin
+doc/conf/* usr/share/ledgersmb-1.7/conf
+lib/* usr/share/ledgersmb-1.7/lib
+debian/adm/config-lsmb-db-user.sh usr/share/ledgersmb-1.7/utils
+ledgersmb.conf etc/ledgersmb-1.7
+locale/* usr/share/ledgersmb-1.7/locale
+old/lib/* usr/share/ledgersmb-1.7/old/lib
+sql/* usr/share/ledgersmb-1.7/sql
+templates/* usr/share/ledgersmb-1.7/templates
+UI/* usr/share/ledgersmb-1.7/UI
+utils/* usr/share/ledgersmb-1.7/utils

@@ -1,5 +1,5 @@
 #!/bin/sh
-# postrm script for ledgersmb-1.6
+# postrm script for ledgersmb-1.7
 #
 # see: dh_installdeb(1)
 
@@ -20,41 +20,41 @@ set -e
 
 case "$1" in
     purge)
-        # If a sym link to ledgersmb-1.6-proxy.conf is present in lighttpd
+        # If a sym link to ledgersmb-1.7-proxy.conf is present in lighttpd
         # conf-enabled, then remove it.
-        if [ -h /etc/lighttpd/conf-enabled/ledgersmb-1.6-proxy.conf ] ; then
-            rm -f /etc/lighttpd/conf-enabled/ledgersmb-1.6-proxy.conf 
+        if [ -h /etc/lighttpd/conf-enabled/ledgersmb-1.7-proxy.conf ] ; then
+            rm -f /etc/lighttpd/conf-enabled/ledgersmb-1.7-proxy.conf 
         fi
-        # When being purged; if sym link /etc/ledgersmb-1.6/lighttpd-proxy.conf
+        # When being purged; if sym link /etc/ledgersmb-1.7/lighttpd-proxy.conf
         # exists, then remove it.
-        if [ -h "/etc/ledgersmb-1.6/lighttpd-proxy.conf" ]; then
-            rm -f /etc/ledgersmb-1.6/lighttpd-proxy.conf
+        if [ -h "/etc/ledgersmb-1.7/lighttpd-proxy.conf" ]; then
+            rm -f /etc/ledgersmb-1.7/lighttpd-proxy.conf
         fi
-        # When being purged; if /etc/lighttpd/conf-available/ledgersmb-1.6-proxy.conf exists, remove
+        # When being purged; if /etc/lighttpd/conf-available/ledgersmb-1.7-proxy.conf exists, remove
         # it and deregister it with ucf.
-        if [ -f "/etc/lighttpd/conf-available/ledgersmb-1.6-proxy.conf" ]; then
+        if [ -f "/etc/lighttpd/conf-available/ledgersmb-1.7-proxy.conf" ]; then
             # Remove the possible backup extensions of the configuration file.
             for ext in '~' '%' .bak .ucf-new .ucf-old .ucf-dist;  do
-                rm -f /etc/lighttpd/conf-available/ledgersmb-1.6-proxy.conf$ext
+                rm -f /etc/lighttpd/conf-available/ledgersmb-1.7-proxy.conf$ext
             done
             # Remove the configuration file itself
-            rm -f /etc/lighttpd/conf-available/ledgersmb-1.6-proxy.conf
+            rm -f /etc/lighttpd/conf-available/ledgersmb-1.7-proxy.conf
             # Clear it out from the ucf database.
             if which ucf >/dev/null 2>&1; then
-                ucf --purge /etc/lighttpd/conf-available/ledgersmb-1.6-proxy.conf
+                ucf --purge /etc/lighttpd/conf-available/ledgersmb-1.7-proxy.conf
             fi
             if which ucfr >/dev/null 2>&1; then
-                ucfr --purge ledgersmb-1.6 /etc/lighttpd/conf-available/ledgersmb-1.6-proxy.conf
+                ucfr --purge ledgersmb-1.7 /etc/lighttpd/conf-available/ledgersmb-1.7-proxy.conf
             fi
         fi
         deb-systemd-invoke restart lighttpd.service
     ;;
 
     remove)
-        # If a sym link to ledgersmb-1.6-proxy.conf is present in lighttpd
+        # If a sym link to ledgersmb-1.7-proxy.conf is present in lighttpd
         # conf-enabled, then remove it & restart
-        if [ -h /etc/lighttpd/conf-enabled/ledgersmb-1.6-proxy.conf ] ; then
-            rm -f /etc/lighttpd/conf-enabled/ledgersmb-1.6-proxy.conf 
+        if [ -h /etc/lighttpd/conf-enabled/ledgersmb-1.7-proxy.conf ] ; then
+            rm -f /etc/lighttpd/conf-enabled/ledgersmb-1.7-proxy.conf 
             deb-systemd-invoke restart lighttpd.service
         fi
     ;;

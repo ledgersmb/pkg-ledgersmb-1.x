@@ -1,5 +1,5 @@
 #!/bin/sh
-# postinst script for ledgersmb-1.6
+# postinst script for ledgersmb-1.7
 #
 # see: dh_installdeb(1)
 
@@ -30,14 +30,14 @@ case "$1" in
         # If this is a new install of the package, then set the DB Admin user.
         if [ -z "$2" ]; then 
             # Get user name.
-            db_get ledgersmb-1.6/admin_login
+            db_get ledgersmb-1.7/admin_login
             LSMBDBUSER=$RET
             # Get password
-            db_get ledgersmb-1.6/admin_password
+            db_get ledgersmb-1.7/admin_password
             LSMBDBPW=$RET
             db_stop
             # Configure database administrative user
-            /usr/share/ledgersmb-1.6/utils/config-lsmb-db-user.sh $LSMBDBUSER $LSMBDBPW
+            /usr/share/ledgersmb-1.7/utils/config-lsmb-db-user.sh $LSMBDBUSER $LSMBDBPW
         fi
     ;;
 

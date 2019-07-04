@@ -1,5 +1,5 @@
 #!/bin/sh
-# postinst script for ledgersmb-1.6
+# postinst script for ledgersmb-1.7
 #
 # see: dh_installdeb(1)
 
@@ -22,10 +22,9 @@ set -e
 
 case "$1" in
     configure)
-        # Do lighttpd related processing if it is present.
-        if [ -d "/etc/lighttpd" ]; then
-            [ -d /etc/lighttpd/conf-available/ ] && [ ! -e /etc/lighttpd/conf-available/ledgersmb-1.6-proxy.conf ] && ucf /usr/share/ledgersmb-1.6/conf/lighttpd-vhost.conf /etc/lighttpd/conf-available/ledgersmb-1.6-proxy.conf
-            [ ! -h /etc/ledgersmb-1.6/lighttpd-proxy.conf ] && ln -s /etc/lighttpd/conf-available/ledgersmb-1.6-proxy.conf /etc/ledgersmb-1.6/lighttpd-proxy.conf
+        # Do varnish related processing if it is present.
+        if [ -d "/etc/varnish" ]; then
+            [ ! -h /etc/ledgersmb-1.7/varnish-proxy.conf ] && ln -s /etc/varnish/default.vcl /etc/ledgersmb-1.7/varnish-proxy.conf
         fi
     ;;
 

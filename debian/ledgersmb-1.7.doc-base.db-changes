@@ -1,8 +1,8 @@
-Document: ledgersmb-1.6-db-changes
+Document: ledgersmb-1.7-db-changes
 Title: LedgerSMB Database Changes Information
 Author: The LedgerSMB Core Team
 Abstract: Database Changes Information for LedgerSMB
 Section: Office
 
 Format: text
-Files: /usr/share/doc/ledgersmb-1.6/db-changes
+Files: /usr/share/doc/ledgersmb-1.7/db-changes
