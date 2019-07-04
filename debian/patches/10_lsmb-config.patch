@@ -1,15 +1,15 @@
 Author: Robert James Clay <jame@rocasa.us>
 Description: Make needed updates for ledgesmb.config.default for use by package.
 Origin: vendor
-Last-Update: 2018-08-10
---- a/conf/ledgersmb.conf.default
-+++ b/conf/ledgersmb.conf.default
+Last-Update: 2019-07-04
+--- a/doc/conf/ledgersmb.conf.default
++++ b/doc/conf/ledgersmb.conf.default
 @@ -4,7 +4,7 @@
  # of an alternative location
  #
  # e.g.
 -# LSMB_CONFIG_FILE=/etc/ledgersmb/ledgersmb.conf
-+# LSMB_CONFIG_FILE=/etc/ledgersmb-1.6/ledgersmb.conf
++# LSMB_CONFIG_FILE=/etc/ledgersmb-1.7/ledgersmb.conf
  
  [main]
  
@@ -18,7 +18,7 @@ Last-Update: 2018-08-10
  # Used to keep multiple instances and/or different versions
  # logged in at the same time
 -cookie_name = LedgerSMB-1.5
-+cookie_name = LedgerSMB-1.6-lsmb
++cookie_name = LedgerSMB-1.7-lsmb
  
  # This is the Dojo theme to be used by default -- e.g. when no other theme
  # has been selected.
@@ -27,7 +27,7 @@ Last-Update: 2018-08-10
  # if you want to force people to enter a company name at login.
  port = 5432
 -default_db = lsmb13
-+default_db = lsmb16
++default_db = lsmb17
  host = localhost
  db_namespace = public
  # sslmode can be require, allow, prefer, or disable.  Defaults to prefer.

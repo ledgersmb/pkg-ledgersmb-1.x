@@ -5,15 +5,15 @@ Description: Set working directory in the apache-vhost.conf, nginx-vhost.conf,
  default.vcl file for Varnish. Also reference default SSL certificates using the 
  so-called snakeoil ones as working examples.
 Origin: vendor
-Last-Update: 2018-11-01
---- a/conf/apache-vhost.conf
-+++ b/conf/apache-vhost.conf
+Last-Update: 2019-07-04
+--- a/doc/conf/apache-vhost.conf
++++ b/doc/conf/apache-vhost.conf
 @@ -20,15 +20,15 @@
  <VirtualHost *:443>
    ServerName YOUR_SERVER_NAME
  
 -  DocumentRoot WORKING_DIR/UI
-+  DocumentRoot /usr/share/ledgersmb-1.6/UI
++  DocumentRoot /usr/share/ledgersmb-1.7/UI
  
    # If you own a publicly exposed server, consider submitting it
    # to the SSL security tests available at
@@ -28,8 +28,8 @@ Last-Update: 2018-11-01
  
    <Location "/">
      SSLRequireSSL
---- a/conf/nginx-vhost.conf
-+++ b/conf/nginx-vhost.conf
+--- a/doc/conf/nginx-vhost.conf
++++ b/doc/conf/nginx-vhost.conf
 @@ -22,12 +22,12 @@
    # Replace snippets/snakeoil.conf with either your own version of snakeoil.conf
    # or modified versions of the following ssl_certificate, ssl_certificate_key lines
@@ -42,12 +42,12 @@ Last-Update: 2018-11-01
 +  #ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
  
 -  root WORKING_DIR/UI;
-+  root /usr/share/ledgersmb-1.6/UI;
++  root /usr/share/ledgersmb-1.7/UI;
  
    # Configuration files don't exist
    location ^~ \.conf$ {
---- a/conf/lighttpd-vhost.conf
-+++ b/conf/lighttpd-vhost.conf
+--- a/doc/conf/lighttpd-vhost.conf
++++ b/doc/conf/lighttpd-vhost.conf
 @@ -10,19 +10,11 @@
  
  server.modules = (
@@ -65,7 +65,7 @@ Last-Update: 2018-11-01
 -server.pid-file             = "/var/run/lighttpd.pid"
 -server.username             = "www-data"
 -server.groupname            = "www-data"
-+server.document-root        = "/usr/share/ledgersmb-1.6/UI"
++server.document-root        = "/usr/share/ledgersmb-1.7/UI"
  
    # If you own a publicly exposed server, consider submitting it
    # to the SSL security tests available at
@@ -100,8 +100,8 @@ Last-Update: 2018-11-01
  
  server.modules   += ( "mod_proxy" )
  
---- a/conf/default.vcl
-+++ b/conf/default.vcl
+--- a/doc/conf/default.vcl
++++ b/doc/conf/default.vcl
 @@ -15,7 +15,7 @@
  # Default backend definition. Set this to point to your content server.
  backend default {

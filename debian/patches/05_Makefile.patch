@@ -3,10 +3,10 @@ Description: This is a patch to facilitate running basic upstream tests during
  target of the Makefile.
 Author: Robert James Clay <jame@rocasa.us>
 Origin: vendor
-Last-Update: 2018-11-09
+Last-Update: 2019-07-04
 
---- ledgersmb-1.6-1.6.6.orig/Makefile
-+++ ledgersmb-1.6-1.6.6/Makefile
+--- ledgersmb.orig/Makefile
++++ ledgersmb/Makefile
 @@ -462,7 +462,7 @@ postgres_user:
  	sudo createuser -S -d -r -l -P lsmb_dbadmin
  
