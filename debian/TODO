@@ -1,7 +1,11 @@
-debian/TODO for LedgerSMB ledgersmb-1.6 package
+debian/TODO for LedgerSMB ledgersmb-1.7 package
 
   - See also https://github.com/ledgersmb/pkg-ledgersmb-1.x/issues
 ================================================================================
+--------------------------------------------------------------------------------
+
+- Review depenancies for 1.7 and update pkg as neceesary.
+
 --------------------------------------------------------------------------------
 
 - Add a doc-base file for UI/welcome.html ?
@@ -94,7 +98,7 @@ can be updated for that.
 - Referance also https://github.com/ledgersmb/LedgerSMB/issues/2899 which is
 for the creation of a test in upstream that checks for such permission issues.
 
-- As of the packaging for 1.6.6, this is what is in the override_dh_fixperms
+- As of the packaging for 1.7.0, this is what is in the override_dh_fixperms
   stanza:
     dh_fixperms
     chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/bin/drop-roles
@@ -132,31 +136,29 @@ been the package 'wkhtml2pdf'. See also:
 https://github.com/ledgersmb/LedgerSMB/issues/2719
 
 -------------------------------------------------------------------------------
-  - Test build from git;
-Now running lintian ledgersmb-1.6_1.6.8-1~1_amd64.changes ...
+  - from a manual test build:
 
-W: ledgersmb-1.6 changes: orig-tarball-missing-upstream-signature ledgersmb-1.6_1.6.8.orig.tar.gz
-I: ledgersmb-1.6 source: no-complete-debconf-translation
-I: ledgersmb-1.6 source: out-of-date-standards-version 3.9.8 (released 2016-04-06) (current is 4.2.1)
-I: ledgersmb-1.6 source: testsuite-autopkgtest-missing
-I: ledgersmb-1.6: package-contains-empty-directory usr/share/ledgersmb-1.6/lib/LedgerSMB/Scripts/custom/
-I: ledgersmb-1.6: systemd-service-file-missing-documentation-key lib/systemd/system/ledgersmb-1.6.service
-I: ledgersmb-1.6: unused-override package-contains-empty-directory usr/share/ledgersmb-1.6/lib/LedgerSMB/Scripts/custom
-N: 375 tags overridden (354 errors, 4 warnings, 17 info)
+Now running lintian ledgersmb-1.7_1.7.0~beta1-1~1_amd64.changes ...
+W: ledgersmb-1.7 source: orig-tarball-missing-upstream-signature ledgersmb-1.7_1.7.0~beta1.orig.tar.gz
+I: ledgersmb-1.7 source: no-complete-debconf-translation
+I: ledgersmb-1.7 source: out-of-date-standards-version 3.9.8 (released 2016-04-06) (current is 4.3.0)
+I: ledgersmb-1.7 source: testsuite-autopkgtest-missing
+I: ledgersmb-1.7 source: public-upstream-key-not-minimal upstream/signing-key.asc has 1 extra signature(s) for keyid 39A629558DA0AF10
+W: ledgersmb-1.7: debian-changelog-line-too-long line 5
+W: ledgersmb-1.7: spelling-error-in-changelog dependancy dependency
+I: ledgersmb-1.7: package-contains-empty-directory usr/share/ledgersmb-1.6/bin/custom/
+I: ledgersmb-1.7: package-contains-empty-directory usr/share/ledgersmb-1.6/lib/LedgerSMB/Reconciliation/CSV/Formats/
+I: ledgersmb-1.7: package-contains-empty-directory usr/share/ledgersmb-1.6/lib/LedgerSMB/Scripts/custom/
+I: ledgersmb-1.7: package-contains-empty-directory usr/share/ledgersmb-1.7/UI/js-src/dijit/
+I: ledgersmb-1.7: package-contains-empty-directory usr/share/ledgersmb-1.7/UI/js-src/dojo/
+I: ledgersmb-1.7: package-contains-empty-directory usr/share/ledgersmb-1.7/UI/js-src/util/
+E: ledgersmb-1.7: doc-base-file-references-missing-file ledgersmb-1.7-coding:8 /usr/share/doc/ledgersmb-1.7/coding-standard.pdf.gz
+I: ledgersmb-1.7: systemd-service-file-missing-documentation-key lib/systemd/system/ledgersmb-1.7.service
+I: ledgersmb-1.7: unused-override package-contains-empty-directory usr/share/ledgersmb-1.7/bin/custom/
+I: ledgersmb-1.7: unused-override package-contains-empty-directory usr/share/ledgersmb-1.7/lib/LedgerSMB/Reconciliation/CSV/Formats/
+I: ledgersmb-1.7: unused-override package-contains-empty-directory usr/share/ledgersmb-1.7/lib/LedgerSMB/Scripts/custom
+N: 378 tags overridden (355 errors, 4 warnings, 19 info); 3 unused overrides
 Finished running lintian.
-
-  - lintian results from pkg build:
-
-N: 345 tags overridden (341 errors, 2 warnings, 2 info)
-
-I: ledgersmb-1.6 source: no-complete-debconf-translation
-
-I: ledgersmb-1.6: systemd-service-file-missing-documentation-key lib/systemd/system/ledgersmb-1.6.service
-
-I: ledgersmb-1.6: package-contains-empty-directory usr/share/ledgersmb-1.6/lib/LedgerSMB/Scripts/custom/
-I: ledgersmb-1.6: unused-override package-contains-empty-directory usr/share/ledgersmb-1.6/lib/LedgerSMB/Scripts/custom
-
-I: ledgersmb-1.6 source: testsuite-autopkgtest-missing
 
 -------------------------------------------------------------------------------
 - Interesting enough; this is available for Config::Model
@@ -217,4 +219,4 @@ is resolved. See also - https://github.com/ledgersmb/LedgerSMB/issues/3900
   
 -----------------------------------------------------------------------------------
 
- -- Robert James Clay <jame@rocasa.us>  Mon, 17 Dec 2018 09:29 -0500
+ -- Robert James Clay <jame@rocasa.us>  Thu, 04 Jul 2019 18:10 -0400
