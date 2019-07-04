@@ -4,8 +4,8 @@
 	dh $@ --with systemd
 
 override_dh_auto_configure:
-	cp conf/ledgersmb.conf.default ledgersmb.conf
-	cp conf/systemd/ledgersmb_starman.service debian/ledgersmb-1.6.service
+	cp doc/conf/ledgersmb.conf.default ledgersmb.conf
+	cp doc/conf/systemd/ledgersmb_starman.service debian/ledgersmb-1.7.service
 
 override_dh_auto_build:
 
@@ -15,17 +15,17 @@ override_dh_install:
 	dh_install -XMIT-LICENSE -XGPL.txt -XLICENSE
 
 override_dh_installdocs:
-	dh_installdocs --link-doc=ledgersmb-1.6
+	dh_installdocs --link-doc=ledgersmb-1.7
 
 override_dh_fixperms:
 	dh_fixperms
-	chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/bin/drop-roles
-	chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/sql/modules/reload_modules.sh
-	chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/utils/notify_short/config.pl
-	chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/utils/notify_short/listener.pl
-	chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/utils/process_queue/config.pl.default
-	chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/utils/process_queue/process_queue.pl
-	chmod +x debian/ledgersmb-1.6/usr/share/ledgersmb-1.6/utils/devel/ledgersmb-server-development.psgi
+	chmod +x debian/ledgersmb-1.7/usr/share/ledgersmb-1.7/bin/drop-roles
+	chmod +x debian/ledgersmb-1.7/usr/share/ledgersmb-1.7/sql/modules/reload_modules.sh
+	chmod +x debian/ledgersmb-1.7/usr/share/ledgersmb-1.7/utils/notify_short/config.pl
+	chmod +x debian/ledgersmb-1.7/usr/share/ledgersmb-1.7/utils/notify_short/listener.pl
+	chmod +x debian/ledgersmb-1.7/usr/share/ledgersmb-1.7/utils/process_queue/config.pl.default
+	chmod +x debian/ledgersmb-1.7/usr/share/ledgersmb-1.7/utils/process_queue/process_queue.pl
+	chmod +x debian/ledgersmb-1.7/usr/share/ledgersmb-1.7/utils/devel/ledgersmb-server-development.psgi
 
 get-original-source:
 	uscan --force-download --rename --destdir .
