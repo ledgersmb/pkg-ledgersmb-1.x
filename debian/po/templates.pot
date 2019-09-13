@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ledgersmb-1.5\n"
 "Report-Msgid-Bugs-To: ledgersmb-1.5@packages.debian.org\n"
-"POT-Creation-Date: 2017-11-25 17:30-0500\n"
+"POT-Creation-Date: 2019-09-13 15:36-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,26 +45,4 @@ msgid ""
 "Please enter the password of the LedgerSMB database administrative user. "
 "This password is needed for the administrative web user interface, typically "
 "at http://localhost:5762/setup.pl."
-msgstr ""
-
-#. Type: boolean
-#. Description
-#: ../templates:4001
-msgid "Configure LedgerSMB Database administrative user?"
-msgstr ""
-
-#. Type: boolean
-#. Description
-#: ../templates:4001
-msgid ""
-"The configuration program for the package can automatically configure the "
-"LedgerSMB database user. Enable if you want to do that, disable if not."
-msgstr ""
-
-#. Type: boolean
-#. Description
-#: ../templates:4001
-msgid ""
-"More information about the configuration of the database administrative user "
-"can be found in /usr/share/doc/ledgersmb-1.5/README.Debian."
 msgstr ""

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ledgersmb 1.3.15-3\n"
 "Report-Msgid-Bugs-To: ledgersmb-1.5@packages.debian.org\n"
-"POT-Creation-Date: 2017-11-25 17:30-0500\n"
+"POT-Creation-Date: 2019-09-13 15:36-0400\n"
 "PO-Revision-Date: 2017-06-08 16:30-0400\n"
 "Last-Translator: Robert James Clay <jame@rocasa.us>\n"
 "Language-Team: \n"
@@ -64,41 +64,32 @@ msgstr ""
 "пароль требуется для веб-интерфейса управления, обычно располагающегося по "
 "адресу http://localhost:5762/setup.pl."
 
-#. Type: boolean
-#. Description
-#: ../templates:4001
 #, fuzzy
-#| msgid "Database administrative user login:"
-msgid "Configure LedgerSMB Database administrative user?"
-msgstr "Учётная запись администратора баз данных:"
+#~| msgid "Database administrative user login:"
+#~ msgid "Configure LedgerSMB Database administrative user?"
+#~ msgstr "Учётная запись администратора баз данных:"
 
-#. Type: boolean
-#. Description
-#: ../templates:4001
 #, fuzzy
-#| msgid ""
-#| "The configuration program for the package can automatically configure "
-#| "some aspects of LedgerSMB, such as the LedgerSMB database user."
-msgid ""
-"The configuration program for the package can automatically configure the "
-"LedgerSMB database user. Enable if you want to do that, disable if not."
-msgstr ""
-"Программа настройки пакета может автоматически настроить некоторые параметры "
-"LedgerSMB, такие как учётная запись базы данных LedgerSMB."
+#~| msgid ""
+#~| "The configuration program for the package can automatically configure "
+#~| "some aspects of LedgerSMB, such as the LedgerSMB database user."
+#~ msgid ""
+#~ "The configuration program for the package can automatically configure the "
+#~ "LedgerSMB database user. Enable if you want to do that, disable if not."
+#~ msgstr ""
+#~ "Программа настройки пакета может автоматически настроить некоторые "
+#~ "параметры LedgerSMB, такие как учётная запись базы данных LedgerSMB."
 
-#. Type: boolean
-#. Description
-#: ../templates:4001
 #, fuzzy
-#| msgid ""
-#| "More general information about the initial configuration of the "
-#| "application can be found in /usr/share/doc/ledgersmb-1.5/README.Debian."
-msgid ""
-"More information about the configuration of the database administrative user "
-"can be found in /usr/share/doc/ledgersmb-1.5/README.Debian."
-msgstr ""
-"Дополнительную информацию о начальной настройке приложения можно найти в "
-"файле /usr/share/doc/ledgersmb-1.5/README.Debian."
+#~| msgid ""
+#~| "More general information about the initial configuration of the "
+#~| "application can be found in /usr/share/doc/ledgersmb-1.5/README.Debian."
+#~ msgid ""
+#~ "More information about the configuration of the database administrative "
+#~ "user can be found in /usr/share/doc/ledgersmb-1.5/README.Debian."
+#~ msgstr ""
+#~ "Дополнительную информацию о начальной настройке приложения можно найти в "
+#~ "файле /usr/share/doc/ledgersmb-1.5/README.Debian."
 
 #~ msgid "Configure LedgerSMB automatically?"
 #~ msgstr "Настроить LedgerSMB автоматически?"
