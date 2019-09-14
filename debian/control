@@ -3,7 +3,41 @@ Section: web
 Priority: optional
 Maintainer: LedgerSMB Core Team <devel@lists.ledgersmb.org>
 Uploaders: Robert James Clay <jame@rocasa.us>
-Build-Depends: debhelper (>= 9.20160709), po-debconf
+Build-Depends: debhelper (>= 9.20160709), po-debconf, texlive-xetex,
+               texlive-latex-recommended
+Build-Depends-Indep: libcarp-always-perl,
+         libcgi-emulate-psgi-perl,
+         libcgi-simple-perl,
+         libclass-c3-xs-perl,
+         libconfig-inifiles-perl,
+         libdatetime-format-strptime-perl,
+         libdatetime-perl,
+         libdbd-pg-perl,
+         libdbi-perl,
+         libfile-mimeinfo-perl,
+         libhttp-exception-perl,
+         libjson-perl,
+         liblocale-maketext-lexicon-perl (>= 0.62-1~),
+         liblog-log4perl-perl,
+         libmime-lite-perl,
+         libmoose-perl,
+         libmoosex-nonmoose-perl,
+         libnamespace-autoclean-perl,
+         libnumber-format-perl,
+         libpgobject-perl (>= 1.403.2-1~),
+         libpgobject-simple-perl (>= 3.000002-1~),
+         libpgobject-simple-role-perl (>= 2.000000-1~),
+         libpgobject-type-bigfloat-perl,
+         libpgobject-type-bytestring-perl (>= 1.1.1-1~),
+         libpgobject-type-datetime-perl,
+         libpgobject-util-dbmethod-perl,
+         libpgobject-util-dbadmin-perl,
+         libplack-perl,
+         libplack-builder-conditionals-perl,
+         libtemplate-perl (>=2.14-1~),
+         libtry-tiny-perl,
+         libxml-simple-perl,
+         perl (>= 5.10.1-1~)
 Standards-Version: 3.9.8
 Homepage: http://www.ledgersmb.org/
 Vcs-Git: https://github.com/ledgersmb/pkg-ledgersmb-1.x.git -b master-1.5
