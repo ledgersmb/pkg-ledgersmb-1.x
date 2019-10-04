@@ -115,8 +115,8 @@ sub link_part {
 
     # currencies
     $form->{selectcurrency} = "";
-    for ( split /:/, $form->{currencies} ) {
-        $form->{selectcurrency} .= qq|<option value="$_">$_</option>\n|;
+    for ( @{$form->{currencies}} ) {
+        $form->{selectcurrency} .= "<option value=\"$_\">$_</option>\n";
     }
 
     # readonly
@@ -472,7 +472,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows="$rows
         $onhand = qq|
           <tr>
         <th align="right" nowrap>| . $locale->text('On Hand') . qq|</th>
-        <th align=left nowrap class="plus$n" id="onhand">&nbsp;|
+        <th align=left nowrap class="plus$n">&nbsp;| # onhand exists as hidden INPUT
           . $form->format_amount( \%myconfig, $form->{onhand} )
           . qq|</th>
           </tr>
