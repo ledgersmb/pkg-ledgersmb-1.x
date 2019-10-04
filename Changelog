@@ -1,6 +1,79 @@
                                                         -*- fundamental -*-
+Changelog for 1.7 Series
+2019-10-04
+
+
+Changelog for 1.7.0
+
+New functionalities
+* Deletion of template transactions (Nick P)
+* Transaction date now part of purchase history report (Chris T)
+* UI allows addition and removal of custom `account_link` flags (Nick P)
+
+Improved foreign currency support
+* Multiple rates per day per currency (Erik H)
+  - Reversing a transaction from a closed-period on a day with different rate
+  - Bank transfers with different banks on the same day with bank's fx rate
+  - Migration from systems which support per-transaction or per-line fx rates
+* Multiple currencies in a single general ledger transaction (Erik H)
+  - Posting an opening balance with all currencies in 1 transaction
+  - Transferring between foreign currencies on e.g. Paypal in 1 transaction
+* Fixed copying of invoice copies fx rate without option to change (Erik H)
+* UI showing foreign and default currency amounts in transactions (Erik H)
+
+Quality Assurance
+* Expanded checks and resolutions for schema changes (Erik H)
+* Testing infrastructure and tests for schema change checks (Erik H)
+* Ensure correct dependency declaration (RequireExplicitInclusion critic policy)
+* POD documentation structure improvements, with automated checks (Erik H)
+* Expanded BDD tests, including payments, batches and approval (Nick P, Erik H)
+
+Code cleanup
+* Removed deprecated 'custom table' and 'custom field' tables (Erik H)
+* Reduce dependencies on deprecated LedgerSMB::App_State (Nick P)
+* Simplified deprecated LedgerSMB::PGOld (Nick P)
+* Remove unused LedgerSMB::DBObject and LedgerSMB::PGOld methods (Nick P)
+* Remove unused configuration settings in ledgersmb.conf (Erik H)
+* Further (compared to 1.6) reduction of warnings
+* Implemented tests for LedgerSMB::File(::*) modules (Nick P)
+* Template engine simplification by separation of UI and printed docs (Erik H)
+* Consistent copyright notices - with tests - on all Perl files in lib/ (Nick P)
+* Request handling cleanup by mapping 'flat' POST data into hierarchy (Erik H)
+
+Dependency updates
+* Dojo Toolkit (JavaScript UI tools) updated to 1.15.0 (Erik H)
+* Minimum Perl (tested) version increased to 5.18 (from 5.14)
+* Plack web glue library minimum >= 1.0031
+* PGObject::Simple::Role minimum updated to 2.0.2 (from 1.13.2)
+* Cpanel::JSON::XS minimum >= 3.0206
+* JSON::PP >= 2.00
+* [New] File::Find::Rule
+* [New] Text::CSV
+
+Nick P is Nick Prater
+Erik H is Erik Huelsmann
+Chris T is Chris Travers
+
+
 Changelog for 1.6 Series
 Released 2018-06-10
+
+Changelog for 1.6.12
+* Work around unloadable backups being dumped on some PostgreSQL versions (Erik H)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.6.11
+* Add CSS indentation to hierarchical financial statements (Erik H)
+* Fix random setup.pl errors due to assumed-available credentials (Erik H)
+* Fix failure in setup.pl when initial user exists in the database (Erik H)
+* Fix SQL Ledger version-comparisons when upgrading to LedgerSMB (Yves L)
+* Fix regression when running in a schema other than 'public' (Erik H)
+
+Erik H is Erik Huelsmann
+Yves L is Yves Lavoie
+
 
 Changelog for 1.6.10
 * Apply correct layout to schema upgrade pages in setup.pl (Erik H)
@@ -164,6 +237,18 @@ David G is David Godfrey
 
 Changelog for 1.5 Series
 Released 2016-12-24
+
+Changelog for 1.5.26
+* Work around unloadable backups being dumped on some PostgreSQL versions (Erik H)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.5.25
+* Fix regression when running in a schema other than 'public' (Erik H)
+
+Erik H is Erik Huelsmann
+
 
 Changelog for 1.5.24
 * Fix all addresses selected on AR/AP Invoice's Ship To screen (Erik H, #3940)
