@@ -6,9 +6,10 @@ ledgersmb-1.7 (1.7.0-1~1) UNRELEASED; urgency=medium
     debian/templates, debian/watch, debian/patches/*.
   * Add 'libtest2-suite-perl' to Build-Depends-Indep in debian/control.
   * Add 'libexcel-writer-xlsx-perl' to the dependencies in debian/control.
+  * Add 'libopenoffice-oodoc-perl' to the dependencies in debian/control.
   * Create and update debian/ledgersmb-1.7.* files as necessary for new upstream.
 
- -- Robert James Clay <jame@rocasa.us>  Fri, 04 Oct 2019 16:25:38 -0500
+ -- Robert James Clay <jame@rocasa.us>  Sun, 06 Oct 2019 16:57:25 -0500
 
 ledgersmb-1.6 (1.6.10-1) stable; urgency=medium
 
